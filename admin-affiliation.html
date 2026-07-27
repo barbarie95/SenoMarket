@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Administration Affiliation - SenoMarket</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+<h1>Seno<span>Market</span></h1>
+</div>
+
+</header>
+
+
+
+<section class="affiliate">
+
+
+<h2>Gestion des affiliés SenoMarket</h2>
+
+
+<div class="card">
+
+<h3>Ajouter un affilié</h3>
+
+
+<form id="formAffilie">
+
+
+<label>
+Nom de l'affilié
+</label>
+
+<br>
+
+<input type="text" id="nom" placeholder="Nom complet" 
+
+
+<br><br>
+
+
+<label>
+Code affilié
+</label>
+
+<br>
+
+<input type="text" id="code" placeholder="Exemple : SENO001" required>
+
+
+<br><br>
+
+
+<label>
+Nombre de ventes
+</label>
+
+<br>
+
+<input type="number" id="ventes" placeholder="0" required>
+
+
+<br><br>
+
+
+<label>
+Montant de la vente (FCFA)
+</label>
+
+<br>
+
+<input type="number" id="montantVente" placeholder="Exemple : 10000"> 
+
+
+<br><br>
+
+
+<button type="submit" class="gold-btn">
+Enregistrer
+</button>
+
+
+</form>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>
+Liste des affiliés
+</h3>
+
+
+<div id="listeAffilies">
+
+<p>Aucun affilié enregistré.</p>
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+<footer>
+
+<p>
+© 2026 SenoMarket - Transformez vos idées en réussite
+</p>
+
+</footer>
+
+
+
+<script>
+
+let form = document.getElementById("formAffilie");
+
+let liste = document.getElementById("listeAffilies");
+
+
+let affilies = JSON.parse(localStorage.getItem("affilies")) || [];
+
+
+function afficherAffilies(){
+
+if(affilies.length === 0){
+
+liste.innerHTML = "<p>Aucun affilié enregistré.</p>";
+
+return;
+
+}
+
+
+liste.innerHTML = "";
+
+
+affilies.forEach(function(affilie){
+
+liste.innerHTML += `
+
+<div style="
+background:#111;
+padding:15px;
+margin-top:15px;
+border-radius:10px;
+">
+
+<strong>${affilie.nom}</strong><br>
+
+Code : ${affilie.code}<br>
+
+Ventes : ${affilie.ventes} FCFA<br>
+
+Commission (25%) : ${affilie.commission} FCFA
+
+</div>
+
+`;
+
+});
+
+
+}
+
+
+
+form.addEventListener("submit", function(e){
+
+e.preventDefault();
+
+
+let montantVente = Number(document.getElementById("montantVente").value);
+
+
+let commission = montantVente * 0.25;
+
+
+let nouvelAffilie = {
+
+nom: document.getElementById("nom").value,
+
+code: document.getElementById("code").value,
+
+ventes: montantVente,
+
+commission: commission
+
+};
+
+
+affilies.push(nouvelAffilie);
+
+
+localStorage.setItem("affilies", JSON.stringify(affilies));
+
+
+form.reset();
+
+
+afficherAffilies();
+
+
+alert("Affilié enregistré avec succès !");
+
+
+});
+
+
+
+afficherAffilies();
+
+
+</script>
+
+
+
+</body>
+
+</html>
