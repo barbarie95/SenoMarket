@@ -110,7 +110,7 @@ Remplissez ce formulaire pour rejoindre notre programme d'affiliation.
 </p>
 
 
-<form action="https://formspree.io/f/xvzedkvw" method="POST">
+<form id="affiliationForm" action="https://formspree.io/f/xvzedkvw" method="POST">
 
 
 <label>
@@ -237,6 +237,27 @@ Politique de confidentialité
 
 </footer>
 
+<script>
+document.getElementById('affiliationForm').addEventListener('submit', function() {
+  var formData = {
+    nom: this.nom.value,
+    whatsapp: this.whatsapp.value,
+    email: this.email.value,
+    pays: this.pays.value,
+    paiement: this.paiement.value,
+    numero_paiement: this.numero_paiement.value,
+    motivation: this.motivation.value
+  };
+
+  fetch('https://hook.eu1.make.com/tyffq9yxha4887p4pcefvk2az13hcfzi', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData)
+  }).catch(function(err) {
+    console.log('Erreur envoi Make:', err);
+  });
+});
+</script>
 
 </body>
 
