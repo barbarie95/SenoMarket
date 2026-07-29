@@ -1,92 +1,79 @@
-<section class="affiliate">
+<section class="affiliate affiliate-space">
 
   <h2>🚀 Espace Affilié SenoMarket</h2>
 
-  <!-- Étape 1 : saisie du code -->
-  <div class="card" id="login-box">
+  <div class="card affiliate-card" id="login-box">
     <h3>🔑 Accès affilié</h3>
     <p>Entrez votre code affilié pour accéder à votre espace.</p>
-    <input type="text" id="code-input" placeholder="Ex: SENO001" style="padding:12px;border-radius:8px;width:80%;">
+
+    <input 
+      type="text" 
+      id="code-input" 
+      placeholder="Ex: SENO001"
+      class="affiliate-input">
+
     <br><br>
-    <button onclick="verifierCode()" class="gold-btn">Accéder à mon espace</button>
-    <p id="login-error" style="color:red;"></p>
+
+    <button onclick="verifierCode()" class="gold-btn">
+      Accéder à mon espace
+    </button>
+
+    <p id="login-error"></p>
   </div>
 
-  <!-- Étape 2 : dashboard, caché au départ -->
+
   <div id="dashboard" style="display:none;">
 
-    <div class="card">
+    <div class="card affiliate-card">
       <h3>👤 Votre profil affilié</h3>
+
       <p>Nom : <span id="aff-nom"></span></p>
+
       <p>Code affilié :</p>
-      <div style="background:#111;padding:15px;border-radius:10px;color:#FFD700;font-size:22px;" id="aff-code"></div>
+
+      <div class="affiliate-box" id="aff-code"></div>
     </div>
 
-    <div class="card">
+
+    <div class="card affiliate-card">
       <h3>🔗 Votre lien affilié</h3>
-      <div style="background:#111;padding:15px;border-radius:10px;word-break:break-all;" id="aff-lien"></div>
+
+      <div class="affiliate-box" id="aff-lien"></div>
     </div>
 
-    <div class="card">
+
+    <div class="card affiliate-card">
+
       <h3>📊 Vos statistiques</h3>
+
       <p>Ventes réalisées :</p>
-      <h2 style="color:#FFD700;" id="aff-ventes">0</h2>
+
+      <h2 class="gold-text" id="aff-ventes">0</h2>
+
+
       <p>Commission gagnée :</p>
-      <h2 style="color:#FFD700;" id="aff-commission">0 FCFA</h2>
+
+      <h2 class="gold-text" id="aff-commission">
+        0 FCFA
+      </h2>
+
     </div>
 
-    <div class="card">
+
+    <div class="card affiliate-card">
+
       <h3>💰 Demander un paiement</h3>
-      <p>Lorsque vous avez gagné des commissions, demandez votre retrait.</p>
-      <a href="#" onclick="demanderRetrait()" class="gold-btn">Demander mon paiement</a>
+
+      <p>
+        Lorsque vous avez gagné des commissions, demandez votre retrait.
+      </p>
+
+      <a href="#" onclick="demanderRetrait()" class="gold-btn">
+        Demander mon paiement
+      </a>
+
     </div>
 
   </div>
 
 </section>
-
-<script>
-const WEBHOOK_VERIFICATION = "https://hook.eu1.make.com/COLLE_TON_URL_ICI";
-
-async function verifierCode() {
-  const code = document.getElementById("code-input").value.trim();
-  const errorBox = document.getElementById("login-error");
-  errorBox.textContent = "";
-
-  if (!code) {
-    errorBox.textContent = "Merci d'entrer un code.";
-    return;
-  }
-
-  try {
-    const res = await fetch(WEBHOOK_VERIFICATION, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ code: code })
-    });
-
-    if (!res.ok) throw new Error("Code invalide");
-
-    const data = await res.json();
-
-    document.getElementById("aff-nom").textContent = data.nom;
-    document.getElementById("aff-code").textContent = code;
-    document.getElementById("aff-lien").textContent = `https://barbarie95.github.io/SenoMarket/boutique.html?ref=${code}`;
-    document.getElementById("aff-ventes").textContent = data.ventes;
-    document.getElementById("aff-commission").textContent = data.commission + " FCFA";
-
-    document.getElementById("login-box").style.display = "none";
-    document.getElementById("dashboard").style.display = "block";
-
-    sessionStorage.setItem("codeAffilie", code);
-
-  } catch (err) {
-    errorBox.textContent = "Code affilié introuvable. Vérifiez et réessayez.";
-  }
-}
-
-function demanderRetrait() {
-  const code = sessionStorage.getItem("codeAffilie");
-  window.location.href = `contact.html?demande=retrait&code=${code}`;
-}
-</script>
