@@ -53,7 +53,7 @@ Chez SenoMarket, nous avons choisi un système simple et flexible pour nos affil
 
 <ul>
 
-<li>✅ Vous choisissez votre méthode de paiement lors de votre inscription (Orange Money, Moov Money ou autre moyen disponible).</li>
+<li>✅ Vous choisissez votre méthode de paiement lors de votre inscription (Orange Money, Moov Money, MTN ou autre moyen disponible).</li>
 
 <li>✅ Vos commissions gagnées sont ajoutées directement à votre solde affilié.</li>
 
@@ -178,6 +178,10 @@ Moov Money
 </option>
 
 <option>
+MTN
+</option>
+
+<option>
 Autre
 </option>
 
@@ -252,7 +256,8 @@ document.getElementById('affiliationForm').addEventListener('submit', function()
   fetch('https://hook.eu1.make.com/tyffq9yxha4887p4pcefvk2az13hcfzi', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(formData)
+    body: JSON.stringify(formData),
+    keepalive: true
   }).catch(function(err) {
     console.log('Erreur envoi Make:', err);
   });
