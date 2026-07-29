@@ -364,18 +364,6 @@ footer{
     width:240px;
     height:240px;
 }
-
-
-nav{
-    flex-direction:column;
-}
-
-
-.product img{
-    height:180px;
-}
-
-}
 /* ESPACE AFFILIE SENOMARKET */
 
 .affiliate-space {
@@ -384,7 +372,6 @@ nav{
     padding:40px 20px;
 }
 
-
 .affiliate-space h2,
 .affiliate-space h3 {
     color:#FFD700;
@@ -392,12 +379,12 @@ nav{
 
 
 .affiliate-card {
-    background:#181818;
+    background:#151515;
     border:1px solid #FFD700;
-    border-radius:15px;
-    padding:25px;
+    border-radius:20px;
+    padding:30px;
     margin:20px auto;
-    box-shadow:0 0 15px rgba(255,215,0,0.15);
+    box-shadow:0 0 15px #FFD70030;
 }
 
 
@@ -427,5 +414,15 @@ nav{
 
 
 #login-error {
-    color:#ff4444;
+    color:red;
 }
+
+nav{
+    flex-direction:column;
+}
+
+
+.product img{
+    height:180px;
+}
+
