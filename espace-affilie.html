@@ -1,255 +1,92 @@
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Espace Affilié - SenoMarket</title>
-
-<link rel="stylesheet" href="css/style.css">
-
-</head>
-
-
-<body>
-
-
-<header>
-
-<div class="logo">
-<img src="images/logo-seno.png" alt="Logo SenoMarket">
-</div>
-
-
-<nav>
-<a href="index.html">Accueil</a>
-<a href="boutique.html">Boutique</a>
-<a href="affiliation.html">Affiliation</a>
-<a href="espace-affilie.html">Espace Affilié</a>
-<a href="contact.html">Contact</a>
-</nav>
-
-
-<a href="boutique.html" class="btn">
-Boutique
-</a>
-
-</header>
-
-
-
 <section class="affiliate">
 
-
-<h2>
-🚀 Espace Affilié SenoMarket
-</h2>
-
-
-<p>
-Bienvenue dans votre espace partenaire. Suivez vos performances et développez vos revenus avec SenoMarket.
-</p>
-
-
-
-<div class="card">
-
-<h3>
-👤 Votre profil affilié
-</h3>
-
-<p>
-Nom : Votre nom
-</p>
-
-<p>
-Code affilié :
-</p>
-
-
-<div style="
-background:#111;
-padding:15px;
-border-radius:10px;
-color:#FFD700;
-font-size:22px;
-">
-
-SENO001
-
-</div>
-
-
-</div>
-
-
-
-
-
-<div class="card">
-
-<h3>
-🔗 Votre lien affilié
-</h3>
-
-
-<p>
-Partagez ce lien avec vos clients pour recevoir vos commissions.
-</p>
-
-
-<div style="
-background:#111;
-padding:15px;
-border-radius:10px;
-word-break:break-all;
-">
-
-https://senomarket.com/boutique.html?ref=SENO001
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-<div class="card">
-
-<h3>
-📊 Vos statistiques
-</h3>
-
-
-<p>
-Ventes réalisées :
-</p>
-
-<h2 style="color:#FFD700;">
-0
-</h2>
-
-
-<p>
-Commission gagnée :
-</p>
-
-<h2 style="color:#FFD700;">
-0 FCFA
-</h2>
-
-
-<p>
-Commission par vente :
-</p>
-
-<h2 style="color:#FFD700;">
-25%
-</h2>
-
-
-</div>
-
-
-
-
-
-
-<div class="card">
-
-<h3>
-💰 Demander un paiement
-</h3>
-
-
-<p>
-Lorsque vous avez gagné des commissions, contactez SenoMarket pour recevoir votre paiement.
-</p>
-
-
-<a href="contact.html" class="gold-btn">
-Demander mon paiement
-</a>
-
-
-</div>
-
-
-
-
-
-
-<div class="card">
-
-<h3>
-📋 Historique des commissions
-</h3>
-
-
-<p>
-Aucune commission enregistrée pour le moment.
-</p>
-
-
-</div>
-
-
-
-
-
-
-<div class="card">
-
-<h3>
-❓ Comment ça fonctionne ?
-</h3>
-
-
-<p>
-
-1. Recevez votre code affilié.<br><br>
-
-2. Partagez votre lien avec votre audience.<br><br>
-
-3. Les clients achètent grâce à vous.<br><br>
-
-4. Votre commission est calculée.<br><br>
-
-5. Vous recevez votre paiement.
-
-</p>
-
-
-</div>
-
+  <h2>🚀 Espace Affilié SenoMarket</h2>
+
+  <!-- Étape 1 : saisie du code -->
+  <div class="card" id="login-box">
+    <h3>🔑 Accès affilié</h3>
+    <p>Entrez votre code affilié pour accéder à votre espace.</p>
+    <input type="text" id="code-input" placeholder="Ex: SENO001" style="padding:12px;border-radius:8px;width:80%;">
+    <br><br>
+    <button onclick="verifierCode()" class="gold-btn">Accéder à mon espace</button>
+    <p id="login-error" style="color:red;"></p>
+  </div>
+
+  <!-- Étape 2 : dashboard, caché au départ -->
+  <div id="dashboard" style="display:none;">
+
+    <div class="card">
+      <h3>👤 Votre profil affilié</h3>
+      <p>Nom : <span id="aff-nom"></span></p>
+      <p>Code affilié :</p>
+      <div style="background:#111;padding:15px;border-radius:10px;color:#FFD700;font-size:22px;" id="aff-code"></div>
+    </div>
+
+    <div class="card">
+      <h3>🔗 Votre lien affilié</h3>
+      <div style="background:#111;padding:15px;border-radius:10px;word-break:break-all;" id="aff-lien"></div>
+    </div>
+
+    <div class="card">
+      <h3>📊 Vos statistiques</h3>
+      <p>Ventes réalisées :</p>
+      <h2 style="color:#FFD700;" id="aff-ventes">0</h2>
+      <p>Commission gagnée :</p>
+      <h2 style="color:#FFD700;" id="aff-commission">0 FCFA</h2>
+    </div>
+
+    <div class="card">
+      <h3>💰 Demander un paiement</h3>
+      <p>Lorsque vous avez gagné des commissions, demandez votre retrait.</p>
+      <a href="#" onclick="demanderRetrait()" class="gold-btn">Demander mon paiement</a>
+    </div>
+
+  </div>
 
 </section>
 
+<script>
+const WEBHOOK_VERIFICATION = "https://hook.eu1.make.com/COLLE_TON_URL_ICI";
 
+async function verifierCode() {
+  const code = document.getElementById("code-input").value.trim();
+  const errorBox = document.getElementById("login-error");
+  errorBox.textContent = "";
 
+  if (!code) {
+    errorBox.textContent = "Merci d'entrer un code.";
+    return;
+  }
 
+  try {
+    const res = await fetch(WEBHOOK_VERIFICATION, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code: code })
+    });
 
-<footer>
+    if (!res.ok) throw new Error("Code invalide");
 
-<p>
-© 2026 SenoMarket - Transformez vos idées en réussite
-</p>
+    const data = await res.json();
 
+    document.getElementById("aff-nom").textContent = data.nom;
+    document.getElementById("aff-code").textContent = code;
+    document.getElementById("aff-lien").textContent = `https://barbarie95.github.io/SenoMarket/boutique.html?ref=${code}`;
+    document.getElementById("aff-ventes").textContent = data.ventes;
+    document.getElementById("aff-commission").textContent = data.commission + " FCFA";
 
-<a href="politique-confidentialite.html">
-Politique de confidentialité
-</a>
+    document.getElementById("login-box").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
 
+    sessionStorage.setItem("codeAffilie", code);
 
-</footer>
+  } catch (err) {
+    errorBox.textContent = "Code affilié introuvable. Vérifiez et réessayez.";
+  }
+}
 
-
-
-</body>
-
-</html>
+function demanderRetrait() {
+  const code = sessionStorage.getItem("codeAffilie");
+  window.location.href = `contact.html?demande=retrait&code=${code}`;
+}
+</script>
