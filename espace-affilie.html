@@ -232,7 +232,10 @@ document.getElementById("aff-code").textContent = code;
 
 
 document.getElementById("aff-lien").textContent =
-"https://barbarie95.github.io/SenoMarket/boutique.html?ref=" + code;
+"https://barbarie95.github.io/SenoMarket/boutique.html?ref=" 
++ code 
++ "&nom=" 
++ encodeURIComponent(data.nom);
 
 
 document.getElementById("aff-ventes").textContent =
