@@ -426,3 +426,61 @@ nav{
     height:180px;
 }
 
+    .testimonials{
+    background:#0d0d0d;
+    padding:80px 20px;
+    overflow:hidden;
+    text-align:center;
+}
+
+.testimonials h2{
+    color:#FFD700;
+    margin-bottom:40px;
+    font-size:2rem;
+}
+
+.slider{
+    max-width:800px;
+    margin:auto;
+    overflow:hidden;
+}
+
+.slides{
+    display:flex;
+    width:300%;
+    animation:slide 15s infinite;
+}
+
+.card{
+    width:100%;
+    flex-shrink:0;
+    padding:30px;
+    background:#1a1a1a;
+    border:1px solid #FFD700;
+    border-radius:18px;
+    color:white;
+    box-shadow:0 0 20px rgba(255,215,0,.15);
+}
+
+.stars{
+    color:#FFD700;
+    font-size:28px;
+    margin-bottom:15px;
+}
+
+.card p{
+    line-height:1.7;
+    font-size:17px;
+}
+
+.card h4{
+    margin-top:20px;
+    color:#FFD700;
+}
+
+@keyframes slide{
+    0%,25%{transform:translateX(0);}
+    33%,58%{transform:translateX(-100%);}
+    66%,91%{transform:translateX(-200%);}
+    100%{transform:translateX(0);}
+}
