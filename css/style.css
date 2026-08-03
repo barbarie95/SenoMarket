@@ -1,58 +1,80 @@
+/* =========================
+   Seno Market - Style Global
+   Responsive Desktop + Mobile
+========================= */
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
+    font-family:'Poppins', Arial, sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
     background:#0b0b0b;
     color:white;
+    overflow-x:hidden;
 }
 
-/* HEADER */
+
+/* =========================
+   HEADER
+========================= */
+
 header{
     width:100%;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:25px 8%;
+    gap:30px;
+    padding:20px 8%;
     background:#0b0b0b;
     position:sticky;
     top:0;
     z-index:1000;
 }
 
-.logo h1{
-    font-size:30px;
-    color:white;
+
+.logo img{
+    width:150px;
+    height:auto;
 }
 
-.logo span{
-    color:#FFD700;
-}
 
 nav{
     display:flex;
-    gap:30px;
+    align-items:center;
+    justify-content:center;
+    gap:25px;
+    flex-wrap:wrap;
 }
+
 
 nav a{
     text-decoration:none;
     color:white;
+    font-size:15px;
     transition:.3s;
 }
+
 
 nav a:hover{
     color:#FFD700;
 }
 
-/* BOUTONS */
+
+/* Boutons */
+
 .btn,
 .gold-btn,
 .product a,
 .affiliate a,
 .contact a{
+
     background:#FFD700;
     color:#000;
     padding:12px 25px;
@@ -63,7 +85,6 @@ nav a:hover{
     border:2px solid #FFD700;
     cursor:pointer;
     transition:.3s;
-    box-shadow:0 0 15px #FFD70050;
 }
 
 
@@ -72,40 +93,51 @@ nav a:hover{
 .product a:hover,
 .affiliate a:hover,
 .contact a:hover{
+
     background:transparent;
     color:#FFD700;
-    border:2px solid #FFD700;
-    box-shadow:0 0 25px #FFD700;
-}
 }
 
 
-/* HERO */
+/* =========================
+   HERO
+========================= */
+
 .hero{
+
     min-height:90vh;
     display:flex;
-    justify-content:space-between;
     align-items:center;
-    padding:50px 8%;
-    gap:40px;
+    justify-content:space-between;
+    gap:50px;
+    padding:60px 8%;
 }
+
 
 .hero-text{
     max-width:600px;
 }
 
+
 .hero-text h1{
+
     font-size:55px;
     line-height:1.2;
 }
 
+
 .hero-text p{
+
     margin:25px 0;
     color:#ccc;
     font-size:18px;
+    line-height:1.7;
 }
 
+
+
 .hero-box{
+
     width:350px;
     height:350px;
     border:2px solid #FFD700;
@@ -115,51 +147,89 @@ nav a:hover{
     justify-content:center;
     align-items:center;
     text-align:center;
+    padding:30px;
     box-shadow:0 0 40px #FFD70050;
 }
 
 
-/* SECTIONS */
+
+/* =========================
+   SECTIONS
+========================= */
+
 section{
+
     padding:80px 8%;
 }
 
+
 section h2{
+
     text-align:center;
     font-size:35px;
     margin-bottom:50px;
+    color:#fff;
 }
 
 
-/* CARTES */
+/* =========================
+   CARTES
+========================= */
+
+
 .cards,
 .product-grid{
+
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
     gap:30px;
 }
 
 
+
 .card,
 .product{
+
     background:#151515;
     padding:30px;
     border-radius:20px;
     border:1px solid #222;
-    transition:.3s;
     text-align:center;
+    transition:.3s;
 }
 
 
 .card:hover,
 .product:hover{
-    transform:translateY(-10px);
+
+    transform:translateY(-8px);
     border-color:#FFD700;
 }
 
 
-/* IMAGES PRODUITS */
+
+.card h3,
+.product h3{
+
+    color:#FFD700;
+    margin-bottom:15px;
+    font-size:22px;
+}
+
+
+
+.card p,
+.product p{
+
+    color:#ccc;
+    line-height:1.6;
+}
+/* =========================
+   PRODUITS
+========================= */
+
 .product img{
+
     width:100%;
     max-width:280px;
     height:220px;
@@ -169,22 +239,8 @@ section h2{
 }
 
 
-/* TEXTES PRODUITS */
-.card h3,
-.product h3{
-    color:#FFD700;
-    margin-bottom:15px;
-    font-size:22px;
-}
-
-.card p,
-.product p{
-    color:#ccc;
-    line-height:1.6;
-}
-
-
 .product h4{
+
     color:#FFD700;
     margin-top:15px;
     font-size:20px;
@@ -192,205 +248,175 @@ section h2{
 
 
 .product a{
+
     margin-top:20px;
 }
 
 
-/* AFFILIATION ET CONTACT */
+
+/* =========================
+   AFFILIATION + CONTACT
+========================= */
+
 .affiliate,
 .contact{
+
     text-align:center;
     background:#111;
 }
 
 
-/* FOOTER */
-footer{
+
+.affiliate p,
+.contact p{
+
+    color:#ccc;
+    line-height:1.7;
+    max-width:700px;
+    margin:0 auto 30px;
+}
+
+
+
+/* =========================
+   AVIS CLIENTS
+========================= */
+
+.testimonials{
+
+    background:#0d0d0d;
+    padding:80px 8%;
     text-align:center;
-    padding:40px;
-    background:#050505;
-    color:#aaa;
-}
-
-
-/* LOGO */
-.logo img{
-    width:150px;
-    height:auto;
-    display:block;
-}
-}
-
-
-/* MOBILE ET TABLETTE */
-@media(max-width:768px){
-
-header{
-    padding:20px 5%;
-    flex-direction:column;
-    gap:20px;
-    text-align:center;
-}
-
-
-.logo h1{
-    font-size:28px;
-}
-
-
-nav{
-    width:100%;
-    justify-content:center;
-    gap:15px;
-}
-
-
-nav a{
-    font-size:14px;
-}
-
-
-.btn{
-    padding:10px 20px;
+    overflow:hidden;
 }
 
 
 
-.hero{
-    min-height:auto;
-    padding:40px 5%;
-    flex-direction:column;
-    text-align:center;
-}
+.testimonials h2{
 
-
-.hero-text{
-    max-width:100%;
-}
-
-
-.hero-text h1{
-    font-size:36px;
-    line-height:1.3;
-}
-
-
-.hero-text p{
-    font-size:16px;
-}
-
-
-.hero-box{
-    width:280px;
-    height:280px;
-}
-
-
-
-section{
-    padding:50px 5%;
-}
-
-
-section h2{
-    font-size:30px;
-    margin-bottom:35px;
-}
-
-
-
-.cards,
-.product-grid{
-    grid-template-columns:1fr;
-    gap:20px;
-}
-
-
-
-.card,
-.product{
-    padding:20px;
-}
-
-
-
-.product img{
-    width:100%;
-    max-width:260px;
-    height:220px;
-    object-fit:cover;
-}
-
-
-
-.product h3{
-    font-size:20px;
-}
-
-
-.product p{
-    font-size:15px;
-}
-
-
-
-.gold-btn,
-.product a,
-.affiliate a,
-.contact a{
-    padding:12px 22px;
-    font-size:15px;
-}
-
-
-
-footer{
-    padding:30px 15px;
-    font-size:14px;
-}
-
-}
-
-
-/* PETITS TELEPHONES */
-@media(max-width:400px){
-
-.hero-text h1{
-    font-size:30px;
-}
-
-
-.hero-box{
-    width:240px;
-    height:240px;
-}
-/* ESPACE AFFILIE SENOMARKET */
-
-.affiliate-space {
-    background:#111;
-    color:white;
-    padding:40px 20px;
-}
-
-.affiliate-space h2,
-.affiliate-space h3 {
     color:#FFD700;
 }
 
 
-.affiliate-card {
+
+.slider{
+
+    max-width:800px;
+    margin:auto;
+    overflow:hidden;
+}
+
+
+
+.slides{
+
+    display:flex;
+    width:300%;
+    animation:slide 15s infinite;
+}
+
+
+
+.review-card{
+
+    width:100%;
+    flex-shrink:0;
+    background:#151515;
+    border:1px solid #FFD700;
+    border-radius:20px;
+    padding:35px;
+    color:white;
+    box-shadow:0 0 20px #FFD70020;
+}
+
+
+
+.stars{
+
+    color:#FFD700;
+    font-size:28px;
+    margin-bottom:15px;
+}
+
+
+
+.review-card p{
+
+    color:#ddd;
+    line-height:1.8;
+    font-size:17px;
+}
+
+
+
+.review-card h4{
+
+    margin-top:20px;
+    color:#FFD700;
+}
+
+
+
+@keyframes slide{
+
+    0%,25%{
+        transform:translateX(0);
+    }
+
+    33%,58%{
+        transform:translateX(-100%);
+    }
+
+    66%,91%{
+        transform:translateX(-200%);
+    }
+
+    100%{
+        transform:translateX(0);
+    }
+
+}
+
+
+
+/* =========================
+   ESPACE AFFILIE
+========================= */
+
+
+.affiliate-space{
+
+    background:#111;
+    color:white;
+    padding:50px 20px;
+}
+
+
+
+.affiliate-space h2,
+.affiliate-space h3{
+
+    color:#FFD700;
+}
+
+
+
+.affiliate-card{
+
     background:#151515;
     border:1px solid #FFD700;
     border-radius:20px;
     padding:30px;
     margin:20px auto;
-    box-shadow:0 0 15px #FFD70030;
+    max-width:700px;
 }
 
 
-.affiliate-input {
-    padding:12px;
+
+.affiliate-input{
+
     width:80%;
+    padding:12px;
     border-radius:8px;
     border:1px solid #FFD700;
     background:#000;
@@ -398,89 +424,318 @@ footer{
 }
 
 
-.affiliate-box {
+
+.affiliate-box{
+
     background:#000;
     padding:15px;
     border-radius:10px;
     color:#FFD700;
-    font-size:22px;
-    word-break:break-all;
+    word-break:break-word;
 }
 
 
-.gold-text {
+
+.gold-text{
+
     color:#FFD700;
 }
 
 
-#login-error {
+
+#login-error{
+
     color:red;
 }
 
-nav{
-    flex-direction:column;
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+
+    text-align:center;
+    padding:40px 20px;
+    background:#050505;
+    color:#aaa;
 }
+
+
+footer a{
+
+    color:#FFD700;
+    text-decoration:none;
+}
+/* =========================
+   RESPONSIVE TABLETTES
+========================= */
+
+@media(max-width:1000px){
+
+header{
+
+    padding:20px 5%;
+}
+
+
+nav{
+
+    gap:15px;
+}
+
+
+nav a{
+
+    font-size:14px;
+}
+
+
+
+.hero{
+
+    padding:50px 5%;
+    gap:30px;
+}
+
+
+
+.hero-text h1{
+
+    font-size:45px;
+}
+
+
+
+.hero-box{
+
+    width:300px;
+    height:300px;
+}
+
+
+
+section{
+
+    padding:60px 5%;
+}
+
+}
+
+
+
+
+/* =========================
+   RESPONSIVE TELEPHONES
+========================= */
+
+
+@media(max-width:768px){
+
+
+header{
+
+    flex-direction:column;
+    padding:20px;
+    gap:20px;
+    position:relative;
+}
+
+
+
+.logo img{
+
+    width:130px;
+}
+
+
+
+nav{
+
+    flex-direction:column;
+    width:100%;
+    gap:15px;
+}
+
+
+
+nav a{
+
+    font-size:15px;
+}
+
+
+
+header .btn{
+
+    padding:10px 20px;
+}
+
+
+
+
+.hero{
+
+    min-height:auto;
+    flex-direction:column;
+    text-align:center;
+    padding:40px 20px;
+}
+
+
+
+.hero-text{
+
+    max-width:100%;
+}
+
+
+
+.hero-text h1{
+
+    font-size:34px;
+    line-height:1.3;
+}
+
+
+
+.hero-text p{
+
+    font-size:16px;
+}
+
+
+
+.hero-box{
+
+    width:260px;
+    height:260px;
+}
+
+
+
+
+section{
+
+    padding:50px 20px;
+}
+
+
+
+section h2{
+
+    font-size:28px;
+    margin-bottom:35px;
+}
+
+
+
+
+.cards,
+.product-grid{
+
+    grid-template-columns:1fr;
+    gap:20px;
+}
+
+
+
+
+.card,
+.product{
+
+    padding:25px 20px;
+}
+
+
 
 
 .product img{
-    height:180px;
+
+    height:200px;
 }
 
-    .testimonials{
-    background:#0d0d0d;
-    padding:80px 20px;
-    overflow:hidden;
-    text-align:center;
+
+
+
+.gold-btn,
+.product a,
+.affiliate a,
+.contact a{
+
+    padding:12px 20px;
+    font-size:15px;
 }
 
-.testimonials h2{
-    color:#FFD700;
-    margin-bottom:40px;
-    font-size:2rem;
+
+
+
+
+.testimonials{
+
+    padding:60px 20px;
 }
 
-.slider{
-    max-width:800px;
-    margin:auto;
-    overflow:hidden;
+
+
+.review-card{
+
+    padding:25px 20px;
 }
 
-.slides{
-    display:flex;
-    width:300%;
-    animation:slide 15s infinite;
+
+
+.review-card p{
+
+    font-size:15px;
 }
 
-.card{
-    width:100%;
-    flex-shrink:0;
-    padding:30px;
-    background:#1a1a1a;
-    border:1px solid #FFD700;
-    border-radius:18px;
-    color:white;
-    box-shadow:0 0 20px rgba(255,215,0,.15);
+
+
+footer{
+
+    font-size:14px;
 }
 
-.stars{
-    color:#FFD700;
+}
+
+
+
+/* =========================
+   PETITS TELEPHONES
+========================= */
+
+
+@media(max-width:400px){
+
+
+.hero-text h1{
+
     font-size:28px;
-    margin-bottom:15px;
 }
 
-.card p{
-    line-height:1.7;
-    font-size:17px;
+
+
+.hero-box{
+
+    width:220px;
+    height:220px;
 }
 
-.card h4{
-    margin-top:20px;
-    color:#FFD700;
+
+
+section h2{
+
+    font-size:24px;
 }
 
-@keyframes slide{
-    0%,25%{transform:translateX(0);}
-    33%,58%{transform:translateX(-100%);}
-    66%,91%{transform:translateX(-200%);}
-    100%{transform:translateX(0);}
+
+
+.product img{
+
+    height:170px;
+}
+
+
 }
