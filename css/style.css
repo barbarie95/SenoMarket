@@ -283,42 +283,29 @@ section h2{
 ========================= */
 
 .testimonials{
-
     background:#0d0d0d;
     padding:80px 8%;
     text-align:center;
     overflow:hidden;
 }
 
-
-
 .testimonials h2{
-
     color:#FFD700;
 }
 
-
-
 .slider{
-
     max-width:800px;
     margin:auto;
     overflow:hidden;
 }
 
-
-
 .slides{
-
     display:flex;
-    width:300%;
-    animation:slide 15s infinite;
+    width:600%;              /* 6 avis */
+    animation:slide 42s infinite; /* Beaucoup plus lent */
 }
 
-
-
-.review-card{
-
+.card{
     width:100%;
     flex-shrink:0;
     background:#151515;
@@ -329,24 +316,17 @@ section h2{
     box-shadow:0 0 20px #FFD70020;
 }
 
-
-
 .stars{
-
     color:#FFD700;
     font-size:28px;
     margin-bottom:15px;
 }
 
-
-
-.review-card p{
-
+.card p{
     color:#ddd;
     line-height:1.8;
     font-size:17px;
 }
-
 
 
 .review-card h4{
