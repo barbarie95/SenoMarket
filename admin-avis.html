@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Gestion Avis - SenoMarket</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+<img src="images/logo-seno.png" alt="Logo SenoMarket">
+</div>
+
+</header>
+
+
+
+
+<section class="affiliate">
+
+
+<h2>⭐ Gestion des avis clients</h2>
+
+
+<p>
+Ajoutez et gérez les témoignages affichés sur SenoMarket.
+</p>
+
+
+
+
+<div class="card">
+
+
+<h3>➕ Ajouter un avis</h3>
+
+
+<input
+type="text"
+id="nomClient"
+placeholder="Nom du client"
+style="padding:12px;width:80%;border-radius:10px;">
+
+
+<br><br>
+
+
+<textarea
+id="texteAvis"
+placeholder="Écrire l'avis du client"
+style="padding:12px;width:80%;height:100px;border-radius:10px;">
+</textarea>
+
+
+<br><br>
+
+
+<select id="etoiles" style="padding:12px;border-radius:10px;">
+
+<option value="★★★★★">★★★★★</option>
+
+<option value="★★★★☆">★★★★☆</option>
+
+</select>
+
+
+<br><br>
+
+
+<button onclick="ajouterAvis()" class="gold-btn">
+
+Ajouter l'avis
+
+</button>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+
+<h3>📋 Liste des avis</h3>
+
+
+<div id="listeAvis">
+
+<p>Aucun avis enregistré.</p>
+
+</div>
+
+
+</div>
+
+
+
+
+<br>
+
+
+<a href="dashboard.html" class="gold-btn">
+
+⬅ Retour au tableau de bord
+
+</a>
+
+
+</section>
+
+
+
+
+
+<footer>
+
+<p>
+© 2026 SenoMarket - Transformez vos idées en réussite
+</p>
+
+</footer>
+
+
+
+
+
+<script>
+
+
+let avis = JSON.parse(localStorage.getItem("avisSeno")) || [];
+
+
+
+
+function afficherAvis(){
+
+
+let zone = document.getElementById("listeAvis");
+
+
+
+if(avis.length===0){
+
+zone.innerHTML="<p>Aucun avis enregistré.</p>";
+
+return;
+
+}
+
+
+
+zone.innerHTML="";
+
+
+
+avis.forEach(function(item,index){
+
+
+zone.innerHTML += `
+
+<div class="card">
+
+<div style="color:#FFD700;font-size:25px;">
+
+${item.etoiles}
+
+</div>
+
+
+<p>
+"${item.texte}"
+</p>
+
+
+<h3>
+${item.nom}
+</h3>
+
+
+
+<button onclick="supprimerAvis(${index})" class="gold-btn">
+
+🗑 Supprimer
+
+</button>
+
+
+</div>
+
+`;
+
+
+
+});
+
+
+}
+
+
+
+
+
+function ajouterAvis(){
+
+
+let nom=document.getElementById("nomClient").value;
+
+let texte=document.getElementById("texteAvis").value;
+
+let etoiles=document.getElementById("etoiles").value;
+
+
+
+if(nom==="" || texte===""){
+
+alert("Remplissez tous les champs.");
+
+return;
+
+}
+
+
+
+avis.push({
+
+nom:nom,
+
+texte:texte,
+
+etoiles:etoiles
+
+});
+
+
+
+localStorage.setItem("avisSeno",JSON.stringify(avis));
+
+
+
+document.getElementById("nomClient").value="";
+
+document.getElementById("texteAvis").value="";
+
+
+
+afficherAvis();
+
+
+}
+
+
+
+
+function supprimerAvis(index){
+
+
+avis.splice(index,1);
+
+
+localStorage.setItem("avisSeno",JSON.stringify(avis));
+
+
+afficherAvis();
+
+
+}
+
+
+
+
+afficherAvis();
+
+
+
+</script>
+
+
+
+</body>
+
+</html>
