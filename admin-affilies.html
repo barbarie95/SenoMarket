@@ -26,7 +26,6 @@
 
 
 
-
 <section class="affiliate">
 
 
@@ -34,8 +33,25 @@
 
 
 <p>
-Liste automatique des partenaires affiliés SenoMarket.
+Consultez et gérez vos partenaires affiliés SenoMarket.
 </p>
+
+
+
+<div class="card">
+
+<h3>🔎 Rechercher un affilié</h3>
+
+
+<input 
+type="text"
+id="recherche"
+placeholder="Nom ou code affilié..."
+onkeyup="filtrerAffilies()"
+style="padding:12px;width:80%;border-radius:10px;">
+
+
+</div>
 
 
 
@@ -57,8 +73,6 @@ Liste automatique des partenaires affiliés SenoMarket.
 
 
 
-
-
 <br>
 
 
@@ -69,10 +83,7 @@ Liste automatique des partenaires affiliés SenoMarket.
 </a>
 
 
-
 </section>
-
-
 
 
 
@@ -89,14 +100,14 @@ Liste automatique des partenaires affiliés SenoMarket.
 
 
 
-
-
 <script>
 
 
-const WEBHOOK_AFFILIES = 
+const WEBHOOK_AFFILIES =
 "https://senomarket.app.n8n.cloud/webhook/admin-affilies";
 
+
+let tousLesAffilies = [];
 
 
 
@@ -107,101 +118,17 @@ async function chargerAffilies(){
 const zone = document.getElementById("listeAffilies");
 
 
-
 try{
 
 
 const reponse = await fetch(WEBHOOK_AFFILIES);
 
 
-const affilies = await reponse.json();
+tousLesAffilies = await reponse.json();
 
 
 
-if(!affilies || affilies.length===0){
-
-
-zone.innerHTML =
-"<p>Aucun affilié trouvé.</p>";
-
-
-return;
-
-}
-
-
-
-
-zone.innerHTML = "";
-
-
-
-affilies.forEach(function(affilie){
-
-
-
-zone.innerHTML += `
-
-
-<div class="card">
-
-
-<h3>👤 ${affilie.Nom || affilie.nom}</h3>
-
-
-
-<p>
-📧 Email :
-${affilie.Email || affilie.email || "Non renseigné"}
-</p>
-
-
-
-<p>
-📱 WhatsApp :
-${affilie.WhatsApp || affilie.whatsapp || "Non renseigné"}
-</p>
-
-
-
-<p>
-🔑 Code affilié :
-${affilie["Code Affilié"] || affilie.code || ""}
-</p>
-
-
-
-<p>
-🔗 Lien :
-${affilie["Lien Affilié"] || affilie.lien || ""}
-</p>
-
-
-
-<p>
-📈 Nombre de ventes :
-${affilie["Nombre de ventes"] || affilie.ventes || 0}
-</p>
-
-
-
-<p>
-💰 Commission totale :
-${affilie["Commission totale"] || affilie.commissionTotale || 0} FCFA
-</p>
-
-
-
-</div>
-
-
-
-`;
-
-
-
-});
-
+afficherAffilies(tousLesAffilies);
 
 
 
@@ -212,7 +139,7 @@ catch(error){
 
 
 zone.innerHTML =
-"<p style='color:red;'>Erreur de chargement des affiliés.</p>";
+"<p style='color:red;'>Erreur de chargement.</p>";
 
 
 console.log(error);
@@ -220,6 +147,170 @@ console.log(error);
 
 }
 
+
+}
+
+
+
+
+
+function afficherAffilies(liste){
+
+
+const zone =
+document.getElementById("listeAffilies");
+
+
+
+if(!liste || liste.length === 0){
+
+
+zone.innerHTML =
+"<p>Aucun affilié trouvé.</p>";
+
+return;
+
+
+}
+
+
+
+zone.innerHTML = "";
+
+
+
+liste.forEach(function(affilie){
+
+
+
+let nom =
+affilie.Nom || affilie.nom || "Sans nom";
+
+
+let code =
+affilie["Code Affilié"] || affilie.code || "";
+
+
+let lien =
+affilie["Lien Affilié"] || affilie.lien || "";
+
+
+let ventes =
+affilie["Nombre de ventes"] || affilie.ventes || 0;
+
+
+let commission =
+affilie["Commission totale"] || affilie.commissionTotale || 0;
+
+
+
+zone.innerHTML += `
+
+
+<div class="card">
+
+
+<h3>👤 ${nom}</h3>
+
+
+<p>🔑 Code :
+${code}
+</p>
+
+
+<p>
+🔗 Lien affilié :
+<br>
+${lien}
+</p>
+
+
+<button 
+class="gold-btn"
+onclick="copierLien('${lien}')">
+
+📋 Copier le lien
+
+</button>
+
+
+<p>
+📈 Nombre de ventes :
+<b>${ventes}</b>
+</p>
+
+
+<p>
+💰 Commission totale :
+<b>${commission} FCFA</b>
+</p>
+
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+}
+
+
+
+
+
+function filtrerAffilies(){
+
+
+let recherche =
+document.getElementById("recherche").value.toLowerCase();
+
+
+
+let resultat =
+tousLesAffilies.filter(function(affilie){
+
+
+let nom =
+(affilie.Nom || affilie.nom || "").toLowerCase();
+
+
+
+let code =
+(affilie["Code Affilié"] || affilie.code || "").toLowerCase();
+
+
+
+return nom.includes(recherche)
+||
+code.includes(recherche);
+
+
+
+});
+
+
+
+afficherAffilies(resultat);
+
+
+
+}
+
+
+
+
+function copierLien(lien){
+
+
+navigator.clipboard.writeText(lien);
+
+
+alert("Lien affilié copié !");
 
 
 }
@@ -233,7 +324,6 @@ chargerAffilies();
 
 
 </script>
-
 
 
 
