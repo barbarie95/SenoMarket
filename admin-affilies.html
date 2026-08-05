@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Gestion Affiliés - SenoMarket</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+<img src="images/logo-seno.png" alt="Logo SenoMarket">
+</div>
+
+</header>
+
+
+
+<section class="affiliate">
+
+
+<h2>🤝 Gestion des affiliés</h2>
+
+
+<p>
+Consultez les partenaires affiliés de SenoMarket.
+</p>
+
+
+
+
+<div class="card">
+
+
+<h3>➕ Ajouter un affilié</h3>
+
+
+<input 
+type="text"
+id="nomAffilie"
+placeholder="Nom de l'affilié"
+style="padding:12px;width:80%;border-radius:10px;">
+
+
+<br><br>
+
+
+<input 
+type="text"
+id="codeAffilie"
+placeholder="Code affilié"
+style="padding:12px;width:80%;border-radius:10px;">
+
+
+<br><br>
+
+
+<button onclick="ajouterAffilie()" class="gold-btn">
+
+Ajouter
+
+</button>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+
+<h3>📋 Liste des affiliés</h3>
+
+
+<div id="listeAffilies">
+
+<p>Aucun affilié enregistré.</p>
+
+</div>
+
+
+</div>
+
+
+
+
+<br>
+
+
+<a href="dashboard.html" class="gold-btn">
+
+⬅ Retour au tableau de bord
+
+</a>
+
+
+
+</section>
+
+
+
+
+
+<footer>
+
+<p>
+© 2026 SenoMarket - Transformez vos idées en réussite
+</p>
+
+</footer>
+
+
+
+
+
+<script>
+
+
+let affilies = JSON.parse(localStorage.getItem("affiliesSeno")) || [];
+
+
+
+
+function afficherAffilies(){
+
+
+let zone = document.getElementById("listeAffilies");
+
+
+
+if(affilies.length === 0){
+
+zone.innerHTML="<p>Aucun affilié enregistré.</p>";
+
+return;
+
+}
+
+
+
+zone.innerHTML="";
+
+
+
+affilies.forEach(function(affilie,index){
+
+
+zone.innerHTML += `
+
+<div class="card">
+
+<h3>${affilie.nom}</h3>
+
+<p>
+Code : ${affilie.code}
+</p>
+
+<p>
+Commission : 25%
+</p>
+
+
+<button onclick="supprimerAffilie(${index})" class="gold-btn">
+
+🗑 Supprimer
+
+</button>
+
+
+</div>
+
+`;
+
+
+});
+
+
+}
+
+
+
+
+function ajouterAffilie(){
+
+
+let nom = document.getElementById("nomAffilie").value;
+
+let code = document.getElementById("codeAffilie").value;
+
+
+
+if(nom==="" || code===""){
+
+alert("Remplissez tous les champs.");
+
+return;
+
+}
+
+
+
+affilies.push({
+
+nom:nom,
+
+code:code
+
+});
+
+
+
+localStorage.setItem("affiliesSeno", JSON.stringify(affilies));
+
+
+
+document.getElementById("nomAffilie").value="";
+
+document.getElementById("codeAffilie").value="";
+
+
+
+afficherAffilies();
+
+
+}
+
+
+
+
+
+function supprimerAffilie(index){
+
+
+affilies.splice(index,1);
+
+
+localStorage.setItem("affiliesSeno", JSON.stringify(affilies));
+
+
+afficherAffilies();
+
+
+}
+
+
+
+afficherAffilies();
+
+
+
+</script>
+
+
+
+</body>
+
+</html>
