@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Administration - SenoMarket</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+<img src="images/logo-seno.png" alt="Logo SenoMarket">
+</div>
+
+</header>
+
+
+
+<section class="affiliate">
+
+<h2>🔐 Espace Administrateur SenoMarket</h2>
+
+<p>
+Connectez-vous pour gérer votre boutique.
+</p>
+
+
+
+<div class="card" style="max-width:500px;margin:auto;">
+
+
+<h3>
+Accès administrateur
+</h3>
+
+
+<input 
+type="password"
+id="admin-password"
+placeholder="Entrez le mot de passe"
+style="padding:12px;width:80%;border-radius:10px;">
+
+
+<br><br>
+
+
+<button onclick="connexionAdmin()" class="gold-btn">
+Se connecter
+</button>
+
+
+<p id="admin-error" style="color:red;"></p>
+
+
+</div>
+
+
+</section>
+
+
+
+<footer>
+
+<p>
+© 2026 SenoMarket - Transformez vos idées en réussite
+</p>
+
+</footer>
+
+
+
+<script>
+
+
+function connexionAdmin(){
+
+
+const password =
+document.getElementById("admin-password").value;
+
+
+const error =
+document.getElementById("admin-error");
+
+
+// Mot de passe temporaire pour test
+
+if(password === "SenoAdmin2026"){
+
+
+sessionStorage.setItem("adminConnecte","oui");
+
+
+window.location.href="dashboard.html";
+
+
+}
+
+else{
+
+
+error.textContent =
+"Mot de passe incorrect.";
+
+}
+
+
+}
+
+
+</script>
+
+
+
+</body>
+
+</html>
