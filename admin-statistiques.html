@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Statistiques - SenoMarket</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+<img src="images/logo-seno.png" alt="Logo SenoMarket">
+</div>
+
+</header>
+
+
+
+
+<section class="affiliate">
+
+
+<h2>📈 Statistiques SenoMarket</h2>
+
+
+<p>
+Vue générale des performances de votre plateforme.
+</p>
+
+
+
+
+<div class="cards">
+
+
+
+<div class="card">
+
+<h3>🛒 Produits</h3>
+
+<h2 id="nombreProduits">
+0
+</h2>
+
+<p>
+Produits enregistrés
+</p>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>🤝 Affiliés</h3>
+
+<h2 id="nombreAffilies">
+0
+</h2>
+
+<p>
+Partenaires enregistrés
+</p>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>⭐ Avis</h3>
+
+<h2 id="nombreAvis">
+0
+</h2>
+
+<p>
+Avis clients
+</p>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>💰 Paiements</h3>
+
+<h2 id="nombrePaiements">
+0
+</h2>
+
+<p>
+Demandes enregistrées
+</p>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<br>
+
+
+<a href="dashboard.html" class="gold-btn">
+
+⬅ Retour au tableau de bord
+
+</a>
+
+
+
+</section>
+
+
+
+
+
+<footer>
+
+<p>
+© 2026 SenoMarket - Transformez vos idées en réussite
+</p>
+
+</footer>
+
+
+
+
+
+
+<script>
+
+
+let produits = JSON.parse(localStorage.getItem("produitsSeno")) || [];
+
+let affilies = JSON.parse(localStorage.getItem("affiliesSeno")) || [];
+
+let avis = JSON.parse(localStorage.getItem("avisSeno")) || [];
+
+let paiements = JSON.parse(localStorage.getItem("paiementsSeno")) || [];
+
+
+
+
+document.getElementById("nombreProduits").textContent = produits.length;
+
+
+document.getElementById("nombreAffilies").textContent = affilies.length;
+
+
+document.getElementById("nombreAvis").textContent = avis.length;
+
+
+document.getElementById("nombrePaiements").textContent = paiements.length;
+
+
+
+</script>
+
+
+
+
+</body>
+
+</html>
