@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Gestion Produits - SenoMarket</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+<img src="images/logo-seno.png" alt="Logo SenoMarket">
+</div>
+
+</header>
+
+
+
+<section class="affiliate">
+
+
+<h2>🛒 Gestion des produits</h2>
+
+
+<p>
+Ajoutez et gérez les produits numériques de SenoMarket.
+</p>
+
+
+
+<div class="card">
+
+<h3>➕ Ajouter un produit</h3>
+
+
+<input 
+type="text"
+id="nomProduit"
+placeholder="Nom du produit"
+style="padding:12px;width:80%;border-radius:10px;">
+
+
+<br><br>
+
+
+<input 
+type="text"
+id="prixProduit"
+placeholder="Prix (FCFA)"
+style="padding:12px;width:80%;border-radius:10px;">
+
+
+<br><br>
+
+
+<button onclick="ajouterProduit()" class="gold-btn">
+Ajouter
+</button>
+
+
+</div>
+
+
+
+
+<div class="card">
+
+
+<h3>📦 Liste des produits</h3>
+
+
+<div id="listeProduits">
+
+<p>Aucun produit ajouté pour le moment.</p>
+
+</div>
+
+
+</div>
+
+
+
+
+<br>
+
+
+<a href="dashboard.html" class="gold-btn">
+⬅ Retour au tableau de bord
+</a>
+
+
+
+</section>
+
+
+
+
+<footer>
+
+<p>
+© 2026 SenoMarket - Transformez vos idées en réussite
+</p>
+
+</footer>
+
+
+
+
+<script>
+
+
+let produits = JSON.parse(localStorage.getItem("produitsSeno")) || [];
+
+
+
+function afficherProduits(){
+
+
+let zone = document.getElementById("listeProduits");
+
+
+if(produits.length === 0){
+
+zone.innerHTML = "<p>Aucun produit ajouté pour le moment.</p>";
+
+return;
+
+}
+
+
+
+zone.innerHTML = "";
+
+
+
+produits.forEach(function(produit,index){
+
+
+zone.innerHTML += `
+
+<div class="card">
+
+<h3>${produit.nom}</h3>
+
+<p>Prix : ${produit.prix} FCFA</p>
+
+
+<button onclick="supprimerProduit(${index})" class="gold-btn">
+
+🗑 Supprimer
+
+</button>
+
+
+</div>
+
+`;
+
+
+});
+
+
+}
+
+
+
+
+function ajouterProduit(){
+
+
+let nom = document.getElementById("nomProduit").value;
+
+let prix = document.getElementById("prixProduit").value;
+
+
+
+if(nom === "" || prix === ""){
+
+alert("Remplissez tous les champs.");
+
+return;
+
+}
+
+
+
+produits.push({
+
+nom:nom,
+
+prix:prix
+
+});
+
+
+
+localStorage.setItem("produitsSeno", JSON.stringify(produits));
+
+
+
+document.getElementById("nomProduit").value="";
+
+document.getElementById("prixProduit").value="";
+
+
+
+afficherProduits();
+
+
+}
+
+
+
+
+function supprimerProduit(index){
+
+
+produits.splice(index,1);
+
+
+localStorage.setItem("produitsSeno", JSON.stringify(produits));
+
+
+afficherProduits();
+
+
+}
+
+
+
+afficherProduits();
+
+
+
+</script>
+
+
+
+</body>
+
+</html>
