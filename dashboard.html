@@ -165,12 +165,12 @@ Voir les statistiques
 
 // Vérification de connexion
 
-if(localStorage.getItem("adminConnecte") !== "oui"){
 
-window.location.href="administrateur.html";
+const admin = localStorage.getItem("adminConnecte");
 
+if(admin !== "oui"){
+    window.location.href = "administrateur.html";
 }
-
 
 
 
