@@ -31,63 +31,22 @@
 
 <h2>🛒 Gestion des produits</h2>
 
-
 <p>
-Ajoutez et gérez les produits numériques de SenoMarket.
+Consultez les produits de SenoMarket.
 </p>
 
 
-
 <div class="card">
 
-<h3>➕ Ajouter un produit</h3>
-
-
-<input 
-type="text"
-id="nomProduit"
-placeholder="Nom du produit"
-style="padding:12px;width:80%;border-radius:10px;">
-
-
-<br><br>
-
-
-<input 
-type="text"
-id="prixProduit"
-placeholder="Prix (FCFA)"
-style="padding:12px;width:80%;border-radius:10px;">
-
-
-<br><br>
-
-
-<button onclick="ajouterProduit()" class="gold-btn">
-Ajouter
-</button>
-
-
-</div>
-
-
-
-
-<div class="card">
-
-
-<h3>📦 Liste des produits</h3>
-
+<h3>Liste des produits</h3>
 
 <div id="listeProduits">
 
-<p>Aucun produit ajouté pour le moment.</p>
+<p>Chargement des produits...</p>
 
 </div>
 
-
 </div>
-
 
 
 
@@ -99,9 +58,7 @@ Ajouter
 </a>
 
 
-
 </section>
-
 
 
 
@@ -115,52 +72,55 @@ Ajouter
 
 
 
-
 <script>
 
 
-let produits = JSON.parse(localStorage.getItem("produitsSeno")) || [];
+const webhook = "https://senomarket.app.n8n.cloud/webhook/senomarket-admin?action=produits";
 
 
 
-function afficherProduits(){
+fetch(webhook)
+
+.then(response => response.json())
+
+.then(data => {
 
 
 let zone = document.getElementById("listeProduits");
-
-
-if(produits.length === 0){
-
-zone.innerHTML = "<p>Aucun produit ajouté pour le moment.</p>";
-
-return;
-
-}
-
 
 
 zone.innerHTML = "";
 
 
 
-produits.forEach(function(produit,index){
+data.forEach(function(produit){
 
 
 zone.innerHTML += `
 
 <div class="card">
 
-<h3>${produit.nom}</h3>
+<h3>🛒 ${produit["Nom du produit"]}</h3>
 
-<p>Prix : ${produit.prix} FCFA</p>
+<p>
+Description : ${produit["Description"]}
+</p>
 
+<p>
+Prix : ${produit["Prix"]}
+</p>
 
-<button onclick="supprimerProduit(${index})" class="gold-btn">
+<p>
+Catégorie : ${produit["Catégorie"]}
+</p>
 
-🗑 Supprimer
+<p>
+Statut : ${produit["Statut"]}
+</p>
 
-</button>
-
+<a href="${produit["Lien achat"]}" class="gold-btn">
+Acheter
+</a>
 
 </div>
 
@@ -170,75 +130,15 @@ zone.innerHTML += `
 });
 
 
-}
+})
 
 
+.catch(error => {
 
-
-function ajouterProduit(){
-
-
-let nom = document.getElementById("nomProduit").value;
-
-let prix = document.getElementById("prixProduit").value;
-
-
-
-if(nom === "" || prix === ""){
-
-alert("Remplissez tous les champs.");
-
-return;
-
-}
-
-
-
-produits.push({
-
-nom:nom,
-
-prix:prix
+document.getElementById("listeProduits").innerHTML =
+"Erreur de chargement des produits.";
 
 });
-
-
-
-localStorage.setItem("produitsSeno", JSON.stringify(produits));
-
-
-
-document.getElementById("nomProduit").value="";
-
-document.getElementById("prixProduit").value="";
-
-
-
-afficherProduits();
-
-
-}
-
-
-
-
-function supprimerProduit(index){
-
-
-produits.splice(index,1);
-
-
-localStorage.setItem("produitsSeno", JSON.stringify(produits));
-
-
-afficherProduits();
-
-
-}
-
-
-
-afficherProduits();
 
 
 
