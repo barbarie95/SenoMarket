@@ -26,6 +26,7 @@
 
 
 
+
 <section class="affiliate">
 
 
@@ -33,47 +34,8 @@
 
 
 <p>
-Consultez les partenaires affiliés de SenoMarket.
+Liste automatique des partenaires affiliés SenoMarket.
 </p>
-
-
-
-
-<div class="card">
-
-
-<h3>➕ Ajouter un affilié</h3>
-
-
-<input 
-type="text"
-id="nomAffilie"
-placeholder="Nom de l'affilié"
-style="padding:12px;width:80%;border-radius:10px;">
-
-
-<br><br>
-
-
-<input 
-type="text"
-id="codeAffilie"
-placeholder="Code affilié"
-style="padding:12px;width:80%;border-radius:10px;">
-
-
-<br><br>
-
-
-<button onclick="ajouterAffilie()" class="gold-btn">
-
-Ajouter
-
-</button>
-
-
-</div>
-
 
 
 
@@ -86,12 +48,13 @@ Ajouter
 
 <div id="listeAffilies">
 
-<p>Aucun affilié enregistré.</p>
+<p>Chargement des affiliés...</p>
 
 </div>
 
 
 </div>
+
 
 
 
@@ -113,6 +76,7 @@ Ajouter
 
 
 
+
 <footer>
 
 <p>
@@ -125,24 +89,41 @@ Ajouter
 
 
 
+
+
 <script>
 
 
-let affilies = JSON.parse(localStorage.getItem("affiliesSeno")) || [];
+const WEBHOOK_AFFILIES = 
+"https://senomarket.app.n8n.cloud/webhook/admin-affilies";
 
 
 
 
-function afficherAffilies(){
+
+async function chargerAffilies(){
 
 
-let zone = document.getElementById("listeAffilies");
+const zone = document.getElementById("listeAffilies");
 
 
 
-if(affilies.length === 0){
+try{
 
-zone.innerHTML="<p>Aucun affilié enregistré.</p>";
+
+const reponse = await fetch(WEBHOOK_AFFILIES);
+
+
+const affilies = await reponse.json();
+
+
+
+if(!affilies || affilies.length===0){
+
+
+zone.innerHTML =
+"<p>Aucun affilié trouvé.</p>";
+
 
 return;
 
@@ -150,88 +131,95 @@ return;
 
 
 
-zone.innerHTML="";
+
+zone.innerHTML = "";
 
 
 
-affilies.forEach(function(affilie,index){
+affilies.forEach(function(affilie){
+
 
 
 zone.innerHTML += `
 
+
 <div class="card">
 
-<h3>${affilie.nom}</h3>
+
+<h3>👤 ${affilie.Nom || affilie.nom}</h3>
+
+
 
 <p>
-Code : ${affilie.code}
+📧 Email :
+${affilie.Email || affilie.email || "Non renseigné"}
 </p>
+
+
 
 <p>
-Commission : 25%
+📱 WhatsApp :
+${affilie.WhatsApp || affilie.whatsapp || "Non renseigné"}
 </p>
 
 
-<button onclick="supprimerAffilie(${index})" class="gold-btn">
 
-🗑 Supprimer
+<p>
+🔑 Code affilié :
+${affilie["Code Affilié"] || affilie.code || ""}
+</p>
 
-</button>
+
+
+<p>
+🔗 Lien :
+${affilie["Lien Affilié"] || affilie.lien || ""}
+</p>
+
+
+
+<p>
+📈 Nombre de ventes :
+${affilie["Nombre de ventes"] || affilie.ventes || 0}
+</p>
+
+
+
+<p>
+💰 Commission totale :
+${affilie["Commission totale"] || affilie.commissionTotale || 0} FCFA
+</p>
+
 
 
 </div>
 
+
+
 `;
 
 
-});
-
-
-}
-
-
-
-
-function ajouterAffilie(){
-
-
-let nom = document.getElementById("nomAffilie").value;
-
-let code = document.getElementById("codeAffilie").value;
-
-
-
-if(nom==="" || code===""){
-
-alert("Remplissez tous les champs.");
-
-return;
-
-}
-
-
-
-affilies.push({
-
-nom:nom,
-
-code:code
 
 });
 
 
 
-localStorage.setItem("affiliesSeno", JSON.stringify(affilies));
+
+}
 
 
-
-document.getElementById("nomAffilie").value="";
-
-document.getElementById("codeAffilie").value="";
+catch(error){
 
 
+zone.innerHTML =
+"<p style='color:red;'>Erreur de chargement des affiliés.</p>";
 
-afficherAffilies();
+
+console.log(error);
+
+
+}
+
 
 
 }
@@ -240,27 +228,12 @@ afficherAffilies();
 
 
 
-function supprimerAffilie(index){
-
-
-affilies.splice(index,1);
-
-
-localStorage.setItem("affiliesSeno", JSON.stringify(affilies));
-
-
-afficherAffilies();
-
-
-}
-
-
-
-afficherAffilies();
+chargerAffilies();
 
 
 
 </script>
+
 
 
 
