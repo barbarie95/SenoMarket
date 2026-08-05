@@ -26,86 +26,28 @@
 
 
 
-
 <section class="affiliate">
 
 
 <h2>⭐ Gestion des avis clients</h2>
 
-
 <p>
-Ajoutez et gérez les témoignages affichés sur SenoMarket.
+Consultez les avis clients de SenoMarket.
 </p>
 
 
 
-
 <div class="card">
 
-
-<h3>➕ Ajouter un avis</h3>
-
-
-<input
-type="text"
-id="nomClient"
-placeholder="Nom du client"
-style="padding:12px;width:80%;border-radius:10px;">
-
-
-<br><br>
-
-
-<textarea
-id="texteAvis"
-placeholder="Écrire l'avis du client"
-style="padding:12px;width:80%;height:100px;border-radius:10px;">
-</textarea>
-
-
-<br><br>
-
-
-<select id="etoiles" style="padding:12px;border-radius:10px;">
-
-<option value="★★★★★">★★★★★</option>
-
-<option value="★★★★☆">★★★★☆</option>
-
-</select>
-
-
-<br><br>
-
-
-<button onclick="ajouterAvis()" class="gold-btn">
-
-Ajouter l'avis
-
-</button>
-
-
-</div>
-
-
-
-
-
-<div class="card">
-
-
-<h3>📋 Liste des avis</h3>
-
+<h3>Liste des avis</h3>
 
 <div id="listeAvis">
 
-<p>Aucun avis enregistré.</p>
+<p>Chargement des avis...</p>
 
 </div>
 
-
 </div>
-
 
 
 
@@ -113,15 +55,11 @@ Ajouter l'avis
 
 
 <a href="dashboard.html" class="gold-btn">
-
 ⬅ Retour au tableau de bord
-
 </a>
 
 
 </section>
-
-
 
 
 
@@ -135,154 +73,66 @@ Ajouter l'avis
 
 
 
-
-
 <script>
 
 
-let avis = JSON.parse(localStorage.getItem("avisSeno")) || [];
+const webhook = "https://senomarket.app.n8n.cloud/webhook/senomarket-admin?action=avis";
 
 
+fetch(webhook)
 
+.then(response => response.json())
 
-function afficherAvis(){
+.then(data => {
 
 
 let zone = document.getElementById("listeAvis");
 
+zone.innerHTML = "";
 
 
-if(avis.length===0){
-
-zone.innerHTML="<p>Aucun avis enregistré.</p>";
-
-return;
-
-}
-
-
-
-zone.innerHTML="";
-
-
-
-avis.forEach(function(item,index){
+data.forEach(function(avis){
 
 
 zone.innerHTML += `
 
 <div class="card">
 
-<div style="color:#FFD700;font-size:25px;">
-
-${item.etoiles}
-
-</div>
-
+<h3>⭐ ${avis["Nom client"]}</h3>
 
 <p>
-"${item.texte}"
+Commentaire : ${avis["Commentaire"]}
 </p>
 
+<p>
+Note : ${avis["Note"]}/5
+</p>
 
-<h3>
-${item.nom}
-</h3>
+<p>
+Date : ${avis["Date"]}
+</p>
 
-
-
-<button onclick="supprimerAvis(${index})" class="gold-btn">
-
-🗑 Supprimer
-
-</button>
-
+<p>
+Statut : ${avis["Statut"]}
+</p>
 
 </div>
 
 `;
 
 
-
 });
 
 
-}
+})
 
 
+.catch(error => {
 
-
-
-function ajouterAvis(){
-
-
-let nom=document.getElementById("nomClient").value;
-
-let texte=document.getElementById("texteAvis").value;
-
-let etoiles=document.getElementById("etoiles").value;
-
-
-
-if(nom==="" || texte===""){
-
-alert("Remplissez tous les champs.");
-
-return;
-
-}
-
-
-
-avis.push({
-
-nom:nom,
-
-texte:texte,
-
-etoiles:etoiles
+document.getElementById("listeAvis").innerHTML =
+"Erreur de chargement des avis.";
 
 });
-
-
-
-localStorage.setItem("avisSeno",JSON.stringify(avis));
-
-
-
-document.getElementById("nomClient").value="";
-
-document.getElementById("texteAvis").value="";
-
-
-
-afficherAvis();
-
-
-}
-
-
-
-
-function supprimerAvis(index){
-
-
-avis.splice(index,1);
-
-
-localStorage.setItem("avisSeno",JSON.stringify(avis));
-
-
-afficherAvis();
-
-
-}
-
-
-
-
-afficherAvis();
-
 
 
 </script>
