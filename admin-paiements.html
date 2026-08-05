@@ -26,81 +26,28 @@
 
 
 
-
 <section class="affiliate">
 
 
 <h2>💰 Gestion des paiements</h2>
 
-
 <p>
-Suivez les demandes de retrait des affiliés.
+Consultez les demandes de paiement des affiliés.
 </p>
 
 
 
-
-
 <div class="card">
 
-
-<h3>➕ Ajouter une demande</h3>
-
-
-
-<input
-type="text"
-id="nomPaiement"
-placeholder="Nom de l'affilié"
-style="padding:12px;width:80%;border-radius:10px;">
-
-
-<br><br>
-
-
-<input
-type="number"
-id="montantPaiement"
-placeholder="Montant (FCFA)"
-style="padding:12px;width:80%;border-radius:10px;">
-
-
-<br><br>
-
-
-<button onclick="ajouterPaiement()" class="gold-btn">
-
-Ajouter
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-
-
-<div class="card">
-
-
-<h3>📋 Demandes de paiement</h3>
-
+<h3>Liste des paiements</h3>
 
 <div id="listePaiements">
 
-<p>Aucune demande enregistrée.</p>
+<p>Chargement des paiements...</p>
 
 </div>
 
-
-
 </div>
-
-
 
 
 
@@ -108,16 +55,11 @@ Ajouter
 
 
 <a href="dashboard.html" class="gold-btn">
-
 ⬅ Retour au tableau de bord
-
 </a>
 
 
-
 </section>
-
-
 
 
 
@@ -131,27 +73,28 @@ Ajouter
 
 
 
-
-
-
 <script>
 
 
-let paiements = JSON.parse(localStorage.getItem("paiementsSeno")) || [];
+const webhook = "https://senomarket.app.n8n.cloud/webhook/senomarket-admin?action=paiements";
 
 
+fetch(webhook)
 
+.then(response => response.json())
 
-function afficherPaiements(){
+.then(data => {
 
 
 let zone = document.getElementById("listePaiements");
 
+zone.innerHTML = "";
 
 
-if(paiements.length===0){
 
-zone.innerHTML="<p>Aucune demande enregistrée.</p>";
+if(data.length === 0){
+
+zone.innerHTML = "<p>Aucune demande de paiement.</p>";
 
 return;
 
@@ -159,127 +102,65 @@ return;
 
 
 
-zone.innerHTML="";
-
-
-
-paiements.forEach(function(p,index){
+data.forEach(function(paiement){
 
 
 zone.innerHTML += `
 
 <div class="card">
 
-
-<h3>${p.nom}</h3>
-
+<h3>💰 ${paiement["Nom"]}</h3>
 
 <p>
-Montant demandé : ${p.montant} FCFA
+Code affilié : ${paiement["Code Affilié"]}
 </p>
-
 
 <p>
-Statut : En attente
+Email : ${paiement["Email"]}
 </p>
 
+<p>
+Moyen de paiement : ${paiement["Moyen de paiement"]}
+</p>
 
+<p>
+Informations : ${paiement["Informations de paiement"]}
+</p>
 
-<button onclick="supprimerPaiement(${index})" class="gold-btn">
+<p>
+Montant demandé : ${paiement["Montant demandé"]}
+</p>
 
-🗑 Supprimer
+<p>
+Date : ${paiement["Date"]}
+</p>
 
-</button>
-
-
+<p>
+Statut : ${paiement["Statut"]}
+</p>
 
 </div>
 
 `;
 
 
-
 });
 
 
-}
+})
 
 
+.catch(error => {
 
 
-function ajouterPaiement(){
+document.getElementById("listePaiements").innerHTML =
+"Erreur de chargement des paiements.";
 
-
-let nom=document.getElementById("nomPaiement").value;
-
-let montant=document.getElementById("montantPaiement").value;
-
-
-
-if(nom==="" || montant===""){
-
-alert("Remplissez tous les champs.");
-
-return;
-
-}
-
-
-
-paiements.push({
-
-nom:nom,
-
-montant:montant
 
 });
-
-
-
-localStorage.setItem("paiementsSeno",JSON.stringify(paiements));
-
-
-
-document.getElementById("nomPaiement").value="";
-
-document.getElementById("montantPaiement").value="";
-
-
-
-afficherPaiements();
-
-
-
-}
-
-
-
-
-
-function supprimerPaiement(index){
-
-
-paiements.splice(index,1);
-
-
-localStorage.setItem("paiementsSeno",JSON.stringify(paiements));
-
-
-afficherPaiements();
-
-
-}
-
-
-
-
-
-afficherPaiements();
-
 
 
 </script>
-
 
 
 
