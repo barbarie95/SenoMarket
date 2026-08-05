@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard Admin - SenoMarket</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+<img src="images/logo-seno.png" alt="Logo SenoMarket">
+</div>
+
+</header>
+
+
+
+<section class="affiliate">
+
+
+<h2>📊 Tableau de bord SenoMarket</h2>
+
+
+<p>
+Bienvenue dans votre espace administrateur.
+</p>
+
+
+
+<div class="cards">
+
+
+
+<div class="card">
+
+<h3>🛒 Produits</h3>
+
+<p>
+Gérer vos produits numériques.
+</p>
+
+<button class="gold-btn">
+Gérer les produits
+</button>
+
+</div>
+
+
+
+
+<div class="card">
+
+<h3>🤝 Affiliés</h3>
+
+<p>
+Gérer vos partenaires affiliés.
+</p>
+
+<button class="gold-btn">
+Voir les affiliés
+</button>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>⭐ Avis clients</h3>
+
+<p>
+Ajouter et modifier les avis clients.
+</p>
+
+<button class="gold-btn">
+Gérer les avis
+</button>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>💰 Paiements</h3>
+
+<p>
+Voir les demandes de paiement.
+</p>
+
+<button class="gold-btn">
+Voir les paiements
+</button>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>📈 Statistiques</h3>
+
+<p>
+Suivre les performances de SenoMarket.
+</p>
+
+<button class="gold-btn">
+Voir les statistiques
+</button>
+
+</div>
+
+
+
+</div>
+
+
+
+<br><br>
+
+
+<button onclick="deconnexion()" class="gold-btn">
+
+🚪 Se déconnecter
+
+</button>
+
+
+
+</section>
+
+
+
+
+<footer>
+
+<p>
+© 2026 SenoMarket - Transformez vos idées en réussite
+</p>
+
+</footer>
+
+
+
+
+<script>
+
+
+// Vérification de connexion
+
+if(localStorage.getItem("adminConnecte") !== "oui"){
+
+window.location.href="administrateur.html";
+
+}
+
+
+
+
+function deconnexion(){
+
+localStorage.removeItem("adminConnecte");
+
+window.location.href="administrateur.html";
+
+}
+
+
+</script>
+
+
+
+</body>
+
+</html>
