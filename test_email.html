@@ -15,14 +15,6 @@
       text-align: center;
     }
 
-    h1 {
-      margin-bottom: 15px;
-    }
-
-    p {
-      line-height: 1.6;
-    }
-
     button {
       margin-top: 20px;
       padding: 14px 24px;
@@ -33,8 +25,8 @@
     }
 
     button:disabled {
-      cursor: wait;
       opacity: 0.6;
+      cursor: wait;
     }
 
     #result {
@@ -45,7 +37,6 @@
       text-align: left;
       white-space: pre-wrap;
       word-break: break-word;
-      line-height: 1.5;
     }
   </style>
 </head>
@@ -55,8 +46,8 @@
   <h1>Test Email SenoMarket</h1>
 
   <p>
-    Cette page permet de vérifier la connexion entre
-    SenoMarket, Supabase et Resend.
+    Cette page teste l'envoi d'un email avec
+    Supabase et Resend.
   </p>
 
   <button id="testButton">
@@ -72,18 +63,35 @@
     const FUNCTION_URL =
       "https://vfnqwdwgkocpkkaofrum.supabase.co/functions/v1/test-email";
 
+    /*
+      IMPORTANT :
+      Remplace uniquement la valeur ci-dessous par ta
+      SUPABASE_PUBLISHABLE_KEY.
+
+      NE METS PAS RESEND_API_KEY ICI.
+    */
+    const SUPABASE_PUBLISHABLE_KEY = "COLLE_TA_CLE_PUBLISHABLE_ICI";
+
     testButton.addEventListener("click", async () => {
 
       testButton.disabled = true;
       testButton.textContent = "Envoi en cours...";
 
       result.style.display = "block";
-      result.textContent = "Connexion à la fonction test-email...";
+      result.textContent = "Connexion à Supabase...";
 
       try {
 
         const response = await fetch(FUNCTION_URL, {
-          method: "POST"
+          method: "POST",
+
+          headers: {
+            "Authorization": "Bearer " + SUPABASE_PUBLISHABLE_KEY,
+            "apikey": SUPABASE_PUBLISHABLE_KEY,
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({})
         });
 
         const responseText = await response.text();
@@ -102,32 +110,28 @@
 
           result.textContent =
             "✅ SUCCÈS !\n\n" +
-            "La fonction test-email a répondu correctement.\n\n" +
-            "Resend a accepté l'envoi de l'email.\n\n" +
-            "Vérifie maintenant la boîte :\n" +
+            "Supabase a accepté la demande.\n" +
+            "Resend a accepté l'envoi.\n\n" +
+            "Vérifie maintenant :\n" +
             "gansonrea534@gmail.com\n\n" +
-            "Pense également à vérifier le dossier Spam.";
+            "Regarde également dans les spams.";
 
         } else {
 
           result.textContent =
-            "❌ ÉCHEC DE L'ENVOI\n\n" +
+            "❌ ÉCHEC\n\n" +
             "Code HTTP : " +
             response.status +
             "\n\n" +
-            "Réponse de Supabase :\n\n" +
+            "Réponse :\n" +
             JSON.stringify(data, null, 2);
-
         }
 
       } catch (error) {
 
         result.textContent =
           "❌ ERREUR DE CONNEXION\n\n" +
-          "Le navigateur n'a pas réussi à récupérer la réponse de Supabase.\n\n" +
-          "Message :\n" +
           error.message;
-
       }
 
       testButton.disabled = false;
