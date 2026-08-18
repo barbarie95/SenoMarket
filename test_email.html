@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Email SenoMarket</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 60px auto;
+      padding: 20px;
+      text-align: center;
+    }
+
+    button {
+      padding: 14px 24px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+    }
+
+    #result {
+      margin-top: 25px;
+      padding: 15px;
+      border-radius: 8px;
+      display: none;
+      text-align: left;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Test Email SenoMarket</h1>
+
+  <p>
+    Cette page sert uniquement à vérifier que
+    Supabase peut envoyer un email avec Resend.
+  </p>
+
+  <button id="testButton">
+    Envoyer l'email de test
+  </button>
+
+  <div id="result"></div>
+
+  <script>
+    const testButton = document.getElementById("testButton");
+    const result = document.getElementById("result");
+
+    testButton.addEventListener("click", async () => {
+
+      testButton.disabled = true;
+      testButton.textContent = "Envoi en cours...";
+
+      result.style.display = "block";
+      result.textContent = "Connexion à SenoMarket...";
+
+      try {
+
+        const response = await fetch(
+          "https://vfnqwdwgkocpkkaofrum.supabase.co/functions/v1/test-email",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({})
+          }
+        );
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+
+          result.textContent =
+            "✅ SUCCÈS !\n\n" +
+            "Resend a accepté l'envoi de l'email.\n\n" +
+            "Vérifie maintenant la boîte :\n" +
+            "gansonrea534@gmail.com\n\n" +
+            "Pense également à regarder dans les spams.";
+
+        } else {
+
+          result.textContent =
+            "❌ ÉCHEC\n\n" +
+            "La fonction a répondu avec une erreur.\n\n" +
+            JSON.stringify(data, null, 2);
+
+        }
+
+      } catch (error) {
+
+        result.textContent =
+          "❌ ERREUR DE CONNEXION\n\n" +
+          error.message;
+
+      }
+
+      testButton.disabled = false;
+      testButton.textContent = "Renvoyer l'email de test";
+    });
+  </script>
+
+</body>
+    </html>
