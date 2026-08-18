@@ -100,7 +100,7 @@ Devenir affilié SenoMarket
 Remplissez ce formulaire pour rejoindre notre programme d'affiliation.
 </p>
 
-<form id="affiliationForm" action="https://formspree.io/f/xvzedkvw" method="POST">
+<form id="affiliationForm">
 
 <label>
 Nom complet
@@ -154,25 +154,26 @@ Méthode de paiement préférée
 Choisir une méthode de paiement
 </option>
 
-<option>
+<option value="Mobile Money">
 Mobile Money
 </option>
 
-<option>
+<option value="Virement bancaire">
 Virement bancaire
 </option>
 
-<option>
+<option value="PayPal">
 PayPal
 </option>
 
-<option>
+<option value="Autre">
 Autre
 </option>
 
 </select>
 
 <br><br>
+
 <label>
 Informations de paiement
 </label>
@@ -199,18 +200,38 @@ placeholder="Votre motivation"></textarea>
 
 <br><br>
 
-<input
-type="hidden"
-name="sujet"
-value="Nouvelle demande affiliation SenoMarket">
-
 <button
 type="submit"
-class="gold-btn">
+class="gold-btn"
+id="submitButton">
 
 Envoyer ma demande
 
 </button>
+
+<p id="message"></p>
+
+<div id="resultat" style="display:none;">
+
+<h3>🎉 Félicitations !</h3>
+
+<p>Votre inscription affilié a été enregistrée.</p>
+
+<p>
+<strong>Votre code affilié :</strong><br>
+<span id="codeAffilie"></span>
+</p>
+
+<p>
+<strong>Votre lien affilié :</strong><br>
+<a id="lienAffilie" href="#" target="_blank"></a>
+</p>
+
+<p>
+Conservez précieusement ces informations.
+</p>
+
+</div>
 
 </form>
 
@@ -232,35 +253,101 @@ Politique de confidentialité
 
 <script>
 
-document.getElementById('affiliationForm').addEventListener('submit', function() {
+const SUPABASE_URL = 'https://vfnqwdwgkocpkkaofrum.supabase.co';
 
-  var formData = {
-    nom: this.nom.value,
-    whatsapp: this.whatsapp.value,
-    email: this.email.value,
-    pays: this.pays.value,
-    paiement: this.paiement.value,
-    numero_paiement: this.numero_paiement.value,
-    motivation: this.motivation.value
+const SUPABASE_PUBLISHABLE_KEY = 'COLLE_ICI_TA_PUBLISHABLE_KEY';
+
+const form = document.getElementById('affiliationForm');
+const button = document.getElementById('submitButton');
+const message = document.getElementById('message');
+const resultat = document.getElementById('resultat');
+
+form.addEventListener('submit', async function(event) {
+
+  event.preventDefault();
+
+  button.disabled = true;
+  button.textContent = 'Enregistrement...';
+
+  message.textContent = '';
+  resultat.style.display = 'none';
+
+  const formData = {
+    p_nom: this.nom.value.trim(),
+    p_email: this.email.value.trim(),
+    p_whatsapp: this.whatsapp.value.trim(),
+    p_pays: this.pays.value.trim(),
+    p_methode_paiement: this.paiement.value,
+    p_numero_paiement: this.numero_paiement.value.trim(),
+    p_motivation: this.motivation.value.trim()
   };
 
-  fetch('https://hook.eu1.make.com/tyffq9yxha4887p4pcefvk2az13hcfzi', {
+  try {
 
-    method: 'POST',
+    const response = await fetch(
+      SUPABASE_URL + '/rest/v1/rpc/inscrire_affilie',
+      {
+        method: 'POST',
 
-    headers: {
-      'Content-Type': 'application/json'
-    },
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_PUBLISHABLE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_PUBLISHABLE_KEY
+        },
 
-    body: JSON.stringify(formData),
+        body: JSON.stringify(formData)
+      }
+    );
 
-    keepalive: true
+    const data = await response.json();
 
-  }).catch(function(err) {
+    if (!response.ok) {
+      throw new Error(
+        data.message ||
+        data.error_description ||
+        'Erreur lors de l'inscription.'
+      );
+    }
 
-    console.log('Erreur envoi Make :', err);
+    const affilié = Array.isArray(data) ? data[0] : data;
 
-  });
+    if (!affilié) {
+      throw new Error('Aucune information affilié reçue.');
+    }
+
+    document.getElementById('codeAffilie').textContent =
+      affilié.code_affilie;
+
+    const lien = affilié.lien_affilie;
+
+    const lienComplet = lien.startsWith('http')
+      ? lien
+      : new URL(lien, window.location.href).href;
+
+    const lienElement = document.getElementById('lienAffilie');
+
+    lienElement.href = lienComplet;
+    lienElement.textContent = lienComplet;
+
+    resultat.style.display = 'block';
+
+    message.textContent = 'Inscription réussie !';
+
+    form.reset();
+
+  } catch (error) {
+
+    console.error('Erreur inscription affilié :', error);
+
+    message.textContent =
+      'Une erreur est survenue. Veuillez réessayer.';
+
+  } finally {
+
+    button.disabled = false;
+    button.textContent = 'Envoyer ma demande';
+
+  }
 
 });
 
