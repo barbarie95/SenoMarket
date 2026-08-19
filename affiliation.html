@@ -217,7 +217,7 @@ Envoyer ma demande
 
 
 <!-- =========================================
-     RÉSULTAT DE L'INSCRIPTION
+     RÉSULTAT
 ========================================= -->
 
 <div
@@ -235,18 +235,19 @@ Votre inscription affilié a été enregistrée avec succès.
 </div>
 
 
+<!-- CODE AFFILIÉ -->
+
 <div class="card">
 
 <h3>🔑 Votre code affilié</h3>
 
 <p>
-Ce code vous permet d'accéder à votre
+Votre code vous permet d'accéder à votre
 <strong>Espace Affilié</strong>.
 </p>
 
 <p>
-<strong>Code affilié :</strong>
-<br>
+<strong>Code affilié :</strong><br>
 
 <span id="codeAffilie"></span>
 </p>
@@ -264,26 +265,49 @@ style="display:inline-block;text-decoration:none;">
 </div>
 
 
+<!-- LIEN AFFILIÉ -->
+
 <div class="card">
 
 <h3>🔗 Votre lien affilié</h3>
 
 <p>
-Utilisez ce lien pour promouvoir les produits SenoMarket.
+Utilisez votre lien pour promouvoir les produits SenoMarket.
 </p>
 
-<p>
 
-<a
-id="lienAffilie"
-href="#"
-target="_blank">
-</a>
+<button
+type="button"
+class="gold-btn"
+id="ouvrirLienAffilie">
+
+🔗 Ouvrir mon lien affilié
+
+</button>
+
+
+<button
+type="button"
+class="gold-btn"
+id="copierLienAffilie">
+
+📋 Copier mon lien
+
+</button>
+
+
+<p
+id="confirmationCopie"
+style="display:none;">
+
+✅ Votre lien a été copié !
 
 </p>
 
 </div>
 
+
+<!-- SUPPORT -->
 
 <div class="card">
 
@@ -363,6 +387,22 @@ document.getElementById('message');
 const resultat =
 document.getElementById('resultat');
 
+const ouvrirLien =
+document.getElementById('ouvrirLienAffilie');
+
+const copierLien =
+document.getElementById('copierLienAffilie');
+
+const confirmationCopie =
+document.getElementById('confirmationCopie');
+
+
+/* =========================================
+   VARIABLE DU LIEN
+========================================= */
+
+let lienAffilieActuel = '';
+
 
 /* =========================================
    FORMULAIRE
@@ -373,10 +413,14 @@ form.addEventListener('submit', async function(event) {
 event.preventDefault();
 
 button.disabled = true;
-button.textContent = 'Enregistrement...';
+
+button.textContent =
+'Enregistrement...';
 
 message.textContent = '';
-resultat.style.display = 'none';
+
+resultat.style.display =
+'none';
 
 
 const nom =
@@ -404,18 +448,21 @@ this.motivation.value.trim();
 try {
 
 /* =========================================
-   1. APPEL À LA BASE DE DONNÉES
+   ENREGISTREMENT SUPABASE
 ========================================= */
 
 const response = await fetch(
-SUPABASE_URL + '/rest/v1/rpc/inscrire_affilie',
+SUPABASE_URL +
+'/rest/v1/rpc/inscrire_affilie',
 {
 method: 'POST',
 
 headers: {
 'Content-Type': 'application/json',
 'apikey': SUPABASE_PUBLISHABLE_KEY,
-'Authorization': 'Bearer ' + SUPABASE_PUBLISHABLE_KEY
+'Authorization':
+'Bearer ' +
+SUPABASE_PUBLISHABLE_KEY
 },
 
 body: JSON.stringify({
@@ -434,12 +481,11 @@ p_motivation: motivation
 
 
 /* =========================================
-   2. LIRE LA RÉPONSE
+   LECTURE RÉPONSE
 ========================================= */
 
 const texte =
 await response.text();
-
 
 let data;
 
@@ -465,7 +511,7 @@ throw new Error(
 data.message ||
 data.error_description ||
 data.hint ||
-(JSON.stringify(data)) ||
+JSON.stringify(data) ||
 'Erreur Supabase.'
 
 );
@@ -474,78 +520,59 @@ data.hint ||
 
 
 /* =========================================
-   3. ACCEPTER TABLEAU OU OBJET
+   TABLEAU OU OBJET
 ========================================= */
 
-let affilié;
-
-if (Array.isArray(data)) {
-
-affilié = data[0];
-
-} else {
-
-affilié = data;
-
-}
+const affilié =
+Array.isArray(data)
+? data[0]
+: data;
 
 
 if (!affilié) {
 
 throw new Error(
-'La base de données a répondu, mais aucune donnée affilié n’a été retournée.'
+'Aucune information affilié reçue.'
 );
 
 }
 
 
 /* =========================================
-   4. RÉCUPÉRER LES INFORMATIONS
+   DONNÉES
 ========================================= */
 
 const codeAffilie =
-affilié.code_affilie ||
-'';
+affilié.code_affilie || '';
 
 const lienBase =
-affilié.lien_affilie ||
-'';
+affilié.lien_affilie || '';
 
 
 /*
-   Le token est volontairement récupéré
-   uniquement en interne s'il existe.
-   Il n'est JAMAIS affiché à l'affilié.
+   Le token reste strictement interne.
+   Il n'est jamais affiché.
 */
 
 const token =
-affilié.token ||
-'';
+affilié.token || '';
 
-
-/* =========================================
-   5. VÉRIFICATION
-========================================= */
 
 if (!codeAffilie) {
 
 throw new Error(
-'La base de données n’a pas retourné le code_affilie.'
+'Le code affilié n’a pas été retourné par Supabase.'
 );
 
 }
 
 
 /* =========================================
-   6. CONSTRUCTION DU LIEN
+   CONSTRUCTION DU LIEN
 ========================================= */
 
 let lienComplet;
 
-
-/*
-   Si la base renvoie déjà un lien complet
-*/
 
 if (
 lienBase &&
@@ -565,14 +592,7 @@ encodeURIComponent(codeAffilie) +
 '&nom=' +
 encodeURIComponent(nom);
 
-}
-
-
-/*
-   Si la base renvoie boutique.html
-*/
-
-else {
+} else {
 
 const pageBoutique =
 lienBase ||
@@ -598,7 +618,15 @@ encodeURIComponent(nom);
 
 
 /* =========================================
-   7. AFFICHER LE CODE
+   CONSERVATION INTERNE DU LIEN
+========================================= */
+
+lienAffilieActuel =
+lienComplet;
+
+
+/* =========================================
+   AFFICHER LE CODE
 ========================================= */
 
 document.getElementById(
@@ -608,23 +636,7 @@ codeAffilie;
 
 
 /* =========================================
-   8. AFFICHER LE LIEN
-========================================= */
-
-const lienElement =
-document.getElementById(
-'lienAffilie'
-);
-
-lienElement.href =
-lienComplet;
-
-lienElement.textContent =
-lienComplet;
-
-
-/* =========================================
-   9. AFFICHER LE RÉSULTAT
+   AFFICHER LE RÉSULTAT
 ========================================= */
 
 resultat.style.display =
@@ -635,7 +647,7 @@ message.textContent =
 
 
 /* =========================================
-   10. NOTIFICATION ADMIN
+   NOTIFICATION ADMIN
 ========================================= */
 
 try {
@@ -651,7 +663,8 @@ headers: {
 'Content-Type': 'application/json',
 'apikey': SUPABASE_PUBLISHABLE_KEY,
 'Authorization':
-'Bearer ' + SUPABASE_PUBLISHABLE_KEY
+'Bearer ' +
+SUPABASE_PUBLISHABLE_KEY
 },
 
 body: JSON.stringify({
@@ -683,21 +696,15 @@ notificationText
 } catch (notificationError) {
 
 console.error(
-'Notification admin non envoyée :',
+'Erreur notification :',
 notificationError
 );
-
-/*
-   IMPORTANT :
-   Une erreur d'e-mail ne doit pas empêcher
-   l'affilié de recevoir son code et son lien.
-*/
 
 }
 
 
 /* =========================================
-   11. VIDER LE FORMULAIRE
+   RESET
 ========================================= */
 
 form.reset();
@@ -706,15 +713,9 @@ form.reset();
 } catch (error) {
 
 console.error(
-'Erreur complète :',
+'Erreur inscription :',
 error
 );
-
-
-/*
-   CETTE FOIS, L'ERREUR EST AFFICHÉE
-   DIRECTEMENT SUR LA PAGE.
-*/
 
 message.textContent =
 '❌ ' +
@@ -738,8 +739,87 @@ button.textContent =
 
 });
 
+
+/* =========================================
+   OUVRIR LE LIEN
+========================================= */
+
+ouvrirLien.addEventListener(
+'click',
+function() {
+
+if (!lienAffilieActuel) {
+
+message.textContent =
+'❌ Aucun lien affilié disponible.';
+
+return;
+
+}
+
+window.open(
+lienAffilieActuel,
+'_blank'
+);
+
+});
+
+
+/* =========================================
+   COPIER LE LIEN
+========================================= */
+
+copierLien.addEventListener(
+'click',
+async function() {
+
+if (!lienAffilieActuel) {
+
+message.textContent =
+'❌ Aucun lien affilié disponible.';
+
+return;
+
+}
+
+
+try {
+
+await navigator.clipboard.writeText(
+lienAffilieActuel
+);
+
+confirmationCopie.style.display =
+'block';
+
+confirmationCopie.textContent =
+'✅ Votre lien a été copié !';
+
+setTimeout(
+function() {
+
+confirmationCopie.style.display =
+'none';
+
+},
+3000
+);
+
+
+} catch (error) {
+
+confirmationCopie.style.display =
+'block';
+
+confirmationCopie.textContent =
+'❌ Impossible de copier automatiquement le lien.';
+
+}
+
+});
+
 </script>
 
 </body>
 
-</html>
+     </html>
