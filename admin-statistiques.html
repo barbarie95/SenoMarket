@@ -19,11 +19,14 @@
 <header>
 
 <div class="logo">
-<img src="images/logo-seno.png" alt="Logo SenoMarket">
+
+<img
+src="images/logo-seno.png"
+alt="Logo SenoMarket">
+
 </div>
 
 </header>
-
 
 
 
@@ -39,10 +42,11 @@ Vue générale des performances de votre plateforme.
 
 
 
-
 <div class="cards">
 
 
+
+<!-- PRODUITS -->
 
 <div class="card">
 
@@ -60,7 +64,7 @@ Produits enregistrés
 
 
 
-
+<!-- AFFILIÉS -->
 
 <div class="card">
 
@@ -78,36 +82,36 @@ Partenaires enregistrés
 
 
 
-
+<!-- VENTES -->
 
 <div class="card">
 
-<h3>⭐ Avis</h3>
+<h3>💰 Ventes</h3>
 
-<h2 id="nombreAvis">
+<h2 id="nombreVentes">
 0
 </h2>
 
 <p>
-Avis clients
+Ventes enregistrées
 </p>
 
 </div>
 
 
 
-
+<!-- RETRAITS -->
 
 <div class="card">
 
-<h3>💰 Paiements</h3>
+<h3>💳 Retraits</h3>
 
-<h2 id="nombrePaiements">
+<h2 id="nombreRetraits">
 0
 </h2>
 
 <p>
-Demandes enregistrées
+Demandes de retrait
 </p>
 
 </div>
@@ -115,8 +119,6 @@ Demandes enregistrées
 
 
 </div>
-
-
 
 
 
@@ -130,10 +132,7 @@ Demandes enregistrées
 </a>
 
 
-
 </section>
-
-
 
 
 
@@ -147,39 +146,175 @@ Demandes enregistrées
 
 
 
+<!-- =========================================
+     JAVASCRIPT PRINCIPAL
+     La connexion Supabase est déjà dedans
+========================================= -->
+
+<script src="js/script.js"></script>
 
 
 
 <script>
 
+/* =========================================
+   CHARGER LES STATISTIQUES
+========================================= */
 
-let produits = JSON.parse(localStorage.getItem("produitsSeno")) || [];
-
-let affilies = JSON.parse(localStorage.getItem("affiliesSeno")) || [];
-
-let avis = JSON.parse(localStorage.getItem("avisSeno")) || [];
-
-let paiements = JSON.parse(localStorage.getItem("paiementsSeno")) || [];
+async function chargerStatistiques() {
 
 
+    /* =====================================
+       PRODUITS
+    ===================================== */
+
+    const produits =
+    await supabaseClient
+    .from("produits")
+    .select("*", {
+        count: "exact",
+        head: true
+    });
 
 
-document.getElementById("nombreProduits").textContent = produits.length;
+
+    /* =====================================
+       AFFILIÉS
+    ===================================== */
+
+    const affilies =
+    await supabaseClient
+    .from("affilies")
+    .select("*", {
+        count: "exact",
+        head: true
+    });
 
 
-document.getElementById("nombreAffilies").textContent = affilies.length;
+
+    /* =====================================
+       VENTES
+    ===================================== */
+
+    const ventes =
+    await supabaseClient
+    .from("ventes")
+    .select("*", {
+        count: "exact",
+        head: true
+    });
 
 
-document.getElementById("nombreAvis").textContent = avis.length;
+
+    /* =====================================
+       RETRAITS
+    ===================================== */
+
+    const retraits =
+    await supabaseClient
+    .from("retraits")
+    .select("*", {
+        count: "exact",
+        head: true
+    });
 
 
-document.getElementById("nombrePaiements").textContent = paiements.length;
+
+    /* =====================================
+       AFFICHER LES RÉSULTATS
+    ===================================== */
 
 
+    document.getElementById(
+        "nombreProduits"
+    ).textContent =
+    produits.count || 0;
+
+
+
+    document.getElementById(
+        "nombreAffilies"
+    ).textContent =
+    affilies.count || 0;
+
+
+
+    document.getElementById(
+        "nombreVentes"
+    ).textContent =
+    ventes.count || 0;
+
+
+
+    document.getElementById(
+        "nombreRetraits"
+    ).textContent =
+    retraits.count || 0;
+
+
+
+    /* =====================================
+       AFFICHER LES ERREURS
+    ===================================== */
+
+
+    if (produits.error) {
+
+        console.error(
+            "Erreur produits :",
+            produits.error
+        );
+
+    }
+
+
+    if (affilies.error) {
+
+        console.error(
+            "Erreur affiliés :",
+            affilies.error
+        );
+
+    }
+
+
+    if (ventes.error) {
+
+        console.error(
+            "Erreur ventes :",
+            ventes.error
+        );
+
+    }
+
+
+    if (retraits.error) {
+
+        console.error(
+            "Erreur retraits :",
+            retraits.error
+        );
+
+    }
+
+}
+
+
+
+/* =========================================
+   LANCER LES STATISTIQUES
+========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        chargerStatistiques();
+
+    }
+);
 
 </script>
-
-
 
 
 </body>
