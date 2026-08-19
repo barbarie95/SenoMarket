@@ -45,6 +45,68 @@ Vue générale des performances de votre plateforme.
 
 
 
+<!-- =========================================
+     NOTIFICATIONS
+========================================= -->
+
+<div
+class="card"
+style="
+margin-top:25px;
+margin-bottom:25px;
+text-align:left;
+">
+
+<h3>
+🔔 Notifications
+</h3>
+
+
+<div
+style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:15px;
+">
+
+<p
+style="margin:0;"
+>
+Nouvelles activités
+</p>
+
+
+<span
+id="nombreNotifications"
+style="
+font-weight:bold;
+font-size:20px;
+"
+>
+0
+</span>
+
+</div>
+
+
+<div id="listeNotifications">
+
+<p>
+Chargement des notifications...
+</p>
+
+</div>
+
+
+</div>
+
+
+
+<!-- =========================================
+     STATISTIQUES
+========================================= -->
+
 <div class="cards">
 
 
@@ -200,9 +262,7 @@ async function chargerStatistiques() {
     try {
 
 
-        /* ==============================
-           PRODUITS
-        ============================== */
+        /* PRODUITS */
 
         const produits =
         await supabaseClient
@@ -224,9 +284,7 @@ async function chargerStatistiques() {
 
 
 
-        /* ==============================
-           AFFILIÉS
-        ============================== */
+        /* AFFILIÉS */
 
         const affilies =
         await supabaseClient
@@ -248,9 +306,7 @@ async function chargerStatistiques() {
 
 
 
-        /* ==============================
-           VENTES
-        ============================== */
+        /* VENTES */
 
         const ventes =
         await supabaseClient
@@ -272,9 +328,7 @@ async function chargerStatistiques() {
 
 
 
-        /* ==============================
-           RETRAITS
-        ============================== */
+        /* RETRAITS */
 
         const retraits =
         await supabaseClient
@@ -296,9 +350,7 @@ async function chargerStatistiques() {
 
 
 
-        /* ==============================
-           AFFICHER LES NOMBRES
-        ============================== */
+        /* AFFICHAGE */
 
         document.getElementById(
             "nombreProduits"
@@ -345,7 +397,197 @@ async function chargerStatistiques() {
 
 
 /* =========================================
-   LANCER LES STATISTIQUES
+   CHARGER LES NOTIFICATIONS
+========================================= */
+
+async function chargerNotifications() {
+
+
+    const liste =
+    document.getElementById(
+        "listeNotifications"
+    );
+
+
+    const compteur =
+    document.getElementById(
+        "nombreNotifications"
+    );
+
+
+    const resultat =
+    await supabaseClient
+    .from("notifications")
+    .select("*")
+    .order(
+        "date_creation",
+        {
+            ascending: false
+        }
+    );
+
+
+    if (resultat.error) {
+
+        console.error(
+            "Erreur notifications :",
+            resultat.error
+        );
+
+
+        liste.innerHTML =
+        "<p>Impossible de charger les notifications.</p>";
+
+        return;
+
+    }
+
+
+    const notifications =
+    resultat.data || [];
+
+
+    const nonLues =
+    notifications.filter(
+        notification =>
+        notification.lu === false
+    );
+
+
+    compteur.textContent =
+    nonLues.length;
+
+
+
+    if (notifications.length === 0) {
+
+        liste.innerHTML =
+        "<p>Aucune notification pour le moment.</p>";
+
+        return;
+
+    }
+
+
+
+    liste.innerHTML = "";
+
+
+
+    notifications.forEach(
+    function(notification) {
+
+
+        const element =
+        document.createElement("div");
+
+
+        element.style.padding =
+        "12px";
+
+
+        element.style.marginBottom =
+        "10px";
+
+
+        element.style.borderRadius =
+        "8px";
+
+
+        element.style.background =
+        notification.lu
+        ? "#f1f1f1"
+        : "#fff3cd";
+
+
+        element.innerHTML = `
+
+            <strong>
+                ${notification.message}
+            </strong>
+
+            <br>
+
+            <small>
+                ${new Date(
+                    notification.date_creation
+                ).toLocaleString("fr-FR")}
+            </small>
+
+            <br><br>
+
+            ${
+                notification.lu
+                ?
+
+                "<span>✓ Déjà lue</span>"
+
+                :
+
+                `<button
+                    class="gold-btn"
+                    onclick="marquerCommeLue('${notification.id}')"
+                >
+                    Marquer comme lu
+                </button>`
+            }
+
+        `;
+
+
+        liste.appendChild(
+            element
+        );
+
+
+    });
+
+}
+
+
+
+/* =========================================
+   MARQUER UNE NOTIFICATION COMME LUE
+========================================= */
+
+async function marquerCommeLue(id) {
+
+
+    const resultat =
+    await supabaseClient
+    .from("notifications")
+    .update({
+        lu: true
+    })
+    .eq(
+        "id",
+        id
+    );
+
+
+    if (resultat.error) {
+
+        alert(
+            "Impossible de modifier la notification."
+        );
+
+        console.error(
+            resultat.error
+        );
+
+        return;
+
+    }
+
+
+    chargerNotifications();
+
+}
+
+
+
+/* =========================================
+   INITIALISATION
 ========================================= */
 
 document.addEventListener(
@@ -353,6 +595,8 @@ document.addEventListener(
     function() {
 
         chargerStatistiques();
+
+        chargerNotifications();
 
     }
 );
