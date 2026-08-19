@@ -31,6 +31,7 @@
 
 </header>
 
+
 <section class="affiliate">
 
 <h2>🚀 Devenez affilié SenoMarket</h2>
@@ -38,6 +39,7 @@
 <p>
 Recommandez nos produits numériques, partagez vos liens et gagnez des commissions sur chaque vente réalisée grâce à vous.
 </p>
+
 
 <div class="card">
 
@@ -67,19 +69,21 @@ Notre objectif est de permettre à chaque affilié de profiter rapidement des r�
 
 </div>
 
+
 <div class="card">
 
-<h3>Comment ça fonctionne ?</h3>
+<h3>📋 Comment ça fonctionne ?</h3>
 
 <p>
 1. Inscrivez-vous au programme.<br>
-2. Votre demande est examinée par SenoMarket.<br>
-3. Après validation, vous recevez votre code et votre lien d'affiliation.<br>
-4. Partagez les produits SenoMarket.<br>
+2. Recevez votre code et votre lien d'affiliation.<br>
+3. Utilisez votre code pour accéder à votre Espace Affilié.<br>
+4. Utilisez votre lien affilié pour promouvoir les produits SenoMarket.<br>
 5. Gagnez des commissions sur vos ventes.
 </p>
 
-<h3>Vos avantages</h3>
+
+<h3>🎁 Vos avantages</h3>
 
 <p>
 ✓ Revenus supplémentaires<br>
@@ -91,6 +95,7 @@ Notre objectif est de permettre à chaque affilié de profiter rapidement des r�
 
 </div>
 
+
 <div class="card">
 
 <h2>
@@ -101,7 +106,9 @@ Devenir affilié SenoMarket
 Remplissez ce formulaire pour rejoindre notre programme d'affiliation.
 </p>
 
+
 <form id="affiliationForm">
+
 
 <label>
 Nom complet
@@ -117,6 +124,7 @@ required>
 
 <br><br>
 
+
 <label>
 WhatsApp
 </label>
@@ -130,6 +138,7 @@ placeholder="Votre numéro WhatsApp"
 required>
 
 <br><br>
+
 
 <label>
 Email
@@ -145,6 +154,7 @@ required>
 
 <br><br>
 
+
 <label>
 Pays
 </label>
@@ -158,6 +168,7 @@ placeholder="Votre pays"
 required>
 
 <br><br>
+
 
 <label>
 Méthode de paiement préférée
@@ -191,6 +202,7 @@ Autre
 
 <br><br>
 
+
 <label>
 Informations de paiement
 </label>
@@ -205,6 +217,7 @@ required>
 
 <br><br>
 
+
 <label>
 Pourquoi voulez-vous devenir affilié ?
 </label>
@@ -218,6 +231,7 @@ placeholder="Votre motivation">
 
 <br><br>
 
+
 <button
 type="submit"
 class="gold-btn"
@@ -227,13 +241,111 @@ Envoyer ma demande
 
 </button>
 
+
 <p id="message"></p>
+
+
+<!-- =========================================
+     RÉSULTAT APRÈS INSCRIPTION
+========================================= -->
+
+<div
+id="resultat"
+style="display:none;">
+
+<h3>🎉 Félicitations !</h3>
+
+<p>
+Votre inscription affilié a été enregistrée avec succès.
+</p>
+
+
+<!-- CODE AFFILIÉ -->
+
+<div class="card">
+
+<h3>🔑 Votre code affilié</h3>
+
+<p>
+Votre code affilié vous permettra d'accéder à votre
+<strong>Espace Affilié</strong>.
+</p>
+
+<p>
+<strong>Code affilié :</strong>
+<br>
+
+<span id="codeAffilie"></span>
+</p>
+
+</div>
+
+
+<!-- LIEN AFFILIÉ -->
+
+<div class="card">
+
+<h3>🔗 Votre lien affilié</h3>
+
+<p>
+Utilisez ce lien pour promouvoir les produits SenoMarket.
+Les ventes réalisées grâce à votre lien pourront être associées à votre compte affilié.
+</p>
+
+<p>
+
+<a
+id="lienAffilie"
+href="#"
+target="_blank">
+</a>
+
+</p>
+
+</div>
+
+
+<!-- PHOTOS ET VIDÉOS -->
+
+<div class="card">
+
+<h3>📸 Besoin de photos ou de vidéos ?</h3>
+
+<p>
+Vous souhaitez obtenir des photos ou des vidéos des produits SenoMarket pour les promouvoir sur vos réseaux sociaux ?
+</p>
+
+<p>
+Contactez-nous directement sur WhatsApp et demandez les contenus promotionnels dont vous avez besoin.
+</p>
+
+
+<a
+href="https://wa.me/22604148416?text=Bonjour%20SenoMarket%2C%20je%20suis%20affili%C3%A9%20et%20je%20souhaite%20obtenir%20les%20photos%20et%20vid%C3%A9os%20promotionnelles%20des%20produits."
+target="_blank"
+class="gold-btn"
+style="display:inline-block; text-decoration:none;">
+
+📸 Obtenir les photos et vidéos
+
+</a>
+
+</div>
+
+
+<p>
+⚠️ Conservez précieusement votre code et votre lien affilié.
+</p>
+
+</div>
+
 
 </form>
 
 </div>
 
 </section>
+
 
 <footer>
 
@@ -247,13 +359,24 @@ Politique de confidentialité
 
 </footer>
 
+
 <script>
+
+
+/* =========================================
+   CONFIGURATION SUPABASE
+========================================= */
 
 const SUPABASE_URL =
 'https://vfnqwdwgkocpkkaofrum.supabase.co';
 
 const SUPABASE_PUBLISHABLE_KEY =
 'sb_publishable_BOFyx3zpbcwtN6h-3N0wLw_L1QOJWR-';
+
+
+/* =========================================
+   ÉLÉMENTS DU FORMULAIRE
+========================================= */
 
 const form =
 document.getElementById('affiliationForm');
@@ -264,10 +387,20 @@ document.getElementById('submitButton');
 const message =
 document.getElementById('message');
 
+const resultat =
+document.getElementById('resultat');
 
-form.addEventListener('submit', async function(event) {
+
+/* =========================================
+   ENVOI DU FORMULAIRE
+========================================= */
+
+form.addEventListener(
+'submit',
+async function(event) {
 
 event.preventDefault();
+
 
 button.disabled = true;
 
@@ -276,16 +409,27 @@ button.textContent =
 
 message.textContent = '';
 
+resultat.style.display =
+'none';
+
+
+/* =========================================
+   DONNÉES DU FORMULAIRE
+========================================= */
 
 const formData = {
 
-p_nom: this.nom.value.trim(),
+p_nom:
+this.nom.value.trim(),
 
-p_email: this.email.value.trim(),
+p_email:
+this.email.value.trim(),
 
-p_whatsapp: this.whatsapp.value.trim(),
+p_whatsapp:
+this.whatsapp.value.trim(),
 
-p_pays: this.pays.value.trim(),
+p_pays:
+this.pays.value.trim(),
 
 p_methode_paiement:
 this.paiement.value,
@@ -301,12 +445,13 @@ this.motivation.value.trim()
 
 try {
 
-/*
-1. Enregistrement de la demande
-dans Supabase.
-*/
 
-const response = await fetch(
+/* =========================================
+   1. ENREGISTREMENT DANS SUPABASE
+========================================= */
+
+const response =
+await fetch(
 
 SUPABASE_URL +
 '/rest/v1/rpc/inscrire_affilie',
@@ -371,10 +516,9 @@ throw new Error(
 }
 
 
-/*
-2. Supabase génère le code
-et le lien affilié.
-*/
+/* =========================================
+   2. RÉCUPÉRATION DU CODE ET DU LIEN
+========================================= */
 
 const codeAffilie =
 affilié.code_affilie || '';
@@ -383,7 +527,10 @@ const lienAffilie =
 affilié.lien_affilie || '';
 
 
-if (!codeAffilie || !lienAffilie) {
+if (
+!codeAffilie ||
+!lienAffilie
+) {
 
 throw new Error(
 'Le code ou le lien affilié n’a pas été généré.'
@@ -403,16 +550,49 @@ window.location.href
 ).href;
 
 
-/*
-3. Envoi des informations
-à notify-affiliation.
+/* =========================================
+   3. AFFICHAGE DU CODE AFFILIÉ
+========================================= */
 
-Le code et le lien sont envoyés
-à l'administrateur par email.
+document.getElementById(
+'codeAffilie'
+).textContent =
+codeAffilie;
 
-Ils ne sont PAS affichés
-à l'affilié.
-*/
+
+/* =========================================
+   4. AFFICHAGE DU LIEN AFFILIÉ
+========================================= */
+
+const lienElement =
+document.getElementById(
+'lienAffilie'
+);
+
+lienElement.href =
+lienComplet;
+
+lienElement.textContent =
+lienComplet;
+
+
+/* =========================================
+   5. AFFICHER LE RÉSULTAT
+========================================= */
+
+resultat.style.display =
+'block';
+
+
+message.textContent =
+'✅ Inscription réussie ! Votre code et votre lien affilié sont disponibles ci-dessous.';
+
+
+/* =========================================
+   6. NOTIFICATION ADMINISTRATEUR
+========================================= */
+
+try {
 
 const notificationResponse =
 await fetch(
@@ -489,16 +669,21 @@ console.error(
 notificationData
 );
 
-message.textContent =
-'Votre demande a été enregistrée, mais la notification email n’a pas pu être envoyée.';
+}
 
-} else {
+} catch (notificationError) {
 
-message.textContent =
-'✅ Votre demande d’affiliation a bien été enregistrée. Elle est maintenant en attente de validation.';
+console.error(
+'Erreur notification :',
+notificationError
+);
 
 }
 
+
+/* =========================================
+   7. RÉINITIALISER LE FORMULAIRE
+========================================= */
 
 form.reset();
 
@@ -526,8 +711,11 @@ button.textContent =
 
 });
 
+
 </script>
 
 </body>
 
 </html>
+
+Important : je n’ai pas modifié "notify-affiliation" ni la base de données dans cette version. Le bouton WhatsApp utilise directement le numéro que tu viens de me donner.
