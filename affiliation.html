@@ -2,12 +2,14 @@
 <html lang="fr">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Affiliation - SenoMarket</title>
 
 <link rel="stylesheet" href="css/style.css">
+
 </head>
 
 <body>
@@ -35,20 +37,30 @@
 <h2>🚀 Devenez affilié SenoMarket</h2>
 
 <p>
-Recommandez nos produits numériques, partagez votre lien et gagnez des commissions sur chaque vente réalisée grâce à vous.
+Recommandez nos produits numériques, partagez vos liens et gagnez des commissions sur chaque vente réalisée grâce à vous.
 </p>
 
 
 <div class="card">
 
-<h3>💰 Comment fonctionnent vos commissions ?</h3>
+<h3>💰 Comment fonctionne le paiement des commissions ?</h3>
+
+<p>
+Chez SenoMarket, nous avons choisi un système simple et flexible pour nos affiliés.
+</p>
 
 <ul>
-<li>✅ Choisissez votre méthode de paiement lors de votre inscription.</li>
-<li>✅ Vos commissions sont ajoutées à votre solde affilié.</li>
+
+<li>✅ Vous choisissez votre méthode de paiement lors de votre inscription.</li>
+
+<li>✅ Vos commissions gagnées sont ajoutées directement à votre solde affilié.</li>
+
 <li>✅ Aucun montant minimum obligatoire n'est imposé.</li>
-<li>✅ Vous pouvez demander votre paiement lorsque vous le souhaitez.</li>
+
+<li>✅ Vous pouvez demander le retrait de vos commissions lorsque vous le souhaitez.</li>
+
 <li>✅ Les paiements sont traités selon le calendrier défini par SenoMarket.</li>
+
 </ul>
 
 </div>
@@ -60,9 +72,9 @@ Recommandez nos produits numériques, partagez votre lien et gagnez des commissi
 
 <p>
 1. Inscrivez-vous au programme.<br>
-2. Recevez votre code et votre lien affilié.<br>
+2. Recevez votre code et votre lien d'affiliation.<br>
 3. Utilisez votre code pour accéder à votre Espace Affilié.<br>
-4. Partagez votre lien pour promouvoir les produits.<br>
+4. Utilisez votre lien pour promouvoir les produits SenoMarket.<br>
 5. Gagnez des commissions sur vos ventes.
 </p>
 
@@ -143,7 +155,9 @@ required>
 
 <select name="paiement" required>
 
-<option value="">Choisir une méthode de paiement</option>
+<option value="">
+Choisir une méthode de paiement
+</option>
 
 <option value="Mobile Money">
 Mobile Money
@@ -202,11 +216,15 @@ Envoyer ma demande
 <p id="message"></p>
 
 
-<!-- RÉSULTAT -->
+<!-- =========================================
+     RÉSULTAT DE L'INSCRIPTION
+========================================= -->
 
 <div
 id="resultat"
 style="display:none;">
+
+<div class="card">
 
 <h3>🎉 Félicitations !</h3>
 
@@ -214,21 +232,25 @@ style="display:none;">
 Votre inscription affilié a été enregistrée avec succès.
 </p>
 
+</div>
+
 
 <div class="card">
 
 <h3>🔑 Votre code affilié</h3>
 
 <p>
-Votre code vous permet d'accéder à votre
+Ce code vous permet d'accéder à votre
 <strong>Espace Affilié</strong>.
 </p>
 
 <p>
-<strong>Code affilié :</strong><br>
+<strong>Code affilié :</strong>
+<br>
 
 <span id="codeAffilie"></span>
 </p>
+
 
 <a
 href="espace-affilie.html"
@@ -251,28 +273,13 @@ Utilisez ce lien pour promouvoir les produits SenoMarket.
 </p>
 
 <p>
+
 <a
 id="lienAffilie"
 href="#"
 target="_blank">
 </a>
-</p>
 
-</div>
-
-
-<div class="card">
-
-<h3>🔐 Votre token</h3>
-
-<p>
-Conservez également cette information.
-</p>
-
-<p>
-<strong>Token :</strong><br>
-
-<span id="tokenAffilie"></span>
 </p>
 
 </div>
@@ -283,9 +290,10 @@ Conservez également cette information.
 <h3>📸 Photos et vidéos promotionnelles</h3>
 
 <p>
-Vous souhaitez obtenir les photos ou vidéos des produits SenoMarket pour votre promotion ?
+Vous souhaitez obtenir des photos ou des vidéos des produits SenoMarket pour votre promotion ?
 Contactez-nous directement sur WhatsApp.
 </p>
+
 
 <a
 href="https://wa.me/22604148416?text=Bonjour%20SenoMarket%2C%20je%20suis%20affili%C3%A9%20et%20je%20souhaite%20obtenir%20les%20photos%20et%20vid%C3%A9os%20promotionnelles%20des%20produits."
@@ -301,7 +309,7 @@ style="display:inline-block;text-decoration:none;">
 
 
 <p>
-⚠️ Conservez précieusement votre code, votre token et votre lien affilié.
+⚠️ Conservez précieusement votre code et votre lien affilié.
 </p>
 
 </div>
@@ -328,12 +336,20 @@ Politique de confidentialité
 
 <script>
 
+/* =========================================
+   SUPABASE
+========================================= */
+
 const SUPABASE_URL =
 'https://vfnqwdwgkocpkkaofrum.supabase.co';
 
 const SUPABASE_PUBLISHABLE_KEY =
 'sb_publishable_BOFyx3zpbcwtN6h-3N0wLw_L1QOJWR-';
 
+
+/* =========================================
+   ÉLÉMENTS
+========================================= */
 
 const form =
 document.getElementById('affiliationForm');
@@ -347,6 +363,10 @@ document.getElementById('message');
 const resultat =
 document.getElementById('resultat');
 
+
+/* =========================================
+   FORMULAIRE
+========================================= */
 
 form.addEventListener('submit', async function(event) {
 
@@ -384,7 +404,7 @@ this.motivation.value.trim();
 try {
 
 /* =========================================
-   ENREGISTREMENT SUPABASE
+   1. APPEL À LA BASE DE DONNÉES
 ========================================= */
 
 const response = await fetch(
@@ -413,82 +433,163 @@ p_motivation: motivation
 });
 
 
-const data =
-await response.json();
+/* =========================================
+   2. LIRE LA RÉPONSE
+========================================= */
+
+const texte =
+await response.text();
+
+
+let data;
+
+try {
+
+data =
+JSON.parse(texte);
+
+} catch {
+
+throw new Error(
+'Réponse inattendue de Supabase : ' +
+texte
+);
+
+}
 
 
 if (!response.ok) {
 
 throw new Error(
+
 data.message ||
 data.error_description ||
-'Erreur lors de l'inscription.'
+data.hint ||
+(JSON.stringify(data)) ||
+'Erreur Supabase.'
+
 );
 
 }
 
 
-const affilié =
-Array.isArray(data)
-? data[0]
-: data;
+/* =========================================
+   3. ACCEPTER TABLEAU OU OBJET
+========================================= */
+
+let affilié;
+
+if (Array.isArray(data)) {
+
+affilié = data[0];
+
+} else {
+
+affilié = data;
+
+}
 
 
 if (!affilié) {
 
 throw new Error(
-'Aucune information affilié reçue.'
+'La base de données a répondu, mais aucune donnée affilié n’a été retournée.'
 );
 
 }
 
 
 /* =========================================
-   RÉCUPÉRATION DES 3 CHAMPS
+   4. RÉCUPÉRER LES INFORMATIONS
 ========================================= */
 
 const codeAffilie =
-affilié.code_affilie || '';
+affilié.code_affilie ||
+'';
+
+const lienBase =
+affilié.lien_affilie ||
+'';
+
+
+/*
+   Le token est volontairement récupéré
+   uniquement en interne s'il existe.
+   Il n'est JAMAIS affiché à l'affilié.
+*/
 
 const token =
-affilié.token || '';
+affilié.token ||
+'';
 
-const baseLien =
-affilié.lien_affilie || '';
 
+/* =========================================
+   5. VÉRIFICATION
+========================================= */
 
 if (!codeAffilie) {
 
 throw new Error(
-'Le code affilié n’a pas été généré.'
+'La base de données n’a pas retourné le code_affilie.'
 );
 
 }
 
 
 /* =========================================
-   CONSTRUCTION DU LIEN AFFILIÉ
+   6. CONSTRUCTION DU LIEN
 ========================================= */
 
 let lienComplet;
 
-if (baseLien.startsWith('http')) {
+
+/*
+   Si la base renvoie déjà un lien complet
+*/
+
+if (
+lienBase &&
+lienBase.startsWith('http')
+) {
+
+const separateur =
+lienBase.includes('?')
+? '&'
+: '?';
 
 lienComplet =
-baseLien +
-'?ref=' +
+lienBase +
+separateur +
+'ref=' +
 encodeURIComponent(codeAffilie) +
 '&nom=' +
 encodeURIComponent(nom);
 
-} else {
+}
+
+
+/*
+   Si la base renvoie boutique.html
+*/
+
+else {
+
+const pageBoutique =
+lienBase ||
+'boutique.html';
+
+const separateur =
+pageBoutique.includes('?')
+? '&'
+: '?';
 
 lienComplet =
 new URL(
-baseLien || 'boutique.html',
+pageBoutique,
 window.location.href
 ).href +
-'?ref=' +
+separateur +
+'ref=' +
 encodeURIComponent(codeAffilie) +
 '&nom=' +
 encodeURIComponent(nom);
@@ -497,7 +598,7 @@ encodeURIComponent(nom);
 
 
 /* =========================================
-   AFFICHAGE
+   7. AFFICHER LE CODE
 ========================================= */
 
 document.getElementById(
@@ -506,11 +607,9 @@ document.getElementById(
 codeAffilie;
 
 
-document.getElementById(
-'tokenAffilie'
-).textContent =
-token || 'Non fourni';
-
+/* =========================================
+   8. AFFICHER LE LIEN
+========================================= */
 
 const lienElement =
 document.getElementById(
@@ -524,22 +623,27 @@ lienElement.textContent =
 lienComplet;
 
 
+/* =========================================
+   9. AFFICHER LE RÉSULTAT
+========================================= */
+
 resultat.style.display =
 'block';
 
 message.textContent =
-'✅ Inscription réussie ! Vos informations d’affiliation sont disponibles ci-dessous.';
+'✅ Inscription réussie ! Votre code et votre lien affilié sont disponibles ci-dessous.';
 
 
 /* =========================================
-   NOTIFICATION ADMIN
+   10. NOTIFICATION ADMIN
 ========================================= */
 
 try {
 
 const notificationResponse =
 await fetch(
-SUPABASE_URL + '/functions/v1/notify-affiliation',
+SUPABASE_URL +
+'/functions/v1/notify-affiliation',
 {
 method: 'POST',
 
@@ -567,24 +671,34 @@ lien_affilie: lienComplet
 });
 
 
-const notificationData =
-await notificationResponse.json();
+const notificationText =
+await notificationResponse.text();
 
 console.log(
-'Notification :',
-notificationData
+'Réponse notify-affiliation :',
+notificationText
 );
 
 
 } catch (notificationError) {
 
 console.error(
-'Erreur notification :',
+'Notification admin non envoyée :',
 notificationError
 );
 
+/*
+   IMPORTANT :
+   Une erreur d'e-mail ne doit pas empêcher
+   l'affilié de recevoir son code et son lien.
+*/
+
 }
 
+
+/* =========================================
+   11. VIDER LE FORMULAIRE
+========================================= */
 
 form.reset();
 
@@ -592,18 +706,31 @@ form.reset();
 } catch (error) {
 
 console.error(
-'Erreur inscription :',
+'Erreur complète :',
 error
 );
 
+
+/*
+   CETTE FOIS, L'ERREUR EST AFFICHÉE
+   DIRECTEMENT SUR LA PAGE.
+*/
+
 message.textContent =
+'❌ ' +
+(
 error.message ||
-'Une erreur est survenue. Veuillez réessayer.';
+'Une erreur est survenue.'
+);
+
+message.style.color =
+'red';
 
 
 } finally {
 
 button.disabled = false;
+
 button.textContent =
 'Envoyer ma demande';
 
