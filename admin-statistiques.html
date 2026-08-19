@@ -10,6 +10,9 @@
 
 <link rel="stylesheet" href="css/style.css">
 
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 
 
@@ -45,7 +48,6 @@ Vue générale des performances de votre plateforme.
 <div class="cards">
 
 
-
 <!-- PRODUITS -->
 
 <div class="card">
@@ -53,7 +55,7 @@ Vue générale des performances de votre plateforme.
 <h3>🛒 Produits</h3>
 
 <h2 id="nombreProduits">
-0
+Chargement...
 </h2>
 
 <p>
@@ -71,7 +73,7 @@ Produits enregistrés
 <h3>🤝 Affiliés</h3>
 
 <h2 id="nombreAffilies">
-0
+Chargement...
 </h2>
 
 <p>
@@ -89,7 +91,7 @@ Partenaires enregistrés
 <h3>💰 Ventes</h3>
 
 <h2 id="nombreVentes">
-0
+Chargement...
 </h2>
 
 <p>
@@ -107,7 +109,7 @@ Ventes enregistrées
 <h3>💳 Retraits</h3>
 
 <h2 id="nombreRetraits">
-0
+Chargement...
 </h2>
 
 <p>
@@ -125,7 +127,22 @@ Demandes de retrait
 <br>
 
 
-<a href="dashboard.html" class="gold-btn">
+<!-- MESSAGE D'ERREUR -->
+
+<p
+id="messageErreur"
+style="
+color:red;
+font-weight:bold;
+margin-top:20px;
+">
+</p>
+
+
+
+<a
+href="dashboard.html"
+class="gold-btn">
 
 ⬅ Retour au tableau de bord
 
@@ -146,16 +163,27 @@ Demandes de retrait
 
 
 
-<!-- =========================================
-     JAVASCRIPT PRINCIPAL
-     La connexion Supabase est déjà dedans
-========================================= -->
-
-<script src="js/script.js"></script>
-
-
-
 <script>
+
+/* =========================================
+   CONNEXION SUPABASE
+========================================= */
+
+const SUPABASE_URL =
+"https://vfnqwdwgkocpkkaofrum.supabase.co";
+
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_BOFyx3zpbcwtN6h-3N0wLw_L1QOJWR-";
+
+
+const supabaseClient =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+
 
 /* =========================================
    CHARGER LES STATISTIQUES
@@ -163,137 +191,152 @@ Demandes de retrait
 
 async function chargerStatistiques() {
 
-
-    /* =====================================
-       PRODUITS
-    ===================================== */
-
-    const produits =
-    await supabaseClient
-    .from("produits")
-    .select("*", {
-        count: "exact",
-        head: true
-    });
-
-
-
-    /* =====================================
-       AFFILIÉS
-    ===================================== */
-
-    const affilies =
-    await supabaseClient
-    .from("affilies")
-    .select("*", {
-        count: "exact",
-        head: true
-    });
-
-
-
-    /* =====================================
-       VENTES
-    ===================================== */
-
-    const ventes =
-    await supabaseClient
-    .from("ventes")
-    .select("*", {
-        count: "exact",
-        head: true
-    });
-
-
-
-    /* =====================================
-       RETRAITS
-    ===================================== */
-
-    const retraits =
-    await supabaseClient
-    .from("retraits")
-    .select("*", {
-        count: "exact",
-        head: true
-    });
-
-
-
-    /* =====================================
-       AFFICHER LES RÉSULTATS
-    ===================================== */
-
-
+    const messageErreur =
     document.getElementById(
-        "nombreProduits"
-    ).textContent =
-    produits.count || 0;
+        "messageErreur"
+    );
+
+
+    try {
+
+
+        /* ==============================
+           PRODUITS
+        ============================== */
+
+        const produits =
+        await supabaseClient
+        .from("produits")
+        .select("*", {
+            count: "exact",
+            head: true
+        });
+
+
+        if (produits.error) {
+
+            throw new Error(
+                "Produits : " +
+                produits.error.message
+            );
+
+        }
 
 
 
-    document.getElementById(
-        "nombreAffilies"
-    ).textContent =
-    affilies.count || 0;
+        /* ==============================
+           AFFILIÉS
+        ============================== */
+
+        const affilies =
+        await supabaseClient
+        .from("affilies")
+        .select("*", {
+            count: "exact",
+            head: true
+        });
+
+
+        if (affilies.error) {
+
+            throw new Error(
+                "Affiliés : " +
+                affilies.error.message
+            );
+
+        }
 
 
 
-    document.getElementById(
-        "nombreVentes"
-    ).textContent =
-    ventes.count || 0;
+        /* ==============================
+           VENTES
+        ============================== */
+
+        const ventes =
+        await supabaseClient
+        .from("ventes")
+        .select("*", {
+            count: "exact",
+            head: true
+        });
+
+
+        if (ventes.error) {
+
+            throw new Error(
+                "Ventes : " +
+                ventes.error.message
+            );
+
+        }
 
 
 
-    document.getElementById(
-        "nombreRetraits"
-    ).textContent =
-    retraits.count || 0;
+        /* ==============================
+           RETRAITS
+        ============================== */
+
+        const retraits =
+        await supabaseClient
+        .from("retraits")
+        .select("*", {
+            count: "exact",
+            head: true
+        });
+
+
+        if (retraits.error) {
+
+            throw new Error(
+                "Retraits : " +
+                retraits.error.message
+            );
+
+        }
 
 
 
-    /* =====================================
-       AFFICHER LES ERREURS
-    ===================================== */
+        /* ==============================
+           AFFICHER LES NOMBRES
+        ============================== */
+
+        document.getElementById(
+            "nombreProduits"
+        ).textContent =
+        produits.count ?? 0;
 
 
-    if (produits.error) {
+        document.getElementById(
+            "nombreAffilies"
+        ).textContent =
+        affilies.count ?? 0;
 
-        console.error(
-            "Erreur produits :",
-            produits.error
-        );
+
+        document.getElementById(
+            "nombreVentes"
+        ).textContent =
+        ventes.count ?? 0;
+
+
+        document.getElementById(
+            "nombreRetraits"
+        ).textContent =
+        retraits.count ?? 0;
+
 
     }
 
-
-    if (affilies.error) {
-
-        console.error(
-            "Erreur affiliés :",
-            affilies.error
-        );
-
-    }
-
-
-    if (ventes.error) {
+    catch (erreur) {
 
         console.error(
-            "Erreur ventes :",
-            ventes.error
+            "Erreur statistiques :",
+            erreur
         );
 
-    }
 
-
-    if (retraits.error) {
-
-        console.error(
-            "Erreur retraits :",
-            retraits.error
-        );
+        messageErreur.textContent =
+        "Erreur : " +
+        erreur.message;
 
     }
 
