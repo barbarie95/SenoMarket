@@ -4,1361 +4,538 @@
 <head>
 
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Gestion Produits - SenoMarket</title>
 
+<link rel="stylesheet" href="css/style.css">
 
-<!-- =========================================
-     FEUILLE DE STYLE PRINCIPALE
-========================================= -->
+<!-- Supabase doit être chargé avant notre JS -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<link
-    rel="stylesheet"
-    href="css/style.css"
->
-
-
-<!-- =========================================
-     BIBLIOTHÈQUE SUPABASE
-     
-     IMPORTANT :
-     Elle doit être chargée AVANT notre
-     fichier JavaScript principal.
-========================================= -->
-
-<script
-    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-></script>
-
-
-<!-- =========================================
-     JAVASCRIPT PRINCIPAL SENOMARKET
-     
-     Vérifie que le nom correspond bien
-     à ton fichier JS actuel.
-========================================= -->
-
-<script
-    src="js/script.js"
-></script>
-
+<!-- Ton fichier JS commun -->
+<script src="js/script.js"></script>
 
 </head>
 
-
-
 <body>
 
-
-
-<!-- =========================================
-     EN-TÊTE
-========================================= -->
-
 <header>
-
     <div class="logo">
-
-        <img
-            src="images/logo-seno.png"
-            alt="Logo SenoMarket"
-        >
-
+        <img src="images/logo-seno.png" alt="Logo SenoMarket">
     </div>
-
 </header>
 
 
-
-
-<!-- =========================================
-     ESPACE ADMINISTRATEUR
-========================================= -->
-
 <section class="affiliate">
 
+<h2>🛒 Gestion des produits</h2>
 
-    <h2>
-        🛒 Gestion des produits
-    </h2>
+<p>Ajoutez et gérez les produits de SenoMarket.</p>
 
 
-    <p>
-        Ajoutez et gérez les produits
-        de SenoMarket.
-    </p>
+<!-- FORMULAIRE -->
 
+<div class="card">
 
+<h3 id="titreFormulaire">➕ Ajouter un produit</h3>
 
+<input
+    type="text"
+    id="nom"
+    placeholder="Nom du produit"
+    style="padding:12px;width:90%;margin:6px 0;border-radius:10px;"
+>
 
-    <!-- =====================================
-         FORMULAIRE D'AJOUT / MODIFICATION
-    ====================================== -->
+<input
+    type="number"
+    id="prix"
+    placeholder="Prix"
+    step="0.01"
+    min="0"
+    style="padding:12px;width:90%;margin:6px 0;border-radius:10px;"
+>
 
-    <div class="card">
+<textarea
+    id="description"
+    placeholder="Description du produit"
+    rows="4"
+    style="padding:12px;width:90%;margin:6px 0;border-radius:10px;"
+></textarea>
 
+<input
+    type="text"
+    id="categorie"
+    placeholder="Catégorie"
+    style="padding:12px;width:90%;margin:6px 0;border-radius:10px;"
+>
 
-        <h3 id="titreFormulaire">
+<input
+    type="url"
+    id="image_url"
+    placeholder="URL de l'image du produit"
+    style="padding:12px;width:90%;margin:6px 0;border-radius:10px;"
+>
 
-            ➕ Ajouter un produit
+<input
+    type="url"
+    id="lien_achat"
+    placeholder="Lien d'achat"
+    style="padding:12px;width:90%;margin:6px 0;border-radius:10px;"
+>
 
-        </h3>
+<br>
 
+<label>
+    <input type="checkbox" id="actif" checked>
+    Produit actif
+</label>
 
+<br><br>
 
-        <!-- NOM -->
+<button
+    type="button"
+    onclick="enregistrerProduit()"
+    class="gold-btn"
+    id="boutonEnregistrer"
+>
+    Ajouter le produit
+</button>
 
-        <input
-            type="text"
-            id="nom"
-            placeholder="Nom du produit"
-            style="
-                padding:12px;
-                width:90%;
-                margin:6px 0;
-                border-radius:10px;
-            "
-        >
+<button
+    type="button"
+    onclick="annulerModification()"
+    class="gold-btn"
+    id="boutonAnnuler"
+    style="display:none;"
+>
+    Annuler
+</button>
 
+<p id="message"></p>
 
+</div>
 
-        <!-- PRIX -->
 
-        <input
-            type="number"
-            id="prix"
-            placeholder="Prix"
-            step="0.01"
-            min="0"
-            style="
-                padding:12px;
-                width:90%;
-                margin:6px 0;
-                border-radius:10px;
-            "
-        >
+<br><br>
 
 
+<!-- LISTE DES PRODUITS -->
 
-        <!-- DESCRIPTION -->
+<div class="card">
 
-        <textarea
-            id="description"
-            placeholder="Description du produit"
-            rows="4"
-            style="
-                padding:12px;
-                width:90%;
-                margin:6px 0;
-                border-radius:10px;
-            "
-        ></textarea>
+<h3>📦 Produits enregistrés</h3>
 
+<div id="listeProduits">
+    <p>Chargement des produits...</p>
+</div>
 
+</div>
 
-        <!-- CATÉGORIE -->
 
-        <input
-            type="text"
-            id="categorie"
-            placeholder="Catégorie"
-            style="
-                padding:12px;
-                width:90%;
-                margin:6px 0;
-                border-radius:10px;
-            "
-        >
+<br>
 
-
-
-        <!-- IMAGE -->
-
-        <input
-            type="url"
-            id="image_url"
-            placeholder="URL de l'image du produit"
-            style="
-                padding:12px;
-                width:90%;
-                margin:6px 0;
-                border-radius:10px;
-            "
-        >
-
-
-
-        <!-- LIEN D'ACHAT -->
-
-        <input
-            type="url"
-            id="lien_achat"
-            placeholder="Lien d'achat"
-            style="
-                padding:12px;
-                width:90%;
-                margin:6px 0;
-                border-radius:10px;
-            "
-        >
-
-
-
-        <br>
-
-
-
-        <!-- STATUT -->
-
-        <label>
-
-            <input
-                type="checkbox"
-                id="actif"
-                checked
-            >
-
-            Produit actif
-
-        </label>
-
-
-
-        <br><br>
-
-
-
-        <!-- BOUTON ENREGISTRER -->
-
-        <button
-            type="button"
-            onclick="enregistrerProduit()"
-            class="gold-btn"
-            id="boutonEnregistrer"
-        >
-
-            Ajouter le produit
-
-        </button>
-
-
-
-        <!-- BOUTON ANNULER -->
-
-        <button
-            type="button"
-            onclick="annulerModification()"
-            class="gold-btn"
-            id="boutonAnnuler"
-            style="display:none;"
-        >
-
-            Annuler
-
-        </button>
-
-
-
-        <!-- MESSAGE -->
-
-        <p id="message"></p>
-
-
-    </div>
-
-
-
-
-    <br><br>
-
-
-
-
-    <!-- =====================================
-         LISTE DES PRODUITS
-    ====================================== -->
-
-    <div class="card">
-
-
-        <h3>
-
-            📦 Produits enregistrés
-
-        </h3>
-
-
-
-        <div id="listeProduits">
-
-            <p>
-
-                Chargement des produits...
-
-            </p>
-
-        </div>
-
-
-    </div>
-
-
-
-
-    <br>
-
-
-
-
-    <!-- RETOUR DASHBOARD -->
-
-    <a
-        href="dashboard.html"
-        class="gold-btn"
-    >
-
-        ⬅ Retour au tableau de bord
-
-    </a>
-
+<a href="dashboard.html" class="gold-btn">
+    ⬅ Retour au tableau de bord
+</a>
 
 </section>
 
 
-
-
-<!-- =========================================
-     PIED DE PAGE
-========================================= -->
-
 <footer>
 
-    <p>
-
-        © 2026 SenoMarket -
-        Transformez vos idées en réussite
-
-    </p>
+<p>
+© 2026 SenoMarket - Transformez vos idées en réussite
+</p>
 
 </footer>
 
 
-
-
 <script>
 
-
-/* =========================================
-   PROTECTION DE L'ESPACE ADMINISTRATEUR
-========================================= */
-
-const admin =
-    localStorage.getItem("adminConnecte");
-
-
-if(admin !== "oui"){
-
-    window.location.href =
-        "administrateur.html";
-
+/* Protection administrateur */
+if (localStorage.getItem("adminConnecte") !== "oui") {
+    window.location.href = "administrateur.html";
 }
 
 
-
-/* =========================================
-   VARIABLE DE MODIFICATION
-========================================= */
-
+/* Variable de modification */
 let produitEnModification = null;
 
 
+/* Charger les produits */
+async function chargerProduits() {
 
+    const zone = document.getElementById("listeProduits");
 
-/* =========================================
-   CHARGER LES PRODUITS DEPUIS SUPABASE
-========================================= */
+    zone.innerHTML = "<p>Connexion à Supabase...</p>";
 
-async function chargerProduits(){
-
-
-    const zone =
-        document.getElementById(
-            "listeProduits"
-        );
-
-
-    zone.innerHTML =
-        "<p>Chargement des produits...</p>";
-
-
-
-    /* =====================================
-       REQUÊTE SUPABASE
-       
-       On lit la table :
-       produits
-    ====================================== */
-
-    const {
-        data,
-        error
-    } = await supabaseClient
-
-        .from("produits")
-
-        .select("*")
-
-        .order(
-            "created_at",
-            {
-                ascending: false
-            }
-        );
-
-
-
-    /* =====================================
-       ERREUR SUPABASE
-       
-       IMPORTANT :
-       On affiche maintenant le vrai
-       message d'erreur.
-       
-       C'est temporairement pour le
-       diagnostic.
-    ====================================== */
-
-    if(error){
-
-        console.error(
-            "Erreur Supabase :",
-            error
-        );
-
+    /* Diagnostic visible */
+    if (typeof supabaseClient === "undefined" || !supabaseClient) {
 
         zone.innerHTML = `
-
             <p style="color:red;">
-
-                ❌ Erreur Supabase
-
+                ❌ supabaseClient n'est pas disponible.
             </p>
-
-
-            <p style="color:red;">
-
-                ${error.message}
-
-            </p>
-
-        `;
-
-
-        return;
-
-    }
-
-
-
-    /* =====================================
-       AUCUN PRODUIT
-    ====================================== */
-
-    if(!data || data.length === 0){
-
-        zone.innerHTML = `
-
             <p>
-
-                Aucun produit enregistré.
-
+                Vérifie que ton fichier JS est bien chargé.
             </p>
-
         `;
 
+        return;
+    }
+
+    zone.innerHTML = "<p>Lecture de la table produits...</p>";
+
+    const { data, error } = await supabaseClient
+        .from("produits")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+
+    /* Afficher l'erreur exacte */
+    if (error) {
+
+        console.error(error);
+
+        zone.innerHTML = `
+            <p style="color:red;">
+                ❌ Erreur Supabase
+            </p>
+
+            <p style="color:red;">
+                ${echapperHTML(error.message)}
+            </p>
+        `;
 
         return;
-
     }
 
 
+    /* Aucun produit */
+    if (!data || data.length === 0) {
 
-    /* =====================================
-       VIDER LA ZONE
-    ====================================== */
+        zone.innerHTML = `
+            <p>
+                Aucun produit enregistré.
+            </p>
+        `;
+
+        return;
+    }
+
 
     zone.innerHTML = "";
 
 
+    /* Afficher les produits */
+    data.forEach(produit => {
 
-    /* =====================================
-       AFFICHER CHAQUE PRODUIT
-    ====================================== */
-
-    data.forEach(function(produit){
-
-
-
-        /* STATUT */
-
-        const statut =
-            produit.actif
+        const statut = produit.actif
             ? "🟢 Actif"
             : "🔴 Inactif";
 
-
-
-        /* IMAGE */
-
-        const image =
-            produit.image_url
-            ?
-
-            `
-
-            <img
-                src="${echapperHTML(
-                    produit.image_url
-                )}"
-                alt="${echapperHTML(
-                    produit.nom
-                )}"
-                style="
-                    max-width:200px;
-                    border-radius:10px;
-                    margin-bottom:10px;
-                "
-            >
-
-            `
-
-            :
-
-            "";
-
-
-
-        /* LIEN D'ACHAT */
-
-        const lien =
-            produit.lien_achat
-            ?
-
-            `
-
-            <p>
-
-                <a
-                    href="${echapperHTML(
-                        produit.lien_achat
-                    )}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="gold-btn"
+        const image = produit.image_url
+            ? `
+                <img
+                    src="${echapperHTML(produit.image_url)}"
+                    alt="${echapperHTML(produit.nom || "")}"
+                    style="max-width:200px;border-radius:10px;"
                 >
+              `
+            : "";
 
-                    🔗 Voir le lien d'achat
+        const lien = produit.lien_achat
+            ? `
+                <p>
+                    <a
+                        href="${echapperHTML(produit.lien_achat)}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="gold-btn"
+                    >
+                        🔗 Voir le lien d'achat
+                    </a>
+                </p>
+              `
+            : "";
 
-                </a>
-
-            </p>
-
-            `
-
-            :
-
-            "";
-
-
-
-        /* CARTE PRODUIT */
 
         zone.innerHTML += `
 
-            <div
-                class="card"
-                style="margin-bottom:20px;"
-            >
-
+            <div class="card" style="margin-bottom:20px;">
 
                 ${image}
 
-
-
                 <h3>
-
-                    🛒
-                    ${echapperHTML(
-                        produit.nom || ""
-                    )}
-
+                    🛒 ${echapperHTML(produit.nom || "")}
                 </h3>
 
-
-
                 <p>
-
-                    <strong>
-                        Prix :
-                    </strong>
-
+                    <strong>Prix :</strong>
                     ${produit.prix ?? ""}
-
                 </p>
 
-
-
                 <p>
-
-                    <strong>
-                        Catégorie :
-                    </strong>
-
-                    ${echapperHTML(
-                        produit.categorie ||
-                        "Non définie"
-                    )}
-
+                    <strong>Catégorie :</strong>
+                    ${echapperHTML(produit.categorie || "Non définie")}
                 </p>
 
-
-
                 <p>
-
-                    <strong>
-                        Description :
-                    </strong>
-
-                    ${echapperHTML(
-                        produit.description ||
-                        "Aucune description"
-                    )}
-
+                    <strong>Description :</strong>
+                    ${echapperHTML(produit.description || "Aucune description")}
                 </p>
 
-
-
                 <p>
-
-                    <strong>
-                        Statut :
-                    </strong>
-
+                    <strong>Statut :</strong>
                     ${statut}
-
                 </p>
-
-
 
                 ${lien}
 
-
-
                 <button
-                    type="button"
                     class="gold-btn"
-                    onclick="modifierProduit(
-                        '${produit.id}'
-                    )"
+                    onclick="modifierProduit('${produit.id}')"
                 >
-
                     ✏️ Modifier
-
                 </button>
 
-
-
                 <button
-                    type="button"
                     class="gold-btn"
-                    onclick="changerStatut(
-                        '${produit.id}',
-                        ${!produit.actif}
-                    )"
+                    onclick="changerStatut('${produit.id}', ${!produit.actif})"
                 >
-
-                    ${
-                        produit.actif
-                        ? "🔴 Désactiver"
-                        : "🟢 Activer"
-                    }
-
+                    ${produit.actif ? "🔴 Désactiver" : "🟢 Activer"}
                 </button>
 
-
-
                 <button
-                    type="button"
                     class="gold-btn"
-                    onclick="supprimerProduit(
-                        '${produit.id}'
-                    )"
+                    onclick="supprimerProduit('${produit.id}')"
                 >
-
                     🗑️ Supprimer
-
                 </button>
-
 
             </div>
-
         `;
 
     });
-
 }
 
 
+/* Ajouter ou modifier */
+async function enregistrerProduit() {
+
+    const nom = document.getElementById("nom").value.trim();
+    const prix = document.getElementById("prix").value;
+    const description = document.getElementById("description").value.trim();
+    const categorie = document.getElementById("categorie").value.trim();
+    const image_url = document.getElementById("image_url").value.trim();
+    const lien_achat = document.getElementById("lien_achat").value.trim();
+    const actif = document.getElementById("actif").checked;
+    const message = document.getElementById("message");
 
 
-/* =========================================
-   AJOUTER OU MODIFIER UN PRODUIT
-========================================= */
-
-async function enregistrerProduit(){
-
-
-    const nom =
-        document
-            .getElementById("nom")
-            .value
-            .trim();
-
-
-
-    const prix =
-        document
-            .getElementById("prix")
-            .value;
-
-
-
-    const description =
-        document
-            .getElementById("description")
-            .value
-            .trim();
-
-
-
-    const categorie =
-        document
-            .getElementById("categorie")
-            .value
-            .trim();
-
-
-
-    const image_url =
-        document
-            .getElementById("image_url")
-            .value
-            .trim();
-
-
-
-    const lien_achat =
-        document
-            .getElementById("lien_achat")
-            .value
-            .trim();
-
-
-
-    const actif =
-        document
-            .getElementById("actif")
-            .checked;
-
-
-
-    const message =
-        document.getElementById(
-            "message"
-        );
-
-
-
-    /* =====================================
-       VALIDATION DU NOM
-    ====================================== */
-
-    if(!nom){
-
-        message.style.color =
-            "red";
-
-
-        message.textContent =
-            "Veuillez entrer le nom du produit.";
-
-
+    if (!nom) {
+        message.style.color = "red";
+        message.textContent = "Veuillez entrer le nom du produit.";
         return;
-
     }
 
-
-
-    /* =====================================
-       VALIDATION DU PRIX
-    ====================================== */
-
-    if(prix === ""){
-
-        message.style.color =
-            "red";
-
-
-        message.textContent =
-            "Veuillez entrer le prix.";
-
-
+    if (prix === "") {
+        message.style.color = "red";
+        message.textContent = "Veuillez entrer le prix.";
         return;
-
     }
 
-
-
-    /* =====================================
-       DONNÉES DU PRODUIT
-    ====================================== */
 
     const produit = {
-
-        nom: nom,
-
+        nom,
         prix: Number(prix),
-
-        description:
-            description || null,
-
-        categorie:
-            categorie || null,
-
-        image_url:
-            image_url || null,
-
-        lien_achat:
-            lien_achat || null,
-
-        actif:
-            actif
-
+        description: description || null,
+        categorie: categorie || null,
+        image_url: image_url || null,
+        lien_achat: lien_achat || null,
+        actif
     };
 
 
-
-    /* =====================================
-       MODIFICATION
-    ====================================== */
-
-    if(produitEnModification){
+    let resultat;
 
 
-        const {
-            error
-        } = await supabaseClient
+    if (produitEnModification) {
 
+        resultat = await supabaseClient
             .from("produits")
-
             .update(produit)
+            .eq("id", produitEnModification);
 
-            .eq(
-                "id",
-                produitEnModification
-            );
+    } else {
 
-
-
-        if(error){
-
-            console.error(
-                "Erreur modification :",
-                error
-            );
-
-
-            message.style.color =
-                "red";
-
-
-            message.textContent =
-                "Erreur lors de la modification du produit.";
-
-
-            return;
-
-        }
-
-
-
-        message.style.color =
-            "green";
-
-
-        message.textContent =
-            "✅ Produit modifié avec succès.";
-
-    }
-
-
-
-    /* =====================================
-       AJOUT
-    ====================================== */
-
-    else{
-
-
-        const {
-            error
-        } = await supabaseClient
-
+        resultat = await supabaseClient
             .from("produits")
-
             .insert(produit);
 
-
-
-        if(error){
-
-            console.error(
-                "Erreur ajout :",
-                error
-            );
-
-
-            message.style.color =
-                "red";
-
-
-            message.textContent =
-                "Erreur lors de l'ajout du produit.";
-
-
-            return;
-
-        }
-
-
-
-        message.style.color =
-            "green";
-
-
-        message.textContent =
-            "✅ Produit ajouté avec succès.";
-
     }
 
 
+    if (resultat.error) {
 
-    /* =====================================
-       APRÈS ENREGISTREMENT
-    ====================================== */
+        message.style.color = "red";
+        message.textContent =
+            resultat.error.message;
+
+        return;
+    }
+
+
+    message.style.color = "green";
+
+    message.textContent =
+        produitEnModification
+        ? "✅ Produit modifié."
+        : "✅ Produit ajouté.";
+
 
     reinitialiserFormulaire();
 
-
     await chargerProduits();
-
 }
 
 
+/* Modifier */
+async function modifierProduit(id) {
 
-
-/* =========================================
-   MODIFIER UN PRODUIT
-========================================= */
-
-async function modifierProduit(id){
-
-
-    const {
-        data,
-        error
-    } = await supabaseClient
-
+    const { data, error } = await supabaseClient
         .from("produits")
-
         .select("*")
-
-        .eq(
-            "id",
-            id
-        )
-
+        .eq("id", id)
         .single();
 
 
-
-    if(error){
-
-        console.error(
-            "Erreur récupération produit :",
-            error
-        );
-
-
-        alert(
-            "Impossible de récupérer le produit."
-        );
-
-
+    if (error) {
+        alert(error.message);
         return;
-
     }
 
 
+    produitEnModification = data.id;
 
-    /* ENREGISTRER L'ID */
-
-    produitEnModification =
-        data.id;
-
-
-
-    /* REMPLIR LE FORMULAIRE */
-
-    document
-        .getElementById("nom")
-        .value =
-        data.nom || "";
+    document.getElementById("nom").value = data.nom || "";
+    document.getElementById("prix").value = data.prix ?? "";
+    document.getElementById("description").value = data.description || "";
+    document.getElementById("categorie").value = data.categorie || "";
+    document.getElementById("image_url").value = data.image_url || "";
+    document.getElementById("lien_achat").value = data.lien_achat || "";
+    document.getElementById("actif").checked = data.actif;
 
 
-
-    document
-        .getElementById("prix")
-        .value =
-        data.prix ?? "";
-
-
-
-    document
-        .getElementById("description")
-        .value =
-        data.description || "";
-
-
-
-    document
-        .getElementById("categorie")
-        .value =
-        data.categorie || "";
-
-
-
-    document
-        .getElementById("image_url")
-        .value =
-        data.image_url || "";
-
-
-
-    document
-        .getElementById("lien_achat")
-        .value =
-        data.lien_achat || "";
-
-
-
-    document
-        .getElementById("actif")
-        .checked =
-        data.actif;
-
-
-
-    /* MODIFIER LE TITRE */
-
-    document
-        .getElementById(
-            "titreFormulaire"
-        )
-        .textContent =
+    document.getElementById("titreFormulaire").textContent =
         "✏️ Modifier le produit";
 
-
-
-    /* MODIFIER LE BOUTON */
-
-    document
-        .getElementById(
-            "boutonEnregistrer"
-        )
-        .textContent =
+    document.getElementById("boutonEnregistrer").textContent =
         "Enregistrer les modifications";
 
-
-
-    /* AFFICHER ANNULER */
-
-    document
-        .getElementById(
-            "boutonAnnuler"
-        )
-        .style.display =
+    document.getElementById("boutonAnnuler").style.display =
         "inline-block";
 
 
-
-    /* REMONTER EN HAUT */
-
     window.scrollTo({
-
         top: 0,
-
         behavior: "smooth"
-
     });
-
 }
 
 
+/* Activer / désactiver */
+async function changerStatut(id, nouveauStatut) {
 
-
-/* =========================================
-   ACTIVER / DÉSACTIVER
-========================================= */
-
-async function changerStatut(
-    id,
-    nouveauStatut
-){
-
-
-    const {
-        error
-    } = await supabaseClient
-
+    const { error } = await supabaseClient
         .from("produits")
-
-        .update({
-
-            actif:
-                nouveauStatut
-
-        })
-
-        .eq(
-            "id",
-            id
-        );
+        .update({ actif: nouveauStatut })
+        .eq("id", id);
 
 
-
-    if(error){
-
-        console.error(
-            "Erreur statut :",
-            error
-        );
-
-
-        alert(
-            "Impossible de modifier le statut."
-        );
-
-
+    if (error) {
+        alert(error.message);
         return;
-
     }
-
 
 
     await chargerProduits();
-
 }
 
 
+/* Supprimer */
+async function supprimerProduit(id) {
 
-
-/* =========================================
-   SUPPRIMER UN PRODUIT
-========================================= */
-
-async function supprimerProduit(id){
-
-
-    const confirmation =
-        confirm(
-            "Voulez-vous vraiment supprimer ce produit ?"
-        );
-
-
-
-    if(!confirmation){
-
+    if (!confirm("Voulez-vous vraiment supprimer ce produit ?")) {
         return;
-
     }
 
 
-
-    const {
-        error
-    } = await supabaseClient
-
+    const { error } = await supabaseClient
         .from("produits")
-
         .delete()
-
-        .eq(
-            "id",
-            id
-        );
+        .eq("id", id);
 
 
-
-    if(error){
-
-        console.error(
-            "Erreur suppression :",
-            error
-        );
-
-
-        alert(
-            "Impossible de supprimer le produit."
-        );
-
-
+    if (error) {
+        alert(error.message);
         return;
-
     }
 
 
-
     await chargerProduits();
-
 }
 
 
-
-
-/* =========================================
-   ANNULER UNE MODIFICATION
-========================================= */
-
-function annulerModification(){
-
+/* Annuler */
+function annulerModification() {
     reinitialiserFormulaire();
-
 }
 
 
+/* Réinitialiser */
+function reinitialiserFormulaire() {
 
+    produitEnModification = null;
 
-/* =========================================
-   RÉINITIALISER LE FORMULAIRE
-========================================= */
+    document.getElementById("nom").value = "";
+    document.getElementById("prix").value = "";
+    document.getElementById("description").value = "";
+    document.getElementById("categorie").value = "";
+    document.getElementById("image_url").value = "";
+    document.getElementById("lien_achat").value = "";
+    document.getElementById("actif").checked = true;
 
-function reinitialiserFormulaire(){
-
-
-    produitEnModification =
-        null;
-
-
-
-    document
-        .getElementById("nom")
-        .value = "";
-
-
-
-    document
-        .getElementById("prix")
-        .value = "";
-
-
-
-    document
-        .getElementById("description")
-        .value = "";
-
-
-
-    document
-        .getElementById("categorie")
-        .value = "";
-
-
-
-    document
-        .getElementById("image_url")
-        .value = "";
-
-
-
-    document
-        .getElementById("lien_achat")
-        .value = "";
-
-
-
-    document
-        .getElementById("actif")
-        .checked = true;
-
-
-
-    document
-        .getElementById(
-            "titreFormulaire"
-        )
-        .textContent =
+    document.getElementById("titreFormulaire").textContent =
         "➕ Ajouter un produit";
 
-
-
-    document
-        .getElementById(
-            "boutonEnregistrer"
-        )
-        .textContent =
+    document.getElementById("boutonEnregistrer").textContent =
         "Ajouter le produit";
 
-
-
-    document
-        .getElementById(
-            "boutonAnnuler"
-        )
-        .style.display =
+    document.getElementById("boutonAnnuler").style.display =
         "none";
-
-
-
-    document
-        .getElementById(
-            "message"
-        )
-        .textContent = "";
-
 }
 
 
-
-
-/* =========================================
-   PROTECTION CONTRE L'INSERTION HTML
-========================================= */
-
-function echapperHTML(texte){
+/* Protection du HTML */
+function echapperHTML(texte) {
 
     return String(texte)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
 
-        .replace(
-            /&/g,
-            "&amp;"
-        )
 
-        .replace(
-            /</g,
-            
+/* Chargement initial */
+document.addEventListener("DOMContentLoaded", () => {
+    chargerProduits();
+});
+
+</script>
+
+</body>
+</html>
