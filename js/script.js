@@ -11,7 +11,7 @@ const SUPABASE_URL =
     "https://vfnqwdwgkocpkkaofrum.supabase.com";
 
 const SUPABASE_PUBLISHABLE_KEY =
-    "COLLE_TA_PUBLISHABLE_KEY_ICI";
+    "sb_publishable_BOFyx3zpbcwtN6h-3N0wLw_L1QOJWR-";
 
 
 const supabaseClient =
