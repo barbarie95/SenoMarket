@@ -73,9 +73,10 @@ Notre objectif est de permettre à chaque affilié de profiter rapidement des r�
 
 <p>
 1. Inscrivez-vous au programme.<br>
-2. Recevez vos liens d'affiliation.<br>
-3. Partagez les produits SenoMarket.<br>
-4. Gagnez des commissions sur vos ventes.
+2. Votre demande est examinée par SenoMarket.<br>
+3. Après validation, vous recevez votre code et votre lien d'affiliation.<br>
+4. Partagez les produits SenoMarket.<br>
+5. Gagnez des commissions sur vos ventes.
 </p>
 
 <h3>Vos avantages</h3>
@@ -108,7 +109,11 @@ Nom complet
 
 <br>
 
-<input type="text" name="nom" placeholder="Votre nom complet" required>
+<input
+type="text"
+name="nom"
+placeholder="Votre nom complet"
+required>
 
 <br><br>
 
@@ -118,7 +123,11 @@ WhatsApp
 
 <br>
 
-<input type="tel" name="whatsapp" placeholder="Votre numéro WhatsApp" required>
+<input
+type="tel"
+name="whatsapp"
+placeholder="Votre numéro WhatsApp"
+required>
 
 <br><br>
 
@@ -128,7 +137,11 @@ Email
 
 <br>
 
-<input type="email" name="email" placeholder="Votre adresse email" required>
+<input
+type="email"
+name="email"
+placeholder="Votre adresse email"
+required>
 
 <br><br>
 
@@ -138,7 +151,11 @@ Pays
 
 <br>
 
-<input type="text" name="pays" placeholder="Votre pays" required>
+<input
+type="text"
+name="pays"
+placeholder="Votre pays"
+required>
 
 <br><br>
 
@@ -196,7 +213,8 @@ Pourquoi voulez-vous devenir affilié ?
 
 <textarea
 name="motivation"
-placeholder="Votre motivation"></textarea>
+placeholder="Votre motivation">
+</textarea>
 
 <br><br>
 
@@ -210,28 +228,6 @@ Envoyer ma demande
 </button>
 
 <p id="message"></p>
-
-<div id="resultat" style="display:none;">
-
-<h3>🎉 Félicitations !</h3>
-
-<p>Votre inscription affilié a été enregistrée.</p>
-
-<p>
-<strong>Votre code affilié :</strong><br>
-<span id="codeAffilie"></span>
-</p>
-
-<p>
-<strong>Votre lien affilié :</strong><br>
-<a id="lienAffilie" href="#" target="_blank"></a>
-</p>
-
-<p>
-Conservez précieusement ces informations.
-</p>
-
-</div>
 
 </form>
 
@@ -253,159 +249,280 @@ Politique de confidentialité
 
 <script>
 
-const SUPABASE_URL = 'https://vfnqwdwgkocpkkaofrum.supabase.co';
+const SUPABASE_URL =
+'https://vfnqwdwgkocpkkaofrum.supabase.co';
 
-const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_BOFyx3zpbcwtN6h-3N0wLw_L1QOJWR-';
+const SUPABASE_PUBLISHABLE_KEY =
+'sb_publishable_BOFyx3zpbcwtN6h-3N0wLw_L1QOJWR-';
 
-const form = document.getElementById('affiliationForm');
-const button = document.getElementById('submitButton');
-const message = document.getElementById('message');
-const resultat = document.getElementById('resultat');
+const form =
+document.getElementById('affiliationForm');
+
+const button =
+document.getElementById('submitButton');
+
+const message =
+document.getElementById('message');
+
 
 form.addEventListener('submit', async function(event) {
 
-  event.preventDefault();
+event.preventDefault();
 
-  button.disabled = true;
-  button.textContent = 'Enregistrement...';
+button.disabled = true;
 
-  message.textContent = '';
-  resultat.style.display = 'none';
+button.textContent =
+'Enregistrement...';
 
-  const formData = {
-    p_nom: this.nom.value.trim(),
-    p_email: this.email.value.trim(),
-    p_whatsapp: this.whatsapp.value.trim(),
-    p_pays: this.pays.value.trim(),
-    p_methode_paiement: this.paiement.value,
-    p_numero_paiement: this.numero_paiement.value.trim(),
-    p_motivation: this.motivation.value.trim()
-  };
+message.textContent = '';
 
-  try {
 
-    /* 1. Création de l'affilié dans Supabase */
+const formData = {
 
-    const response = await fetch(
-      SUPABASE_URL + '/rest/v1/rpc/inscrire_affilie',
-      {
-        method: 'POST',
+p_nom: this.nom.value.trim(),
 
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': SUPABASE_PUBLISHABLE_KEY,
-          'Authorization': 'Bearer ' + SUPABASE_PUBLISHABLE_KEY
-        },
+p_email: this.email.value.trim(),
 
-        body: JSON.stringify(formData)
-      }
-    );
+p_whatsapp: this.whatsapp.value.trim(),
 
-    const data = await response.json();
+p_pays: this.pays.value.trim(),
 
-    if (!response.ok) {
-      throw new Error(
-        data.message ||
-        data.error_description ||
-        'Erreur lors de l'inscription.'
-      );
-    }
+p_methode_paiement:
+this.paiement.value,
 
-    const affilié = Array.isArray(data) ? data[0] : data;
+p_numero_paiement:
+this.numero_paiement.value.trim(),
 
-    if (!affilié) {
-      throw new Error('Aucune information affilié reçue.');
-    }
+p_motivation:
+this.motivation.value.trim()
 
-    /* 2. Récupération du code et du lien */
+};
 
-    const codeAffilie = affilié.code_affilie || '';
-    const lienAffilie = affilié.lien_affilie || '';
 
-    if (!codeAffilie || !lienAffilie) {
-      throw new Error(
-        'Le code ou le lien affilié n’a pas été retourné par Supabase.'
-      );
-    }
+try {
 
-    /* 3. Affichage du code et du lien */
+/*
+1. Enregistrement de la demande
+dans Supabase.
+*/
 
-    document.getElementById('codeAffilie').textContent =
-      codeAffilie;
+const response = await fetch(
 
-    const lienComplet = lienAffilie.startsWith('http')
-      ? lienAffilie
-      : new URL(lienAffilie, window.location.href).href;
+SUPABASE_URL +
+'/rest/v1/rpc/inscrire_affilie',
 
-    const lienElement = document.getElementById('lienAffilie');
+{
 
-    lienElement.href = lienComplet;
-    lienElement.textContent = lienComplet;
+method: 'POST',
 
-    resultat.style.display = 'block';
+headers: {
 
-    /* 4. Notification par email via notify-affiliation */
+'Content-Type':
+'application/json',
 
-    const notificationResponse = await fetch(
-      SUPABASE_URL + '/functions/v1/notify-affiliation',
-      {
-        method: 'POST',
+'apikey':
+SUPABASE_PUBLISHABLE_KEY,
 
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': SUPABASE_PUBLISHABLE_KEY,
-          'Authorization': 'Bearer ' + SUPABASE_PUBLISHABLE_KEY
-        },
+'Authorization':
+'Bearer ' +
+SUPABASE_PUBLISHABLE_KEY
 
-        body: JSON.stringify({
-          nom: this.nom.value.trim(),
-          email: this.email.value.trim(),
-          whatsapp: this.whatsapp.value.trim(),
-          pays: this.pays.value.trim(),
-          paiement: this.paiement.value,
-          numero_paiement: this.numero_paiement.value.trim(),
-          motivation: this.motivation.value.trim(),
-          code_affilie: codeAffilie,
-          lien_affilie: lienComplet
-        })
-      }
-    );
+},
 
-    const notificationData = await notificationResponse.json();
+body:
+JSON.stringify(formData)
 
-    if (!notificationResponse.ok || !notificationData.success) {
+}
 
-      console.error(
-        'Erreur notification :',
-        notificationData
-      );
+);
 
-      message.textContent =
-        'Inscription enregistrée, mais la notification email n’a pas pu être envoyée.';
 
-    } else {
+const data =
+await response.json();
 
-      message.textContent =
-        'Inscription réussie ! Votre demande a également été envoyée.';
 
-    }
+if (!response.ok) {
 
-    form.reset();
+throw new Error(
 
-  } catch (error) {
+data.message ||
 
-    console.error('Erreur inscription affilié :', error);
+data.error_description ||
 
-    message.textContent =
-      error.message ||
-      'Une erreur est survenue. Veuillez réessayer.';
+'Erreur lors de l'inscription.'
 
-  } finally {
+);
 
-    button.disabled = false;
-    button.textContent = 'Envoyer ma demande';
+}
 
-  }
+
+const affilié =
+Array.isArray(data)
+? data[0]
+: data;
+
+
+if (!affilié) {
+
+throw new Error(
+'Aucune information affilié reçue.'
+);
+
+}
+
+
+/*
+2. Supabase génère le code
+et le lien affilié.
+*/
+
+const codeAffilie =
+affilié.code_affilie || '';
+
+const lienAffilie =
+affilié.lien_affilie || '';
+
+
+if (!codeAffilie || !lienAffilie) {
+
+throw new Error(
+'Le code ou le lien affilié n’a pas été généré.'
+);
+
+}
+
+
+const lienComplet =
+lienAffilie.startsWith('http')
+
+? lienAffilie
+
+: new URL(
+lienAffilie,
+window.location.href
+).href;
+
+
+/*
+3. Envoi des informations
+à notify-affiliation.
+
+Le code et le lien sont envoyés
+à l'administrateur par email.
+
+Ils ne sont PAS affichés
+à l'affilié.
+*/
+
+const notificationResponse =
+await fetch(
+
+SUPABASE_URL +
+'/functions/v1/notify-affiliation',
+
+{
+
+method: 'POST',
+
+headers: {
+
+'Content-Type':
+'application/json',
+
+'apikey':
+SUPABASE_PUBLISHABLE_KEY,
+
+'Authorization':
+'Bearer ' +
+SUPABASE_PUBLISHABLE_KEY
+
+},
+
+body:
+JSON.stringify({
+
+nom:
+this.nom.value.trim(),
+
+email:
+this.email.value.trim(),
+
+whatsapp:
+this.whatsapp.value.trim(),
+
+pays:
+this.pays.value.trim(),
+
+paiement:
+this.paiement.value,
+
+numero_paiement:
+this.numero_paiement.value.trim(),
+
+motivation:
+this.motivation.value.trim(),
+
+code_affilie:
+codeAffilie,
+
+lien_affilie:
+lienComplet
+
+})
+
+}
+
+);
+
+
+const notificationData =
+await notificationResponse.json();
+
+
+if (
+!notificationResponse.ok ||
+!notificationData.success
+) {
+
+console.error(
+'Erreur notification :',
+notificationData
+);
+
+message.textContent =
+'Votre demande a été enregistrée, mais la notification email n’a pas pu être envoyée.';
+
+} else {
+
+message.textContent =
+'✅ Votre demande d’affiliation a bien été enregistrée. Elle est maintenant en attente de validation.';
+
+}
+
+
+form.reset();
+
+
+} catch (error) {
+
+console.error(
+'Erreur inscription affilié :',
+error
+);
+
+message.textContent =
+error.message ||
+'Une erreur est survenue. Veuillez réessayer.';
+
+
+} finally {
+
+button.disabled = false;
+
+button.textContent =
+'Envoyer ma demande';
+
+}
 
 });
 
@@ -413,4 +530,4 @@ form.addEventListener('submit', async function(event) {
 
 </body>
 
-  </html>
+</html>
