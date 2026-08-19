@@ -2,137 +2,342 @@
 <html lang="fr">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Espace Affilié - SenoMarket</title>
 
 <link rel="stylesheet" href="css/style.css">
+
 </head>
 
 <body>
 
+
 <header>
 
 <div class="logo">
-<img src="images/logo-seno.png" alt="Logo SenoMarket">
+
+<img
+src="images/logo-seno.png"
+alt="Logo SenoMarket">
+
 </div>
 
+
 <nav>
-<a href="index.html">Accueil</a>
-<a href="boutique.html">Boutique</a>
-<a href="blog.html">Blog</a>
-<a href="affiliation.html">Affiliation</a>
-<a href="espace-affilie.html">Espace Affilié</a>
-<a href="contact.html">Contact</a>
+
+<a href="index.html">
+Accueil
+</a>
+
+<a href="boutique.html">
+Boutique
+</a>
+
+<a href="blog.html">
+Blog
+</a>
+
+<a href="affiliation.html">
+Affiliation
+</a>
+
+<a href="espace-affilie.html">
+Espace Affilié
+</a>
+
+<a href="contact.html">
+Contact
+</a>
+
 </nav>
 
-<a href="boutique.html" class="btn">
+
+<a
+href="boutique.html"
+class="btn">
+
 Boutique
+
 </a>
 
 </header>
 
+
+
 <section class="affiliate">
 
-<h2>🚀 Espace Affilié SenoMarket</h2>
+
+<h2>
+🚀 Espace Affilié SenoMarket
+</h2>
+
 
 <p>
 Bienvenue dans votre espace partenaire.
 Entrez votre code affilié pour accéder à votre tableau de bord.
 </p>
 
-<div class="card" id="login-box">
 
-<h3>🔑 Accès affilié</h3>
+
+<!-- =========================================
+     CONNEXION
+========================================= -->
+
+<div
+class="card"
+id="login-box">
+
+<h3>
+🔑 Accès affilié
+</h3>
+
 
 <input
 type="text"
 id="code-input"
 placeholder="Entrez votre code affilié"
-style="padding:12px;width:80%;border-radius:10px;">
+autocomplete="off"
+style="padding:12px;width:80%;border-radius:10px;"
+>
+
 
 <br><br>
 
-<button onclick="verifierCode()" class="gold-btn">
+
+<button
+onclick="verifierCode()"
+class="gold-btn"
+id="login-button">
+
 Accéder à mon espace
+
 </button>
 
-<p id="login-error" style="color:red;"></p>
+
+<p
+id="login-error"
+style="color:red;">
+</p>
 
 </div>
 
-<div id="dashboard" style="display:none;">
+
+
+<!-- =========================================
+     TABLEAU DE BORD
+========================================= -->
+
+<div
+id="dashboard"
+style="display:none;">
+
+
+
+<!-- PROFIL -->
 
 <div class="card">
 
-<h3>👤 Votre profil affilié</h3>
+<h3>
+👤 Votre profil affilié
+</h3>
 
-<p>Nom : <span id="aff-nom"></span></p>
-
-<p>Code affilié :</p>
-
-<div style="background:#111;padding:15px;border-radius:10px;color:#FFD700;font-size:22px;" id="aff-code">
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>🔗 Votre lien affilié</h3>
-
-<p>Votre lien personnel :</p>
-
-<div style="background:#111;padding:15px;border-radius:10px;word-break:break-all;" id="aff-lien">
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>📊 Vos statistiques</h3>
-
-<p>Ventes réalisées :</p>
-
-<h2 style="color:#FFD700;" id="aff-ventes">
-0
-</h2>
-
-<p>Commission gagnée :</p>
-
-<h2 style="color:#FFD700;" id="aff-commission">
-0 FCFA
-</h2>
-
-<p>Commission par vente :</p>
-
-<h2 style="color:#FFD700;">
-25 %
-</h2>
-
-</div>
-<div class="card">
-
-<h3>💰 Demander un paiement</h3>
 
 <p>
-Lorsque vous avez gagné des commissions, vous pouvez demander votre retrait.
+Nom :
+<span id="aff-nom">
+</span>
 </p>
 
-<p style="font-size:13px;color:#aaa;">
-⚠️ Le retrait est toujours total, pas de retrait partiel possible.
+
+<p>
+Code affilié :
 </p>
 
-<a href="contact.html" class="gold-btn">
+
+<div
+style="
+background:#111;
+padding:15px;
+border-radius:10px;
+color:#FFD700;
+font-size:22px;
+"
+id="aff-code">
+
+</div>
+
+</div>
+
+
+
+<!-- LIEN -->
+
+<div class="card">
+
+<h3>
+🔗 Votre lien affilié
+</h3>
+
+
+<p>
+Votre lien personnel :
+</p>
+
+
+<div
+style="
+background:#111;
+padding:15px;
+border-radius:10px;
+word-break:break-all;
+"
+id="aff-lien">
+
+</div>
+
+
+<br>
+
+
+<button
+class="gold-btn"
+onclick="copierLien()">
+
+📋 Copier mon lien
+
+</button>
+
+
+<p
+id="copie-message"
+style="display:none;">
+
+✅ Lien copié !
+
+</p>
+
+</div>
+
+
+
+<!-- STATISTIQUES -->
+
+<div class="card">
+
+<h3>
+📊 Vos statistiques
+</h3>
+
+
+<p>
+Ventes réalisées :
+</p>
+
+
+<h2
+style="color:#FFD700;"
+id="aff-ventes">
+
+0
+
+</h2>
+
+
+<p>
+Montant total des ventes :
+</p>
+
+
+<h2
+style="color:#FFD700;"
+id="aff-total-ventes">
+
+0 FCFA
+
+</h2>
+
+
+<p>
+Commission gagnée :
+</p>
+
+
+<h2
+style="color:#FFD700;"
+id="aff-commission">
+
+0 FCFA
+
+</h2>
+
+
+<p>
+Commission par vente :
+</p>
+
+
+<h2
+style="color:#FFD700;">
+
+25 %
+
+</h2>
+
+</div>
+
+
+
+<!-- RETRAIT -->
+
+<div class="card">
+
+<h3>
+💰 Demander un paiement
+</h3>
+
+
+<p>
+
+Lorsque vous avez gagné des commissions,
+vous pouvez demander votre retrait.
+
+</p>
+
+
+<p
+style="font-size:13px;color:#aaa;">
+
+⚠️ Le retrait est toujours total,
+pas de retrait partiel possible.
+
+</p>
+
+
+<a
+href="contact.html"
+class="gold-btn">
+
 Demander mon paiement
+
 </a>
 
 </div>
 
 
+
+<!-- HISTORIQUE -->
+
 <div class="card">
 
-<h3>📋 Historique des commissions</h3>
+<h3>
+📋 Historique des commissions
+</h3>
+
+
+<div id="historique">
 
 <p>
 Aucune commission enregistrée pour le moment.
@@ -140,22 +345,34 @@ Aucune commission enregistrée pour le moment.
 
 </div>
 
+</div>
+
+
+
+<!-- EXPLICATION -->
 
 <div class="card">
 
-<h3>❓ Comment ça fonctionne ?</h3>
+<h3>
+❓ Comment ça fonctionne ?
+</h3>
+
 
 <p>
 
-1. Recevez votre code affilié.<br><br>
+1. Recevez votre code affilié.
+<br><br>
 
-2. Partagez votre lien affilié.<br><br>
+2. Partagez votre lien affilié.
+<br><br>
 
-3. Vos clients achètent vos produits recommandés.<br><br>
+3. Vos clients achètent vos produits recommandés.
+<br><br>
 
-4. Vos commissions sont calculées.<br><br>
+4. Vos commissions sont calculées.
+<br><br>
 
-5. Vous recevez votre paiement.
+5. Vous pouvez demander votre paiement.
 
 </p>
 
@@ -164,39 +381,374 @@ Aucune commission enregistrée pour le moment.
 
 </div>
 
+
 </section>
+
 
 
 <footer>
 
 <p>
-© 2026 SenoMarket - Transformez vos idées en réussite
+
+© 2026 SenoMarket -
+Transformez vos idées en réussite
+
 </p>
 
+
 <a href="politique-confidentialite.html">
+
 Politique de confidentialité
+
 </a>
 
 </footer>
 
 
+
 <script>
 
 
-const WEBHOOK_VERIFICATION = "https://hook.eu1.make.com/jtxh7qteiz9nnpeovrgicbd0mr3dguqn";
+/* =========================================
+   SUPABASE
+========================================= */
+
+const SUPABASE_URL =
+'https://vfnqwdwgkocpkkaofrum.supabase.co';
+
+
+const SUPABASE_PUBLISHABLE_KEY =
+'sb_publishable_BOFyx3zpbcwtN6h-3N0wLw_L1QOJWR-';
+
+
+
+/* =========================================
+   VARIABLES
+========================================= */
+
+let lienAffilieActuel = '';
+
+
+
+/* =========================================
+   VÉRIFICATION DU CODE
+========================================= */
 
 async function verifierCode(){
 
-const code = document.getElementById("code-input").value.trim();
 
-const errorBox = document.getElementById("login-error");
+const code =
+document
+.getElementById("code-input")
+.value
+.trim();
+
+
+const errorBox =
+document.getElementById("login-error");
+
+
+const button =
+document.getElementById("login-button");
+
 
 errorBox.textContent = "";
 
 
 if(!code){
 
-errorBox.textContent = "Merci d'entrer votre code.";
+errorBox.textContent =
+"Merci d'entrer votre code.";
+
+return;
+
+}
+
+
+button.disabled = true;
+
+button.textContent =
+"Vérification...";
+
+
+try{
+
+
+/* =========================================
+   APPEL SUPABASE
+========================================= */
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+'/rest/v1/rpc/obtenir_espace_affilie',
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":
+"application/json",
+
+"apikey":
+SUPABASE_PUBLISHABLE_KEY,
+
+"Authorization":
+"Bearer " +
+SUPABASE_PUBLISHABLE_KEY
+
+},
+
+body:JSON.stringify({
+
+p_code_affilie:
+code
+
+})
+
+});
+
+
+const texte =
+await response.text();
+
+
+let data;
+
+
+try{
+
+data =
+JSON.parse(texte);
+
+}catch{
+
+throw new Error(
+"Réponse inattendue de Supabase : " +
+texte
+);
+
+}
+
+
+if(!response.ok){
+
+throw new Error(
+
+data.message ||
+data.error_description ||
+JSON.stringify(data)
+
+);
+
+}
+
+
+/* =========================================
+   RÉCUPÉRER L'AFFILIÉ
+========================================= */
+
+const affilié =
+Array.isArray(data)
+? data[0]
+: data;
+
+
+if(!affilié){
+
+throw new Error(
+"Code affilié introuvable."
+);
+
+}
+
+
+/* =========================================
+   PROFIL
+========================================= */
+
+document
+.getElementById("aff-nom")
+.textContent =
+affilié.nom || "";
+
+
+document
+.getElementById("aff-code")
+.textContent =
+affilié.code_affilie || code;
+
+
+
+/* =========================================
+   LIEN AFFILIÉ
+========================================= */
+
+let lien =
+affilié.lien_affilie;
+
+
+if(
+!lien ||
+!lien.startsWith("http")
+){
+
+const page =
+lien ||
+"boutique.html";
+
+
+const separateur =
+page.includes("?")
+? "&"
+: "?";
+
+
+lien =
+new URL(
+page,
+window.location.href
+).href +
+separateur +
+"ref=" +
+encodeURIComponent(
+affilié.code_affilie || code
+);
+
+}
+
+
+/*
+   On conserve le lien complet en mémoire.
+   Il n'est pas affiché sous forme d'une
+   énorme URL.
+*/
+
+lienAffilieActuel =
+lien;
+
+
+document
+.getElementById("aff-lien")
+.textContent =
+"🔗 Votre lien personnel est prêt.";
+
+
+
+/* =========================================
+   STATISTIQUES
+========================================= */
+
+document
+.getElementById("aff-ventes")
+.textContent =
+affilié.ventes || 0;
+
+
+document
+.getElementById("aff-total-ventes")
+.textContent =
+(
+Number(
+affilié.total_ventes || 0
+)
+).toLocaleString("fr-FR")
++
+" FCFA";
+
+
+document
+.getElementById("aff-commission")
+.textContent =
+(
+Number(
+affilié.commission || 0
+)
+).toLocaleString("fr-FR")
++
+" FCFA";
+
+
+
+/* =========================================
+   AFFICHER DASHBOARD
+========================================= */
+
+document
+.getElementById("login-box")
+.style.display =
+"none";
+
+
+document
+.getElementById("dashboard")
+.style.display =
+"block";
+
+
+/* =========================================
+   MÉMORISER LE CODE
+========================================= */
+
+sessionStorage.setItem(
+"codeAffilie",
+affilié.code_affilie || code
+);
+
+
+}
+catch(error){
+
+console.error(
+"Erreur espace affilié :",
+error
+);
+
+
+errorBox.textContent =
+"❌ " +
+(
+error.message ||
+"Code affilié introuvable."
+);
+
+}
+finally{
+
+button.disabled = false;
+
+button.textContent =
+"Accéder à mon espace";
+
+}
+
+}
+
+
+
+/* =========================================
+   COPIER LE LIEN
+========================================= */
+
+async function copierLien(){
+
+
+const message =
+document.getElementById(
+"copie-message"
+);
+
+
+if(!lienAffilieActuel){
+
+message.style.display =
+"block";
+
+message.textContent =
+"❌ Aucun lien disponible.";
 
 return;
 
@@ -206,72 +758,44 @@ return;
 try{
 
 
-const res = await fetch(WEBHOOK_VERIFICATION,{
+await navigator.clipboard.writeText(
+lienAffilieActuel
+);
 
-method:"POST",
 
-headers:{
-"Content-Type":"application/json"
+message.style.display =
+"block";
+
+message.textContent =
+"✅ Lien copié !";
+
+
+setTimeout(
+
+function(){
+
+message.style.display =
+"none";
+
 },
 
-body:JSON.stringify({
-code:code
-})
+3000
 
-});
-
-
-if(!res.ok){
-
-throw new Error();
-
-}
-
-
-const data = await res.json();
-
-
-document.getElementById("aff-nom").textContent = data.nom;
-
-document.getElementById("aff-code").textContent = code;
-
-
-document.getElementById("aff-lien").textContent =
-"https://barbarie95.github.io/SenoMarket/boutique.html?ref=" 
-+ code 
-+ "&nom=" 
-+ encodeURIComponent(data.nom);
-
-
-document.getElementById("aff-ventes").textContent =
-data.ventes;
-
-
-document.getElementById("aff-commission").textContent =
-data.commission + " FCFA";
-
-
-document.getElementById("login-box").style.display="none";
-
-document.getElementById("dashboard").style.display="block";
-
-
-sessionStorage.setItem("codeAffilie",code);
-
+);
 
 
 }
+catch(error){
 
-catch(e){
+message.style.display =
+"block";
 
-errorBox.textContent =
-"Code affilié introuvable. Vérifiez votre code.";
+message.textContent =
+"❌ Impossible de copier le lien.";
 
 }
 
-
 }
-
 
 </script>
 
