@@ -10,6 +10,9 @@
 
 <link rel="stylesheet" href="css/style.css">
 
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 
 
@@ -60,13 +63,11 @@ Commencer
 
 
 
-
 <section class="products">
 
 <h2>
 🛒 Boutique SenoMarket
 </h2>
-
 
 
 <div class="search-box">
@@ -81,9 +82,12 @@ onkeyup="searchProduct()">
 
 
 
+<!-- =========================================
+     TES 9 ANCIENS PRODUITS
+     ILS RESTENT DANS LA BOUTIQUE
+========================================= -->
 
 <div class="product-grid">
-
 
 
 <div class="product">
@@ -109,7 +113,6 @@ Acheter maintenant
 </a>
 
 </div>
-
 
 
 
@@ -139,7 +142,6 @@ Acheter maintenant
 
 
 
-
 <div class="product">
 
 <img
@@ -163,7 +165,6 @@ Acheter maintenant
 </a>
 
 </div>
-
 
 
 
@@ -193,7 +194,6 @@ Acheter maintenant
 
 
 
-
 <div class="product">
 
 <img
@@ -217,7 +217,6 @@ Acheter maintenant
 </a>
 
 </div>
-
 
 
 
@@ -247,7 +246,6 @@ Acheter maintenant
 
 
 
-
 <div class="product">
 
 <img
@@ -271,7 +269,6 @@ Acheter maintenant
 </a>
 
 </div>
-
 
 
 
@@ -301,7 +298,6 @@ Acheter maintenant
 
 
 
-
 <div class="product">
 
 <img
@@ -327,9 +323,32 @@ Acheter maintenant
 </div>
 
 
+</div>
+
+
+
+<!-- =========================================
+     NOUVEAUX PRODUITS SUPABASE
+========================================= -->
+
+<br><br>
+
+<h2>
+✨ Nouveaux produits
+</h2>
+
+<div
+class="product-grid"
+id="nouveaux-produits">
+
+<p>
+Chargement des nouveaux produits...
+</p>
+
+</div>
+
 
 </section>
-
 
 
 
@@ -348,12 +367,17 @@ Politique de confidentialité
 
 
 
+<!-- Ton JavaScript principal -->
 
 <script src="js/script.js"></script>
 
 
 
 <script>
+
+/* =========================================
+   AFFILIATION
+========================================= */
 
 let parametre =
 new URLSearchParams(window.location.search);
@@ -364,10 +388,10 @@ parametre.get("ref");
 
 if (code) {
 
-localStorage.setItem(
-"affilie",
-code
-);
+    localStorage.setItem(
+        "affilie",
+        code
+    );
 
 }
 
@@ -376,46 +400,218 @@ let codeAffilie =
 localStorage.getItem("affilie");
 
 
+/* Message affilié */
+
 if (codeAffilie) {
 
-document.body.insertAdjacentHTML(
+    document.body.insertAdjacentHTML(
 
-"afterbegin",
+        "afterbegin",
 
-`<div style="
-background:#FFD700;
-color:#000;
-padding:15px;
-text-align:center;
-font-weight:bold;
-">
-Vous êtes arrivé grâce au partenaire SenoMarket
-</div>`
+        `<div style="
+        background:#FFD700;
+        color:#000;
+        padding:15px;
+        text-align:center;
+        font-weight:bold;
+        ">
+        Vous êtes arrivé grâce au partenaire SenoMarket
+        </div>`
 
-);
-
-
-document
-.querySelectorAll(".gold-btn")
-.forEach(function(lien) {
-
-const url =
-new URL(lien.href);
-
-url.searchParams.set(
-"custom_fields[code_affilie]",
-codeAffilie
-);
-
-lien.href =
-url.toString();
-
-});
+    );
 
 }
 
-</script>
 
+/* =========================================
+   AJOUTER LE CODE AFFILIÉ AU LIEN
+========================================= */
+
+function preparerLien(lien) {
+
+    if (!lien) {
+        return "#";
+    }
+
+
+    if (!codeAffilie) {
+        return lien;
+    }
+
+
+    try {
+
+        const url =
+        new URL(lien);
+
+        url.searchParams.set(
+            "custom_fields[code_affilie]",
+            codeAffilie
+        );
+
+        return url.toString();
+
+    }
+
+    catch (erreur) {
+
+        return lien;
+
+    }
+
+}
+
+
+/* =========================================
+   CHARGER LES NOUVEAUX PRODUITS
+   DEPUIS SUPABASE
+========================================= */
+
+async function chargerNouveauxProduits() {
+
+    const zone =
+    document.getElementById(
+        "nouveaux-produits"
+    );
+
+
+    const resultat =
+    await supabaseClient
+
+        .from("produits")
+
+        .select("*")
+
+        .eq("actif", true)
+
+        .order(
+            "created_at",
+            {
+                ascending: false
+            }
+        );
+
+
+    const data =
+    resultat.data;
+
+    const error =
+    resultat.error;
+
+
+    /* Erreur */
+
+    if (error) {
+
+        console.error(
+            "Erreur Supabase :",
+            error
+        );
+
+        zone.innerHTML = `
+            <p>
+            Impossible de charger les nouveaux produits.
+            </p>
+        `;
+
+        return;
+
+    }
+
+
+    /* Aucun nouveau produit */
+
+    if (!data || data.length === 0) {
+
+        zone.innerHTML = `
+            <p>
+            Aucun nouveau produit pour le moment.
+            </p>
+        `;
+
+        return;
+
+    }
+
+
+    /* Vider le message */
+
+    zone.innerHTML = "";
+
+
+    /* Afficher les produits */
+
+    data.forEach(function(produit) {
+
+        const image =
+        produit.image_url
+        ?
+        `
+        <img
+        src="${produit.image_url}"
+        alt="${produit.nom || "Produit"}">
+        `
+        :
+        "";
+
+
+        const lien =
+        preparerLien(
+            produit.lien_achat
+        );
+
+
+        zone.innerHTML += `
+
+        <div class="product">
+
+            ${image}
+
+            <h3>
+            ${produit.nom || ""}
+            </h3>
+
+            <p>
+            ${produit.description || ""}
+            </p>
+
+            <p>
+            <strong>
+            ${produit.prix || 0} FCFA
+            </strong>
+            </p>
+
+            <a
+            href="${lien}"
+            class="gold-btn">
+
+            Acheter maintenant
+
+            </a>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+
+/* =========================================
+   LANCEMENT
+========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        chargerNouveauxProduits();
+
+    }
+);
+
+</script>
 
 
 
