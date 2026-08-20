@@ -8,6 +8,7 @@
 <title>Gestion Paiements - SenoMarket</title>
 
 <link rel="stylesheet" href="css/style.css">
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
@@ -32,7 +33,7 @@ Consultez et gérez les demandes de retrait des affiliés.
 <h3>📋 Demandes de retrait</h3>
 
 <div id="listePaiements">
-<p>Chargement...</p>
+Chargement...
 </div>
 
 </div>
@@ -46,17 +47,15 @@ Consultez et gérez les demandes de retrait des affiliés.
 </section>
 
 <footer>
+
 <p>
 © 2026 SenoMarket - Transformez vos idées en réussite
 </p>
+
 </footer>
 
 
 <script>
-
-/* ================================
-   SUPABASE
-================================ */
 
 const SUPABASE_URL =
 "https://vfnqwdwgkocpkkaofrum.supabase.co";
@@ -71,17 +70,10 @@ supabase.createClient(
 );
 
 
-/* ================================
-   CHARGER LES RETRAITS
-================================ */
-
 async function chargerPaiements() {
 
     const zone =
         document.getElementById("listePaiements");
-
-    zone.innerHTML =
-        "<p>Chargement...</p>";
 
 
     const { data, error } =
@@ -94,16 +86,16 @@ async function chargerPaiements() {
         );
 
 
+    console.log("DONNEES RETRAITS :", data);
+    console.log("ERREUR :", error);
+
+
     if (error) {
 
-        console.error(error);
-
-        zone.innerHTML = `
-            <p style="color:red;">
-                Erreur Supabase :
-                ${error.message}
-            </p>
-        `;
+        zone.innerHTML =
+            "<p style='color:red'>" +
+            error.message +
+            "</p>";
 
         return;
     }
@@ -121,231 +113,148 @@ async function chargerPaiements() {
     zone.innerHTML = "";
 
 
-    for (const retrait of data) {
-
-        let affilie = null;
+    data.forEach(function(retrait) {
 
 
-        if (retrait.affilie_id) {
-
-            const resultat =
-                await supabaseClient
-                .from("affilies")
-                .select(
-                    "nom,email,code_affilie"
-                )
-                .eq(
-                    "id",
-                    retrait.affilie_id
-                )
-                .maybeSingle();
-
-            affilie = resultat.data;
-        }
+        const carte =
+            document.createElement("div");
 
 
-        const nom =
-            affilie?.nom ||
-            "Affilié inconnu";
-
-        const email =
-            affilie?.email ||
-            "Non renseigné";
-
-        const code =
-            affilie?.code_affilie ||
-            "Non renseigné";
-
-        const montant =
-            Number(
-                retrait.montant_demande || 0
-            ).toLocaleString("fr-FR");
-
-        const statut =
-            retrait.statut ||
-            "en attente";
-
-        const statutNormalise =
-            statut
-            .toString()
-            .toLowerCase()
-            .trim();
+        carte.className = "card";
 
 
-        const peutTraiter =
-            statutNormalise === "pending" ||
-            statutNormalise === "en attente" ||
-            statutNormalise === "pending text";
+        carte.style.cssText = `
+            margin-bottom:20px;
+            text-align:left;
+            color:#111;
+        `;
 
 
-        const dateDemande =
-            retrait.date_demande
-            ? new Date(
-                retrait.date_demande
-              ).toLocaleString("fr-FR")
-            : "Non renseignée";
-
-
-        const datePaiement =
-            retrait.date_paiement
-            ? new Date(
-                retrait.date_paiement
-              ).toLocaleString("fr-FR")
-            : "Pas encore payé";
-
-
-        zone.innerHTML += `
-
-        <div class="card"
-             style="
-                margin-bottom:20px;
-                text-align:left;
-             ">
+        carte.innerHTML = `
 
             <h3>
-                👤 ${nom}
+                👤 Demande de retrait
             </h3>
 
             <p>
-                📧 Email :
-                <b>${email}</b>
-            </p>
-
-            <p>
-                🔑 Code affilié :
-                <b>${code}</b>
+                🆔 ID affilié :
+                <b>${retrait.affilie_id}</b>
             </p>
 
             <p>
                 💰 Montant demandé :
-                <b>${montant} FCFA</b>
+                <b>
+                ${retrait.montant_demande}
+                FCFA
+                </b>
             </p>
 
             <p>
                 ⏳ Statut :
-                <b>${statut}</b>
+                <b>${retrait.statut}</b>
             </p>
 
             <p>
                 📅 Date de demande :
-                ${dateDemande}
+                ${retrait.date_demande || "Non renseignée"}
             </p>
 
             <p>
                 💳 Moyen de paiement :
-                <b>
-                ${
-                    retrait.moyen_paiement ||
-                    "Non renseigné"
-                }
-                </b>
+                ${retrait.moyen_paiement || "Non renseigné"}
             </p>
 
             <p>
                 📱 Numéro de paiement :
-                <b>
-                ${
-                    retrait.numero_paiement ||
-                    "Non renseigné"
-                }
-                </b>
+                ${retrait.numero_paiement || "Non renseigné"}
             </p>
 
             <p>
                 ✅ Date de paiement :
-                ${datePaiement}
+                ${retrait.date_paiement || "Pas encore payé"}
             </p>
 
 
-            ${
-                peutTraiter
+            <div style="
+                margin-top:20px;
+                display:flex;
+                gap:10px;
+                flex-wrap:wrap;
+            ">
 
-                ?
-
-                `
-                <div style="
-                    display:flex;
-                    gap:10px;
-                    flex-wrap:wrap;
-                    margin-top:15px;
-                ">
-
-                    <button
-                        class="gold-btn"
-                        onclick="
-                            marquerPaye(
-                                '${retrait.id}'
-                            )
-                        "
-                        style="
-                            cursor:pointer;
-                            border:0;
-                        "
-                    >
-                        ✅ Marquer comme payé
-                    </button>
+                <button
+                    type="button"
+                    onclick="marquerPaye('${retrait.id}')"
+                    style="
+                        display:inline-block !important;
+                        visibility:visible !important;
+                        opacity:1 !important;
+                        background:#d4af37;
+                        color:#111;
+                        border:2px solid #111;
+                        padding:12px 18px;
+                        border-radius:8px;
+                        cursor:pointer;
+                        font-weight:bold;
+                        font-size:15px;
+                    "
+                >
+                    ✅ MARQUER COMME PAYÉ
+                </button>
 
 
-                    <button
-                        class="gold-btn"
-                        onclick="
-                            refuserRetrait(
-                                '${retrait.id}'
-                            )
-                        "
-                        style="
-                            cursor:pointer;
-                            border:0;
-                            background:#b00020;
-                            color:white;
-                        "
-                    >
-                        ❌ Refuser
-                    </button>
+                <button
+                    type="button"
+                    onclick="refuserRetrait('${retrait.id}')"
+                    style="
+                        display:inline-block !important;
+                        visibility:visible !important;
+                        opacity:1 !important;
+                        background:#b00020;
+                        color:white;
+                        border:2px solid #111;
+                        padding:12px 18px;
+                        border-radius:8px;
+                        cursor:pointer;
+                        font-weight:bold;
+                        font-size:15px;
+                    "
+                >
+                    ❌ REFUSER
+                </button>
 
-                </div>
-                `
-
-                :
-
-                ""
-            }
-
-        </div>
+            </div>
 
         `;
-    }
+
+
+        zone.appendChild(carte);
+
+    });
+
 }
 
-
-/* ================================
-   MARQUER COMME PAYÉ
-================================ */
 
 async function marquerPaye(id) {
 
-    if (
-        !confirm(
-            "Confirmer que ce retrait a été payé ?"
-        )
-    ) return;
+    const confirmation =
+        confirm(
+            "Confirmer le paiement de ce retrait ?"
+        );
+
+
+    if (!confirmation) return;
 
 
     const { error } =
         await supabaseClient
         .from("retraits")
         .update({
-
-            statut: "paid",
-
+            statut:"paid",
             date_paiement:
                 new Date().toISOString()
-
         })
-        .eq(
-            "id",
-            id
-        );
+        .eq("id",id);
 
 
     if (error) {
@@ -355,46 +264,38 @@ async function marquerPaye(id) {
             error.message
         );
 
-        console.error(error);
-
         return;
     }
 
 
     alert(
-        "Retrait marqué comme payé !"
+        "Retrait marqué comme payé."
     );
 
 
     chargerPaiements();
+
 }
 
-
-/* ================================
-   REFUSER
-================================ */
 
 async function refuserRetrait(id) {
 
-    if (
-        !confirm(
-            "Voulez-vous refuser cette demande ?"
-        )
-    ) return;
+    const confirmation =
+        confirm(
+            "Refuser cette demande de retrait ?"
+        );
+
+
+    if (!confirmation) return;
 
 
     const { error } =
         await supabaseClient
         .from("retraits")
         .update({
-
-            statut: "rejected"
-
+            statut:"rejected"
         })
-        .eq(
-            "id",
-            id
-        );
+        .eq("id",id);
 
 
     if (error) {
@@ -404,24 +305,19 @@ async function refuserRetrait(id) {
             error.message
         );
 
-        console.error(error);
-
         return;
     }
 
 
     alert(
-        "Demande de retrait refusée."
+        "Demande refusée."
     );
 
 
     chargerPaiements();
+
 }
 
-
-/* ================================
-   DÉMARRAGE
-================================ */
 
 document.addEventListener(
     "DOMContentLoaded",
