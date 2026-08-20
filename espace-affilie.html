@@ -1,54 +1,36 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Espace Affilié - SenoMarket</title>
-
 <link rel="stylesheet" href="css/style.css">
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 </head>
 
 <body>
 
 <header>
-
 <div class="logo">
-
-<img
-src="images/logo-seno.png"
-alt="Logo SenoMarket">
-
+<img src="images/logo-seno.png" alt="Logo SenoMarket">
 </div>
 
 <nav>
-
 <a href="index.html">Accueil</a>
 <a href="boutique.html">Boutique</a>
 <a href="blog.html">Blog</a>
 <a href="affiliation.html">Affiliation</a>
 <a href="espace-affilie.html">Espace Affilié</a>
 <a href="contact.html">Contact</a>
-
 </nav>
 
-<a href="boutique.html" class="btn">
-Boutique
-</a>
-
+<a href="boutique.html" class="btn">Boutique</a>
 </header>
 
 
 <section class="affiliate">
 
-<h2>
-🚀 Espace Affilié SenoMarket
-</h2>
+<h2>🚀 Espace Affilié SenoMarket</h2>
 
 <p>
 Bienvenue dans votre espace partenaire.
@@ -60,21 +42,15 @@ Entrez votre code affilié pour accéder à votre tableau de bord.
 
 <div class="card" id="login-box">
 
-<h3>
-🔑 Accès affilié
-</h3>
+<h3>🔑 Accès affilié</h3>
 
 <input
 type="text"
 id="code-input"
 placeholder="Entrez votre code affilié"
 autocomplete="off"
-style="
-padding:12px;
-width:80%;
-border-radius:10px;
-box-sizing:border-box;
-">
+style="padding:12px;width:80%;border-radius:10px;box-sizing:border-box;"
+>
 
 <br><br>
 
@@ -88,10 +64,7 @@ Accéder à mon espace
 
 </button>
 
-<p
-id="login-error"
-style="color:red;">
-</p>
+<p id="login-error" style="color:red;"></p>
 
 </div>
 
@@ -105,18 +78,14 @@ style="color:red;">
 
 <div class="card">
 
-<h3>
-👤 Votre profil affilié
-</h3>
+<h3>👤 Votre profil affilié</h3>
 
 <p>
 Nom :
 <strong id="aff-nom"></strong>
 </p>
 
-<p>
-Code affilié :
-</p>
+<p>Code affilié :</p>
 
 <div
 id="aff-code"
@@ -137,9 +106,7 @@ font-size:22px;
 
 <div class="card">
 
-<h3>
-🔗 Votre lien affilié
-</h3>
+<h3>🔗 Votre lien affilié</h3>
 
 <div
 id="aff-lien"
@@ -163,11 +130,7 @@ onclick="copierLien()">
 
 </button>
 
-<p
-id="copie-message"
-style="display:none;">
-
-</p>
+<p id="copie-message" style="display:none;"></p>
 
 </div>
 
@@ -176,68 +139,40 @@ style="display:none;">
 
 <div class="card">
 
-<h3>
-📊 Vos statistiques
-</h3>
+<h3>📊 Vos statistiques</h3>
 
-<p>
-Ventes réalisées :
-</p>
+<p>Ventes réalisées :</p>
 
-<h2
-id="aff-ventes"
-style="color:#FFD700;">
+<h2 id="aff-ventes" style="color:#FFD700;">0</h2>
 
-0
+<p>Montant total des ventes :</p>
 
-</h2>
-
-<p>
-Montant total des ventes :
-</p>
-
-<h2
-id="aff-total-ventes"
-style="color:#FFD700;">
-
+<h2 id="aff-total-ventes" style="color:#FFD700;">
 0 FCFA
-
 </h2>
 
-<p>
-💰 Commission disponible :
-</p>
+<p>Commission disponible :</p>
 
-<h2
-id="aff-commission"
-style="color:#FFD700;">
-
+<h2 id="aff-commission" style="color:#FFD700;">
 0 FCFA
-
 </h2>
 
-<p>
-Commission par vente :
-</p>
+<p>Commission par vente :</p>
 
-<h2 style="color:#FFD700;">
-25 %
-</h2>
+<h2 style="color:#FFD700;">25 %</h2>
 
 </div>
 
 
-<!-- RETRAIT TOTAL -->
+<!-- RETRAIT -->
 
 <div class="card">
 
-<h3>
-💰 Demander mon paiement
-</h3>
+<h3>💰 Demander mon paiement</h3>
 
 <p>
-Vous pouvez demander le paiement de
-<strong>la totalité de votre commission disponible</strong>.
+Vous pouvez demander le paiement de la totalité
+de votre commission disponible.
 </p>
 
 <p style="font-size:13px;color:#aaa;">
@@ -247,15 +182,12 @@ Vous pouvez demander le paiement de
 <button
 type="button"
 class="gold-btn"
-onclick="afficherFormulaireRetrait()"
-id="bouton-demande">
+onclick="afficherFormulaireRetrait()">
 
 💰 Demander mon paiement
 
 </button>
 
-
-<!-- FORMULAIRE -->
 
 <div
 id="formulaire-retrait"
@@ -267,13 +199,9 @@ background:#111;
 border-radius:12px;
 ">
 
-<h3>
-📝 Informations du paiement
-</h3>
+<h3>📝 Informations du paiement</h3>
 
-<label>
-Montant total demandé
-</label>
+<label>Montant total demandé</label>
 
 <div
 id="montant-retrait"
@@ -294,14 +222,12 @@ font-weight:bold;
 </div>
 
 <p style="font-size:13px;color:#aaa;">
-Ce montant correspond automatiquement à la totalité
+Le montant correspond automatiquement à la totalité
 de votre commission disponible.
 </p>
 
 
-<label>
-Moyen de paiement
-</label>
+<label>Moyen de paiement</label>
 
 <select
 id="moyen-paiement"
@@ -317,28 +243,15 @@ box-sizing:border-box;
 Sélectionnez un moyen de paiement
 </option>
 
-<option value="Orange Money">
-Orange Money
-</option>
-
-<option value="Moov Money">
-Moov Money
-</option>
-
-<option value="Wave">
-Wave
-</option>
-
-<option value="Virement bancaire">
-Virement bancaire
-</option>
+<option value="Orange Money">Orange Money</option>
+<option value="Moov Money">Moov Money</option>
+<option value="Wave">Wave</option>
+<option value="Virement bancaire">Virement bancaire</option>
 
 </select>
 
 
-<label>
-Numéro / coordonnées de paiement
-</label>
+<label>Numéro / coordonnées de paiement</label>
 
 <input
 type="text"
@@ -391,16 +304,10 @@ font-weight:bold;
 
 <div class="card">
 
-<h3>
-📋 Historique des commissions
-</h3>
+<h3>📋 Historique des commissions</h3>
 
 <div id="historique">
-
-<p>
-Vos commissions apparaîtront ici.
-</p>
-
+<p>Vos commissions apparaîtront ici.</p>
 </div>
 
 </div>
@@ -410,38 +317,25 @@ Vos commissions apparaîtront ici.
 
 <div class="card">
 
-<h3>
-❓ Comment ça fonctionne ?
-</h3>
+<h3>❓ Comment ça fonctionne ?</h3>
 
 <p>
 
 1. Vous réalisez des ventes.
-
 <br><br>
 
 2. Vos commissions sont ajoutées à votre solde.
-
 <br><br>
 
-3. Vous cliquez sur « Demander mon paiement ».
-
+3. Vous demandez le paiement de la totalité du solde.
 <br><br>
 
-4. Le système demande automatiquement
-la totalité de votre solde.
-
+4. L'administrateur traite votre demande.
 <br><br>
 
-5. L'administrateur traite votre demande.
-
-<br><br>
-
-6. Lorsque la demande est marquée
-<strong>Payée</strong>, les commissions utilisées
-pour le retrait passent à <strong>paid</strong>
-et votre solde disponible devient
-<strong>0 FCFA</strong>.
+5. Lorsque le retrait est marqué payé,
+les commissions passent à <strong>paid</strong>
+et le solde devient <strong>0 FCFA</strong>.
 
 </p>
 
@@ -468,9 +362,7 @@ Politique de confidentialité
 
 <script>
 
-/* =====================================================
-   SUPABASE
-===================================================== */
+/* SUPABASE */
 
 const SUPABASE_URL =
 'https://vfnqwdwgkocpkkaofrum.supabase.co';
@@ -480,640 +372,586 @@ const SUPABASE_PUBLISHABLE_KEY =
 
 const supabaseClient =
 supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
+SUPABASE_URL,
+SUPABASE_PUBLISHABLE_KEY
 );
 
 
-/* =====================================================
-   VARIABLES
-===================================================== */
+/* VARIABLES */
 
 let affiliéActuel = null;
-
 let lienAffilieActuel = '';
 
 
-/* =====================================================
-   CONNEXION
-===================================================== */
+/* CONNEXION */
 
 async function verifierCode(){
 
-    const code =
-        document
-        .getElementById('code-input')
-        .value
-        .trim();
+const code =
+document.getElementById('code-input').value.trim();
 
-    const errorBox =
-        document
-        .getElementById('login-error');
+const errorBox =
+document.getElementById('login-error');
 
-    const button =
-        document
-        .getElementById('login-button');
+const button =
+document.getElementById('login-button');
 
-    errorBox.textContent = '';
+errorBox.textContent = '';
 
-    if(!code){
+if(!code){
 
-        errorBox.textContent =
-            'Merci d’entrer votre code affilié.';
+errorBox.textContent =
+'Merci d’entrer votre code affilié.';
 
-        return;
-    }
+return;
+}
 
-    button.disabled = true;
+button.disabled = true;
+button.textContent = 'Vérification...';
 
-    button.textContent =
-        'Vérification...';
 
-    try{
+try{
 
-        const response =
-            await fetch(
-                SUPABASE_URL +
-                '/rest/v1/rpc/obtenir_espace_affilie',
-                {
-                    method:'POST',
+const response =
+await fetch(
+SUPABASE_URL +
+'/rest/v1/rpc/obtenir_espace_affilie',
+{
+method:'POST',
 
-                    headers:{
-                        'Content-Type':'application/json',
-                        'apikey':SUPABASE_PUBLISHABLE_KEY,
-                        'Authorization':
-                            'Bearer ' +
-                            SUPABASE_PUBLISHABLE_KEY
-                    },
+headers:{
+'Content-Type':'application/json',
+'apikey':SUPABASE_PUBLISHABLE_KEY,
+'Authorization':
+'Bearer ' +
+SUPABASE_PUBLISHABLE_KEY
+},
 
-                    body:JSON.stringify({
-                        p_code_affilie:code
-                    })
-                }
-            );
+body:JSON.stringify({
+p_code_affilie:code
+})
+}
+);
 
 
-        const texte =
-            await response.text();
+const texte =
+await response.text();
 
-        let data;
+let data;
 
-        try{
+try{
 
-            data = JSON.parse(texte);
+data = JSON.parse(texte);
 
-        }catch{
+}catch{
 
-            throw new Error(
-                'Réponse inattendue de Supabase.'
-            );
+throw new Error(
+'Réponse inattendue de Supabase.'
+);
 
-        }
-
-
-        if(!response.ok){
-
-            throw new Error(
-                data.message ||
-                data.error_description ||
-                JSON.stringify(data)
-            );
-
-        }
-
-
-        const affilié =
-            Array.isArray(data)
-            ? data[0]
-            : data;
-
-
-        if(!affilié){
-
-            throw new Error(
-                'Code affilié introuvable.'
-            );
-
-        }
-
-
-        affiliéActuel =
-            affilié;
-
-
-        /* PROFIL */
-
-        document
-        .getElementById('aff-nom')
-        .textContent =
-            affilié.nom || '';
-
-
-        document
-        .getElementById('aff-code')
-        .textContent =
-            affilié.code_affilie || code;
-
-
-        /* LIEN */
-
-        let lien =
-            affilié.lien_affilie;
-
-
-        if(
-            !lien ||
-            !lien.startsWith('http')
-        ){
-
-            const page =
-                lien || 'boutique.html';
-
-            const separateur =
-                page.includes('?')
-                ? '&'
-                : '?';
-
-            lien =
-                new URL(
-                    page,
-                    window.location.href
-                ).href +
-                separateur +
-                'ref=' +
-                encodeURIComponent(
-                    affilié.code_affilie || code
-                );
-        }
-
-
-        lienAffilieActuel =
-            lien;
-
-
-        document
-        .getElementById('aff-lien')
-        .textContent =
-            lien;
-
-
-        /* STATISTIQUES */
-
-        afficherStatistiques(
-            affilié
-        );
-
-
-        /* DASHBOARD */
-
-        document
-        .getElementById('login-box')
-        .style.display =
-            'none';
-
-
-        document
-        .getElementById('dashboard')
-        .style.display =
-            'block';
-
-
-        sessionStorage.setItem(
-            'codeAffilie',
-            affilié.code_affilie || code
-        );
-
-    }
-    catch(error){
-
-        console.error(
-            'Erreur espace affilié:',
-            error
-        );
-
-        errorBox.textContent =
-            '❌ ' +
-            (
-                error.message ||
-                'Code affilié introuvable.'
-            );
-
-    }
-    finally{
-
-        button.disabled = false;
-
-        button.textContent =
-            'Accéder à mon espace';
-
-    }
 }
 
 
-/* =====================================================
-   STATISTIQUES
-===================================================== */
+if(!response.ok){
+
+throw new Error(
+data.message ||
+data.error_description ||
+JSON.stringify(data)
+);
+
+}
+
+
+const affilié =
+Array.isArray(data)
+? data[0]
+: data;
+
+
+if(!affilié){
+
+throw new Error(
+'Code affilié introuvable.'
+);
+
+}
+
+
+/*
+IMPORTANT :
+Le RPC renvoie "affilie_id".
+On conserve donc exactement ce nom.
+*/
+
+affiliéActuel = affilié;
+
+
+/* PROFIL */
+
+document
+.getElementById('aff-nom')
+.textContent =
+affilié.nom || '';
+
+document
+.getElementById('aff-code')
+.textContent =
+affilié.code_affilie || code;
+
+
+/* LIEN */
+
+let lien =
+affilié.lien_affilie;
+
+if(
+!lien ||
+!lien.startsWith('http')
+){
+
+const page =
+lien || 'boutique.html';
+
+const separateur =
+page.includes('?')
+? '&'
+: '?';
+
+lien =
+new URL(
+page,
+window.location.href
+).href +
+separateur +
+'ref=' +
+encodeURIComponent(
+affilié.code_affilie || code
+);
+
+}
+
+lienAffilieActuel = lien;
+
+document
+.getElementById('aff-lien')
+.textContent =
+lien;
+
+
+/* STATISTIQUES */
+
+afficherStatistiques(affilié);
+
+
+/* AFFICHER DASHBOARD */
+
+document
+.getElementById('login-box')
+.style.display =
+'none';
+
+document
+.getElementById('dashboard')
+.style.display =
+'block';
+
+
+sessionStorage.setItem(
+'codeAffilie',
+affilié.code_affilie || code
+);
+
+}
+catch(error){
+
+console.error(
+'Erreur espace affilié:',
+error
+);
+
+errorBox.textContent =
+'❌ ' +
+(
+error.message ||
+'Code affilié introuvable.'
+);
+
+}
+finally{
+
+button.disabled = false;
+button.textContent =
+'Accéder à mon espace';
+
+}
+
+}
+
+
+/* STATISTIQUES */
 
 function afficherStatistiques(affilié){
 
-    const ventes =
-        Number(
-            affilié.ventes || 0
-        );
+const ventes =
+Number(affilié.ventes || 0);
 
-    const totalVentes =
-        Number(
-            affilié.total_ventes || 0
-        );
+const totalVentes =
+Number(affilié.total_ventes || 0);
 
-    const commission =
-        Number(
-            affilié.commission || 0
-        );
+const commission =
+Number(affilié.commission || 0);
 
 
-    document
-    .getElementById('aff-ventes')
-    .textContent =
-        ventes;
+document
+.getElementById('aff-ventes')
+.textContent =
+ventes;
 
 
-    document
-    .getElementById('aff-total-ventes')
-    .textContent =
-        totalVentes.toLocaleString('fr-FR') +
-        ' FCFA';
+document
+.getElementById('aff-total-ventes')
+.textContent =
+totalVentes.toLocaleString('fr-FR') +
+' FCFA';
 
 
-    document
-    .getElementById('aff-commission')
-    .textContent =
-        commission.toLocaleString('fr-FR') +
-        ' FCFA';
+document
+.getElementById('aff-commission')
+.textContent =
+commission.toLocaleString('fr-FR') +
+' FCFA';
 
 }
 
 
-/* =====================================================
-   OUVRIR FORMULAIRE DE RETRAIT
-===================================================== */
+/* FORMULAIRE RETRAIT */
 
 function afficherFormulaireRetrait(){
 
-    if(!affiliéActuel){
+if(!affiliéActuel){
 
-        alert(
-            'Veuillez d’abord vous connecter à votre espace affilié.'
-        );
+alert(
+'Veuillez d’abord vous connecter.'
+);
 
-        return;
-    }
-
-
-    const commission =
-        Number(
-            affiliéActuel.commission || 0
-        );
-
-
-    if(commission <= 0){
-
-        alert(
-            'Vous n’avez aucune commission disponible.'
-        );
-
-        return;
-    }
-
-
-    document
-    .getElementById('montant-retrait')
-    .textContent =
-        commission.toLocaleString('fr-FR') +
-        ' FCFA';
-
-
-    document
-    .getElementById('moyen-paiement')
-    .value =
-        '';
-
-
-    document
-    .getElementById('numero-paiement')
-    .value =
-        '';
-
-
-    document
-    .getElementById('message-retrait')
-    .textContent =
-        '';
-
-
-    document
-    .getElementById('formulaire-retrait')
-    .style.display =
-        'block';
+return;
 }
 
 
-/* =====================================================
-   FERMER FORMULAIRE
-===================================================== */
+const commission =
+Number(
+affiliéActuel.commission || 0
+);
+
+
+if(commission <= 0){
+
+alert(
+'Vous n’avez aucune commission disponible.'
+);
+
+return;
+}
+
+
+document
+.getElementById('montant-retrait')
+.textContent =
+commission.toLocaleString('fr-FR') +
+' FCFA';
+
+
+document
+.getElementById('moyen-paiement')
+.value = '';
+
+document
+.getElementById('numero-paiement')
+.value = '';
+
+document
+.getElementById('message-retrait')
+.textContent = '';
+
+document
+.getElementById('formulaire-retrait')
+.style.display =
+'block';
+
+}
+
+
+/* FERMER */
 
 function fermerFormulaireRetrait(){
 
-    document
-    .getElementById('formulaire-retrait')
-    .style.display =
-        'none';
+document
+.getElementById('formulaire-retrait')
+.style.display =
+'none';
+
 }
 
 
-/* =====================================================
-   ENVOYER RETRAIT TOTAL
-===================================================== */
+/* ENVOYER RETRAIT */
 
 async function envoyerDemandeRetrait(){
 
-    const message =
-        document
-        .getElementById('message-retrait');
+const message =
+document.getElementById('message-retrait');
 
-    const bouton =
-        document
-        .getElementById('bouton-retrait');
+const bouton =
+document.getElementById('bouton-retrait');
 
 
-    if(!affiliéActuel){
+if(!affiliéActuel){
 
-        message.style.color =
-            'red';
+message.style.color = 'red';
 
-        message.textContent =
-            '❌ Session affiliée introuvable.';
+message.textContent =
+'❌ Session affiliée introuvable.';
 
-        return;
-    }
-
-
-    const montant =
-        Number(
-            affiliéActuel.commission || 0
-        );
-
-
-    const moyenPaiement =
-        document
-        .getElementById('moyen-paiement')
-        .value
-        .trim();
-
-
-    const numeroPaiement =
-        document
-        .getElementById('numero-paiement')
-        .value
-        .trim();
-
-
-    /* VALIDATION */
-
-    if(montant <= 0){
-
-        message.style.color =
-            'red';
-
-        message.textContent =
-            '❌ Aucun solde disponible.';
-
-        return;
-    }
-
-
-    if(!moyenPaiement){
-
-        message.style.color =
-            'red';
-
-        message.textContent =
-            '❌ Sélectionnez un moyen de paiement.';
-
-        return;
-    }
-
-
-    if(!numeroPaiement){
-
-        message.style.color =
-            'red';
-
-        message.textContent =
-            '❌ Entrez vos coordonnées de paiement.';
-
-        return;
-    }
-
-
-    bouton.disabled = true;
-
-    bouton.textContent =
-        'Envoi en cours...';
-
-    message.textContent =
-        '';
-
-
-    try{
-
-        /*
-         Le montant envoyé correspond
-         TOUJOURS à 100 % de la commission.
-        */
-
-        const { data, error } =
-            await supabaseClient
-            .from('retraits')
-            .insert({
-
-                affilie_id:
-                    affiliéActuel.id,
-
-                montant_demande:
-                    montant,
-
-                statut:
-                    'pending',
-
-                date_demande:
-                    new Date().toISOString(),
-
-                moyen_paiement:
-                    moyenPaiement,
-
-                numero_paiement:
-                    numeroPaiement
-
-            })
-            .select()
-            .single();
-
-
-        if(error){
-
-            throw error;
-        }
-
-
-        if(!data){
-
-            throw new Error(
-                'La demande n’a pas été créée.'
-            );
-        }
-
-
-        /* SUCCÈS */
-
-        message.style.color =
-            '#FFD700';
-
-        message.textContent =
-            '✅ Votre demande de paiement total de ' +
-            montant.toLocaleString('fr-FR') +
-            ' FCFA a bien été envoyée.';
-
-
-        /*
-         Le montant est maintenant réservé
-         par la demande de retrait.
-        */
-
-        affiliéActuel.commission =
-            0;
-
-
-        afficherStatistiques(
-            affiliéActuel
-        );
-
-
-        document
-        .getElementById('moyen-paiement')
-        .value =
-            '';
-
-
-        document
-        .getElementById('numero-paiement')
-        .value =
-            '';
-
-
-        setTimeout(
-            function(){
-
-                fermerFormulaireRetrait();
-
-            },
-            4000
-        );
-
-    }
-    catch(error){
-
-        console.error(
-            'Erreur retrait:',
-            error
-        );
-
-
-        message.style.color =
-            'red';
-
-
-        message.textContent =
-            '❌ Impossible d’envoyer la demande : ' +
-            (
-                error.message ||
-                'Erreur inconnue.'
-            );
-
-    }
-    finally{
-
-        bouton.disabled =
-            false;
-
-        bouton.textContent =
-            '✅ Envoyer ma demande';
-
-    }
+return;
 }
 
 
-/* =====================================================
-   COPIER LE LIEN
-===================================================== */
+/*
+IMPORTANT :
+Le RPC renvoie affilie_id,
+PAS id.
+*/
+
+const affiliateId =
+affiliéActuel.affilie_id;
+
+
+if(!affiliateId){
+
+message.style.color = 'red';
+
+message.textContent =
+'❌ Identifiant affilié introuvable.';
+
+console.error(
+'Affilié reçu par Supabase :',
+affiliéActuel
+);
+
+return;
+}
+
+
+const montant =
+Number(
+affiliéActuel.commission || 0
+);
+
+
+const moyenPaiement =
+document
+.getElementById('moyen-paiement')
+.value
+.trim();
+
+
+const numeroPaiement =
+document
+.getElementById('numero-paiement')
+.value
+.trim();
+
+
+if(montant <= 0){
+
+message.style.color = 'red';
+
+message.textContent =
+'❌ Aucun solde disponible.';
+
+return;
+}
+
+
+if(!moyenPaiement){
+
+message.style.color = 'red';
+
+message.textContent =
+'❌ Sélectionnez un moyen de paiement.';
+
+return;
+}
+
+
+if(!numeroPaiement){
+
+message.style.color = 'red';
+
+message.textContent =
+'❌ Entrez vos coordonnées de paiement.';
+
+return;
+}
+
+
+bouton.disabled = true;
+bouton.textContent = 'Envoi en cours...';
+
+message.textContent = '';
+
+
+try{
+
+const { data, error } =
+await supabaseClient
+.from('retraits')
+.insert({
+
+/*
+CORRECTION PRINCIPALE
+*/
+affilie_id:
+affiliateId,
+
+montant_demande:
+montant,
+
+statut:
+'pending',
+
+date_demande:
+new Date().toISOString(),
+
+moyen_paiement:
+moyenPaiement,
+
+numero_paiement:
+numeroPaiement
+
+})
+.select()
+.single();
+
+
+if(error){
+
+throw error;
+}
+
+
+if(!data){
+
+throw new Error(
+'La demande n’a pas été créée.'
+);
+
+}
+
+
+message.style.color =
+'#FFD700';
+
+message.textContent =
+'✅ Votre demande de paiement total de ' +
+montant.toLocaleString('fr-FR') +
+' FCFA a bien été envoyée.';
+
+
+document
+.getElementById('moyen-paiement')
+.value = '';
+
+document
+.getElementById('numero-paiement')
+.value = '';
+
+
+setTimeout(
+function(){
+fermerFormulaireRetrait();
+},
+4000
+);
+
+}
+catch(error){
+
+console.error(
+'Erreur retrait:',
+error
+);
+
+message.style.color = 'red';
+
+message.textContent =
+'❌ Impossible d’envoyer la demande : ' +
+(
+error.message ||
+'Erreur inconnue.'
+);
+
+}
+finally{
+
+bouton.disabled = false;
+
+bouton.textContent =
+'✅ Envoyer ma demande';
+
+}
+
+}
+
+
+/* COPIER LIEN */
 
 async function copierLien(){
 
-    const message =
-        document
-        .getElementById('copie-message');
+const message =
+document.getElementById(
+'copie-message'
+);
 
+if(!lienAffilieActuel){
 
-    if(!lienAffilieActuel){
+message.style.display = 'block';
+message.textContent =
+'❌ Aucun lien disponible.';
 
-        message.style.display =
-            'block';
+return;
+}
 
-        message.textContent =
-            '❌ Aucun lien disponible.';
+try{
 
-        return;
-    }
+await navigator.clipboard.writeText(
+lienAffilieActuel
+);
 
+message.style.display = 'block';
+message.textContent =
+'✅ Lien copié !';
 
-    try{
+setTimeout(
+function(){
+message.style.display = 'none';
+},
+3000
+);
 
-        await navigator.clipboard.writeText(
-            lienAffilieActuel
-        );
+}
+catch(error){
 
+message.style.display = 'block';
 
-        message.style.display =
-            'block';
+message.textContent =
+'❌ Impossible de copier le lien.';
 
-        message.textContent =
-            '✅ Lien copié !';
+}
 
-
-        setTimeout(
-            function(){
-
-                message.style.display =
-                    'none';
-
-            },
-            3000
-        );
-
-    }
-    catch(error){
-
-        message.style.display =
-            'block';
-
-        message.textContent =
-            '❌ Impossible de copier le lien.';
-
-    }
 }
 
 </script>
 
 </body>
-
    </html>
