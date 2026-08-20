@@ -4,14 +4,11 @@
 <head>
 
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Espace Affilié - SenoMarket</title>
 
-<link rel="stylesheet"
-      href="css/style.css">
+<link rel="stylesheet" href="css/style.css">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -34,35 +31,26 @@ alt="Logo SenoMarket">
 
 <nav>
 
-<a href="index.html">
-Accueil
-</a>
+<a href="index.html">Accueil</a>
 
-<a href="boutique.html">
-Boutique
-</a>
+<a href="boutique.html">Boutique</a>
 
-<a href="blog.html">
-Blog
-</a>
+<a href="blog.html">Blog</a>
 
-<a href="affiliation.html">
-Affiliation
-</a>
+<a href="affiliation.html">Affiliation</a>
 
 <a href="espace-affilie.html">
 Espace Affilié
 </a>
 
-<a href="contact.html">
-Contact
-</a>
+<a href="contact.html">Contact</a>
 
 </nav>
 
 
-<a href="boutique.html"
-   class="btn">
+<a
+href="boutique.html"
+class="btn">
 
 Boutique
 
@@ -75,29 +63,27 @@ Boutique
 <section class="affiliate">
 
 
-<h2>
-🚀 Espace Affilié SenoMarket
-</h2>
+<h2>🚀 Espace Affilié SenoMarket</h2>
 
 
 <p>
+
 Bienvenue dans votre espace partenaire.
 Entrez votre code affilié pour accéder à votre tableau de bord.
+
 </p>
 
 
 
-<!-- =====================================================
-     CONNEXION
-===================================================== -->
+<!-- =========================================
+     CONNEXION AFFILIÉ
+========================================= -->
 
-<div class="card"
-     id="login-box">
+<div
+class="card"
+id="login-box">
 
-
-<h3>
-🔑 Accès affilié
-</h3>
+<h3>🔑 Accès affilié</h3>
 
 
 <input
@@ -113,8 +99,7 @@ box-sizing:border-box;
 ">
 
 
-<br>
-<br>
+<br><br>
 
 
 <button
@@ -135,31 +120,27 @@ style="color:red;">
 </p>
 
 
-<!-- =====================================================
-     NOUVEAU : CODE OUBLIÉ
-===================================================== -->
+<!-- =========================================
+     CODE AFFILIÉ OUBLIÉ
+========================================= -->
 
 <button
 type="button"
 class="gold-btn"
-onclick="afficherRecuperation()"
+onclick="afficherCodeOublie()"
 style="
-margin-top:15px;
-background:transparent;
-color:#FFD700;
+margin-top:10px;
 ">
 
-🔐 J'ai oublié mon code affilié
+🔑 J'ai oublié mon code affilié
 
 </button>
 
 
-<!-- =====================================================
-     FORMULAIRE DE RÉCUPÉRATION
-===================================================== -->
+<!-- FORMULAIRE CODE OUBLIÉ -->
 
 <div
-id="recuperation-box"
+id="code-oublie-box"
 style="
 display:none;
 margin-top:20px;
@@ -170,7 +151,7 @@ border-radius:12px;
 
 
 <h3>
-📧 Récupérer mon code affilié
+📧 Retrouver mon code affilié
 </h3>
 
 
@@ -195,36 +176,22 @@ box-sizing:border-box;
 ">
 
 
-<br>
-<br>
+<br><br>
 
 
 <button
 type="button"
 class="gold-btn"
-id="bouton-recuperation"
-onclick="recupererCodeAffilie()">
+id="recuperation-button"
+onclick="retrouverCodeAffilie()">
 
-📩 Récupérer mon code
-
-</button>
-
-
-<button
-type="button"
-class="gold-btn"
-onclick="fermerRecuperation()"
-style="
-margin-left:8px;
-">
-
-Annuler
+📩 Retrouver mon code
 
 </button>
 
 
 <p
-id="message-recuperation"
+id="recuperation-message"
 style="
 margin-top:15px;
 font-weight:bold;
@@ -235,14 +202,13 @@ font-weight:bold;
 
 </div>
 
-
 </div>
 
 
 
-<!-- =====================================================
+<!-- =========================================
      TABLEAU DE BORD
-===================================================== -->
+========================================= -->
 
 <div
 id="dashboard"
@@ -254,15 +220,13 @@ style="display:none;">
 
 <div class="card">
 
-
-<h3>
-👤 Votre profil affilié
-</h3>
+<h3>👤 Votre profil affilié</h3>
 
 
 <p>
 
 Nom :
+
 <strong id="aff-nom"></strong>
 
 </p>
@@ -285,19 +249,15 @@ font-size:22px;
 
 </div>
 
-
 </div>
 
 
 
-<!-- LIEN -->
+<!-- LIEN AFFILIÉ -->
 
 <div class="card">
 
-
-<h3>
-🔗 Votre lien affilié
-</h3>
+<h3>🔗 Votre lien affilié</h3>
 
 
 <div
@@ -331,7 +291,6 @@ style="display:none;">
 
 </p>
 
-
 </div>
 
 
@@ -340,10 +299,7 @@ style="display:none;">
 
 <div class="card">
 
-
-<h3>
-📊 Vos statistiques
-</h3>
+<h3>📊 Vos statistiques</h3>
 
 
 <p>
@@ -399,25 +355,23 @@ Commission par vente :
 
 </h2>
 
-
 </div>
 
 
 
-<!-- RETRAIT -->
+<!-- =========================================
+     RETRAIT
+========================================= -->
 
 <div class="card">
 
-
-<h3>
-💰 Demander mon paiement
-</h3>
+<h3>💰 Demander mon paiement</h3>
 
 
 <p>
 
-Vous pouvez demander le paiement
-de la totalité de votre commission disponible.
+Vous pouvez demander le paiement de la totalité
+de votre commission disponible.
 
 </p>
 
@@ -441,6 +395,7 @@ onclick="afficherFormulaireRetrait()">
 💰 Demander mon paiement
 
 </button>
+
 
 
 <div
@@ -489,8 +444,8 @@ font-size:13px;
 color:#aaa;
 ">
 
-Le montant correspond automatiquement
-à la totalité de votre commission disponible.
+Le montant correspond automatiquement à la totalité
+de votre commission disponible.
 
 </p>
 
@@ -510,31 +465,25 @@ border-radius:10px;
 box-sizing:border-box;
 ">
 
-
 <option value="">
 Sélectionnez un moyen de paiement
 </option>
-
 
 <option value="Orange Money">
 Orange Money
 </option>
 
-
 <option value="Moov Money">
 Moov Money
 </option>
-
 
 <option value="Wave">
 Wave
 </option>
 
-
 <option value="Virement bancaire">
 Virement bancaire
 </option>
-
 
 </select>
 
@@ -591,7 +540,6 @@ font-weight:bold;
 
 </div>
 
-
 </div>
 
 
@@ -599,7 +547,6 @@ font-weight:bold;
 <!-- HISTORIQUE -->
 
 <div class="card">
-
 
 <h3>
 📋 Historique des commissions
@@ -614,7 +561,6 @@ Vos commissions apparaîtront ici.
 
 </div>
 
-
 </div>
 
 
@@ -622,7 +568,6 @@ Vos commissions apparaîtront ici.
 <!-- EXPLICATION -->
 
 <div class="card">
-
 
 <h3>
 ❓ Comment ça fonctionne ?
@@ -653,19 +598,16 @@ et le solde devient <strong>0 FCFA</strong>.
 
 </p>
 
-
 </div>
 
 
 </div>
-
 
 </section>
 
 
 
 <footer>
-
 
 <p>
 
@@ -681,42 +623,36 @@ Politique de confidentialité
 
 </a>
 
-
 </footer>
 
 
 
 <script>
 
-
-/* =====================================================
+/* =========================================
    SUPABASE
-===================================================== */
+   CLÉ CONSERVÉE EXACTEMENT
+========================================= */
 
 const SUPABASE_URL =
 'https://vfnqwdwgkocpkkaofrum.supabase.co';
 
 
-/*
-   IMPORTANT :
-   Clé conservée exactement comme fournie.
-*/
-
 const SUPABASE_PUBLISHABLE_KEY =
-'sb_publishable_BOFyx3zpbcNT6h-3N0wLw_L1QOJWR-';
+'sb_publishable_BOFyx3zpbcwhN6t-3N0wLw_L1QOJWR-';
 
 
 const supabaseClient =
 supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
+SUPABASE_URL,
+SUPABASE_PUBLISHABLE_KEY
 );
 
 
 
-/* =====================================================
+/* =========================================
    VARIABLES
-===================================================== */
+========================================= */
 
 let affiliéActuel = null;
 
@@ -724,9 +660,9 @@ let lienAffilieActuel = '';
 
 
 
-/* =====================================================
+/* =========================================
    CONNEXION
-===================================================== */
+========================================= */
 
 async function verifierCode(){
 
@@ -738,13 +674,11 @@ document
 
 
 const errorBox =
-document
-.getElementById('login-error');
+document.getElementById('login-error');
 
 
 const button =
-document
-.getElementById('login-button');
+document.getElementById('login-button');
 
 
 errorBox.textContent = '';
@@ -771,8 +705,10 @@ try{
 
 const response =
 await fetch(
+
 SUPABASE_URL +
 '/rest/v1/rpc/obtenir_espace_affilie',
+
 {
 
 method:'POST',
@@ -798,7 +734,9 @@ code
 
 })
 
-});
+}
+
+);
 
 
 const texte =
@@ -813,7 +751,9 @@ try{
 data =
 JSON.parse(texte);
 
-}catch{
+}
+
+catch{
 
 throw new Error(
 'Réponse inattendue de Supabase.'
@@ -924,7 +864,7 @@ affilié
 
 
 
-/* DASHBOARD */
+/* AFFICHER DASHBOARD */
 
 document
 .getElementById('login-box')
@@ -945,6 +885,7 @@ affilié.code_affilie || code
 
 
 }
+
 catch(error){
 
 console.error(
@@ -960,8 +901,8 @@ error.message ||
 'Code affilié introuvable.'
 );
 
-
 }
+
 finally{
 
 button.disabled = false;
@@ -975,247 +916,13 @@ button.textContent =
 
 
 
-/* =====================================================
-   NOUVEAU : AFFICHER RÉCUPÉRATION
-===================================================== */
-
-function afficherRecuperation(){
-
-document
-.getElementById('recuperation-box')
-.style.display =
-'block';
-
-document
-.getElementById('email-recuperation')
-.focus();
-
-}
-
-
-/* =====================================================
-   NOUVEAU : FERMER RÉCUPÉRATION
-===================================================== */
-
-function fermerRecuperation(){
-
-document
-.getElementById('recuperation-box')
-.style.display =
-'none';
-
-document
-.getElementById('message-recuperation')
-.textContent =
-'';
-
-}
-
-
-
-/* =====================================================
-   NOUVEAU : RÉCUPÉRER CODE
-===================================================== */
-
-async function recupererCodeAffilie(){
-
-const email =
-document
-.getElementById('email-recuperation')
-.value
-.trim()
-.toLowerCase();
-
-
-const message =
-document
-.getElementById('message-recuperation');
-
-
-const bouton =
-document
-.getElementById('bouton-recuperation');
-
-
-message.textContent = '';
-
-
-if(!email){
-
-message.style.color =
-'red';
-
-message.textContent =
-'❌ Entrez votre adresse email.';
-
-return;
-
-}
-
-
-bouton.disabled = true;
-
-bouton.textContent =
-'Recherche...';
-
-
-try{
-
-
-/*
-   Cette fonction RPC doit être créée
-   dans Supabase :
-   
-   recuperer_code_affilie
-*/
-
-const response =
-await fetch(
-SUPABASE_URL +
-'/rest/v1/rpc/recuperer_code_affilie',
-{
-
-method:'POST',
-
-headers:{
-
-'Content-Type':
-'application/json',
-
-'apikey':
-SUPABASE_PUBLISHABLE_KEY,
-
-'Authorization':
-'Bearer ' +
-SUPABASE_PUBLISHABLE_KEY
-
-},
-
-body:JSON.stringify({
-
-p_email:
-email
-
-})
-
-});
-
-
-const texte =
-await response.text();
-
-
-let data;
-
-
-try{
-
-data =
-JSON.parse(texte);
-
-}catch{
-
-throw new Error(
-'Réponse inattendue de Supabase.'
-);
-
-}
-
-
-if(!response.ok){
-
-throw new Error(
-
-data.message ||
-data.error_description ||
-data.hint ||
-JSON.stringify(data)
-
-);
-
-}
-
-
-const resultat =
-Array.isArray(data)
-? data[0]
-: data;
-
-
-if(!resultat){
-
-throw new Error(
-'Impossible de récupérer le code affilié.'
-);
-
-}
-
-
-/*
-   Pour l'instant, on affiche le résultat
-   uniquement si Supabase retourne un code.
-*/
-
-if(resultat.code_affilie){
-
-message.style.color =
-'#FFD700';
-
-message.textContent =
-'✅ Votre code affilié est : ' +
-resultat.code_affilie;
-
-}else{
-
-message.style.color =
-'#FFD700';
-
-message.textContent =
-'✅ Votre demande a été traitée.';
-
-}
-
-
-}
-catch(error){
-
-console.error(
-'Erreur récupération code:',
-error
-);
-
-
-message.style.color =
-'red';
-
-
-message.textContent =
-'❌ ' +
-(
-error.message ||
-'Impossible de récupérer votre code.'
-);
-
-
-}
-finally{
-
-bouton.disabled = false;
-
-bouton.textContent =
-'📩 Récupérer mon code';
-
-}
-
-}
-
-
-
-/* =====================================================
-   STATISTIQUES
-===================================================== */
-
-function afficherStatistiques(affilié){
+/* =========================================
+   AFFICHER STATISTIQUES
+========================================= */
+
+function afficherStatistiques(
+affilié
+){
 
 const ventes =
 Number(
@@ -1262,9 +969,253 @@ commission.toLocaleString(
 
 
 
-/* =====================================================
+/* =========================================
+   CODE AFFILIÉ OUBLIÉ
+========================================= */
+
+function afficherCodeOublie(){
+
+const box =
+document.getElementById(
+'code-oublie-box'
+);
+
+
+if(
+box.style.display === 'none' ||
+!box.style.display
+){
+
+box.style.display =
+'block';
+
+}
+else{
+
+box.style.display =
+'none';
+
+}
+
+}
+
+
+
+/* =========================================
+   RETROUVER LE CODE AFFILIÉ
+========================================= */
+
+async function retrouverCodeAffilie(){
+
+const emailInput =
+document.getElementById(
+'email-recuperation'
+);
+
+
+const button =
+document.getElementById(
+'recuperation-button'
+);
+
+
+const message =
+document.getElementById(
+'recuperation-message'
+);
+
+
+const email =
+emailInput.value
+.trim()
+.toLowerCase();
+
+
+message.textContent = '';
+
+
+if(!email){
+
+message.style.color =
+'red';
+
+message.textContent =
+'❌ Entrez votre adresse email.';
+
+return;
+
+}
+
+
+button.disabled = true;
+
+button.textContent =
+'Recherche...';
+
+
+try{
+
+
+/*
+IMPORTANT :
+
+Cette fonction SQL doit exister
+dans Supabase :
+
+retrouver_code_affilie
+
+Elle reçoit :
+p_email
+
+et doit retourner :
+code_affilie
+*/
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+'/rest/v1/rpc/retrouver_code_affilie',
+
+{
+
+method:'POST',
+
+headers:{
+
+'Content-Type':
+'application/json',
+
+'apikey':
+SUPABASE_PUBLISHABLE_KEY,
+
+'Authorization':
+'Bearer ' +
+SUPABASE_PUBLISHABLE_KEY
+
+},
+
+body:JSON.stringify({
+
+p_email:
+email
+
+})
+
+}
+
+);
+
+
+const texte =
+await response.text();
+
+
+let data;
+
+
+try{
+
+data =
+JSON.parse(texte);
+
+}
+
+catch{
+
+throw new Error(
+'Réponse inattendue de Supabase.'
+);
+
+}
+
+
+if(!response.ok){
+
+throw new Error(
+
+data.message ||
+data.error_description ||
+data.hint ||
+JSON.stringify(data)
+
+);
+
+}
+
+
+const résultat =
+Array.isArray(data)
+? data[0]
+: data;
+
+
+if(
+!résultat ||
+!résultat.code_affilie
+){
+
+throw new Error(
+'Aucun affilié trouvé avec cette adresse email.'
+);
+
+}
+
+
+message.style.color =
+'#FFD700';
+
+
+message.textContent =
+'✅ Votre code affilié est : ' +
+résultat.code_affilie;
+
+
+document
+.getElementById('code-input')
+.value =
+résultat.code_affilie;
+
+
+}
+
+catch(error){
+
+console.error(
+'Erreur récupération code:',
+error
+);
+
+
+message.style.color =
+'red';
+
+
+message.textContent =
+'❌ ' +
+(
+error.message ||
+'Impossible de retrouver votre code.'
+);
+
+}
+
+finally{
+
+button.disabled = false;
+
+button.textContent =
+'📩 Retrouver mon code';
+
+}
+
+}
+
+
+
+/* =========================================
    FORMULAIRE RETRAIT
-===================================================== */
+========================================= */
 
 function afficherFormulaireRetrait(){
 
@@ -1307,20 +1258,17 @@ commission.toLocaleString(
 
 document
 .getElementById('moyen-paiement')
-.value =
-'';
+.value = '';
 
 
 document
 .getElementById('numero-paiement')
-.value =
-'';
+.value = '';
 
 
 document
 .getElementById('message-retrait')
-.textContent =
-'';
+.textContent = '';
 
 
 document
@@ -1332,9 +1280,9 @@ document
 
 
 
-/* =====================================================
-   FERMER RETRAIT
-===================================================== */
+/* =========================================
+   FERMER FORMULAIRE
+========================================= */
 
 function fermerFormulaireRetrait(){
 
@@ -1347,20 +1295,22 @@ document
 
 
 
-/* =====================================================
+/* =========================================
    ENVOYER RETRAIT
-===================================================== */
+========================================= */
 
 async function envoyerDemandeRetrait(){
 
 const message =
-document
-.getElementById('message-retrait');
+document.getElementById(
+'message-retrait'
+);
 
 
 const bouton =
-document
-.getElementById('bouton-retrait');
+document.getElementById(
+'bouton-retrait'
+);
 
 
 if(!affiliéActuel){
@@ -1389,7 +1339,7 @@ message.textContent =
 '❌ Identifiant affilié introuvable.';
 
 console.error(
-'Affilié reçu par Supabase:',
+'Affilié reçu par Supabase :',
 affiliéActuel
 );
 
@@ -1462,8 +1412,7 @@ bouton.disabled = true;
 bouton.textContent =
 'Envoi en cours...';
 
-message.textContent =
-'';
+message.textContent = '';
 
 
 try{
@@ -1525,14 +1474,12 @@ montant.toLocaleString('fr-FR') +
 
 document
 .getElementById('moyen-paiement')
-.value =
-'';
+.value = '';
 
 
 document
 .getElementById('numero-paiement')
-.value =
-'';
+.value = '';
 
 
 setTimeout(
@@ -1546,6 +1493,7 @@ fermerFormulaireRetrait();
 
 
 }
+
 catch(error){
 
 console.error(
@@ -1566,6 +1514,7 @@ error.message ||
 );
 
 }
+
 finally{
 
 bouton.disabled = false;
@@ -1579,15 +1528,16 @@ bouton.textContent =
 
 
 
-/* =====================================================
-   COPIER LIEN
-===================================================== */
+/* =========================================
+   COPIER LE LIEN
+========================================= */
 
 async function copierLien(){
 
 const message =
-document
-.getElementById('copie-message');
+document.getElementById(
+'copie-message'
+);
 
 
 if(!lienAffilieActuel){
@@ -1627,8 +1577,8 @@ message.style.display =
 3000
 );
 
-
 }
+
 catch(error){
 
 message.style.display =
@@ -1641,10 +1591,9 @@ message.textContent =
 
 }
 
-
 </script>
 
 
 </body>
 
-     </html>
+</html>
