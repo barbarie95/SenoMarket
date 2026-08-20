@@ -315,6 +315,12 @@ section h2{
 }
 
 
+/*
+=================================================
+ANCIEN SYSTÈME D'ANIMATION
+=================================================
+*/
+
 .review-card{
 
     width:100%;
@@ -726,8 +732,61 @@ section h2{
 }
 
 
+/* =========================
+   LOGIN
+========================= */
+
 #login-box{
     display:block !important;
     opacity:1 !important;
     position:relative !important;
 }
+
+
+/* =========================================================
+   CORRECTION AVIS DYNAMIQUES SUPABASE
+=========================================================
+
+   Le site possédait une ancienne animation CSS sur
+   .review-card.
+
+   Les nouveaux avis sont animés par JavaScript.
+
+   On désactive donc l'ancienne animation uniquement
+   dans la section des témoignages.
+========================================================= */
+
+.testimonials .review-card{
+
+    position:relative !important;
+
+    top:auto !important;
+
+    left:auto !important;
+
+    animation:none !important;
+
+    opacity:0;
+
+    transform:translateY(15px);
+
+    transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+}
+
+
+.testimonials .review-card.visible{
+
+    opacity:1;
+
+    transform:translateY(0);
+}
+
+
+.testimonials .review-card.leaving{
+
+    opacity:0;
+
+    transform:translateY(-15px);
+   }
