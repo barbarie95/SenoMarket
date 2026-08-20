@@ -2,19 +2,18 @@
 <html lang="fr">
 
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>Gestion Avis - SenoMarket</title>
 
 <link rel="stylesheet" href="css/style.css">
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 
 <body>
-
 
 <header>
 
@@ -25,30 +24,24 @@
 </header>
 
 
-
 <section class="affiliate">
-
 
 <h2>⭐ Gestion des avis clients</h2>
 
 <p>
-Consultez les avis clients de SenoMarket.
+Consultez et gérez les avis clients de SenoMarket.
 </p>
-
 
 
 <div class="card">
 
-<h3>Liste des avis</h3>
+<h3>📋 Liste des avis</h3>
 
 <div id="listeAvis">
-
 <p>Chargement des avis...</p>
-
 </div>
 
 </div>
-
 
 
 <br>
@@ -58,9 +51,7 @@ Consultez les avis clients de SenoMarket.
 ⬅ Retour au tableau de bord
 </a>
 
-
 </section>
-
 
 
 <footer>
@@ -72,73 +63,304 @@ Consultez les avis clients de SenoMarket.
 </footer>
 
 
-
 <script>
 
+/* =========================
+   SUPABASE
+========================= */
 
-const webhook = "https://senomarket.app.n8n.cloud/webhook/senomarket-admin?action=avis";
+const SUPABASE_URL =
+"https://vfnqwdwgkocpkkaofrum.supabase.co";
 
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_BOFyx3zpbcwtN6h-3N0wLw_L1QOJWR-";
 
-fetch(webhook)
-
-.then(response => response.json())
-
-.then(data => {
-
-
-let zone = document.getElementById("listeAvis");
-
-zone.innerHTML = "";
-
-
-data.forEach(function(avis){
+const supabaseClient =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
 
 
-zone.innerHTML += `
+/* =========================
+   CHARGER LES AVIS
+========================= */
 
-<div class="card">
+async function chargerAvis() {
 
-<h3>⭐ ${avis["Nom client"]}</h3>
-
-<p>
-Commentaire : ${avis["Commentaire"]}
-</p>
-
-<p>
-Note : ${avis["Note"]}/5
-</p>
-
-<p>
-Date : ${avis["Date"]}
-</p>
-
-<p>
-Statut : ${avis["Statut"]}
-</p>
-
-</div>
-
-`;
+    const zone =
+        document.getElementById("listeAvis");
 
 
-});
+    const { data, error } =
+        await supabaseClient
+        .from("avis")
+        .select("*")
+        .order(
+            "date_creation",
+            { ascending:false }
+        );
 
 
-})
+    if (error) {
+
+        console.error(error);
+
+        zone.innerHTML = `
+            <p style="color:red;">
+                Erreur :
+                ${error.message}
+            </p>
+        `;
+
+        return;
+    }
 
 
-.catch(error => {
+    if (!data || data.length === 0) {
 
-document.getElementById("listeAvis").innerHTML =
-"Erreur de chargement des avis.";
+        zone.innerHTML =
+            "<p>Aucun avis pour le moment.</p>";
 
-});
+        return;
+    }
 
+
+    zone.innerHTML = "";
+
+
+    data.forEach(function(avis) {
+
+
+        const statut =
+            avis.statut || "pending";
+
+
+        const note =
+            Number(avis.note || 0);
+
+
+        const etoiles =
+            "⭐".repeat(
+                Math.max(
+                    0,
+                    Math.min(5,note)
+                )
+            );
+
+
+        zone.innerHTML += `
+
+        <div class="card"
+             style="
+                margin-bottom:20px;
+                text-align:left;
+             ">
+
+            <h3>
+                👤 ${avis.nom_client || "Client"}
+            </h3>
+
+            <p>
+                📧 Email :
+                <b>
+                ${avis.email || "Non renseigné"}
+                </b>
+            </p>
+
+            <p>
+                ⭐ Note :
+                <b>${etoiles}</b>
+                (${note}/5)
+            </p>
+
+            <p>
+                💬 Commentaire :
+                <br>
+                <b>
+                ${avis.commentaire || ""}
+                </b>
+            </p>
+
+            <p>
+                🛍️ Produit ID :
+                ${avis.produit_id || "Non renseigné"}
+            </p>
+
+            <p>
+                📅 Date :
+                ${
+                    avis.date_creation
+                    ? new Date(
+                        avis.date_creation
+                      ).toLocaleString("fr-FR")
+                    : "Non renseignée"
+                }
+            </p>
+
+            <p>
+                ⏳ Statut :
+                <b>${statut}</b>
+            </p>
+
+
+            <div style="
+                margin-top:15px;
+                display:flex;
+                gap:10px;
+                flex-wrap:wrap;
+            ">
+
+                ${
+                    statut.toLowerCase() !== "approved"
+                    ?
+                    `
+                    <button
+                        type="button"
+                        onclick="
+                            approuverAvis(
+                                '${avis.id}'
+                            )
+                        "
+                        style="
+                            background:#d4af37;
+                            color:#111;
+                            border:0;
+                            padding:11px 15px;
+                            border-radius:8px;
+                            cursor:pointer;
+                            font-weight:bold;
+                        "
+                    >
+                        ✅ Approuver
+                    </button>
+                    `
+                    :
+                    ""
+                }
+
+
+                <button
+                    type="button"
+                    onclick="
+                        supprimerAvis(
+                            '${avis.id}'
+                        )
+                    "
+                    style="
+                        background:#b00020;
+                        color:white;
+                        border:0;
+                        padding:11px 15px;
+                        border-radius:8px;
+                        cursor:pointer;
+                        font-weight:bold;
+                    "
+                >
+                    ❌ Supprimer
+                </button>
+
+            </div>
+
+        </div>
+
+        `;
+    });
+}
+
+
+/* =========================
+   APPROUVER
+========================= */
+
+async function approuverAvis(id) {
+
+    if (
+        !confirm(
+            "Approuver cet avis ?"
+        )
+    ) return;
+
+
+    const { error } =
+        await supabaseClient
+        .from("avis")
+        .update({
+            statut:"approved"
+        })
+        .eq("id",id);
+
+
+    if (error) {
+
+        alert(
+            "Erreur : " +
+            error.message
+        );
+
+        return;
+    }
+
+
+    alert(
+        "Avis approuvé !"
+    );
+
+
+    chargerAvis();
+}
+
+
+/* =========================
+   SUPPRIMER
+========================= */
+
+async function supprimerAvis(id) {
+
+    if (
+        !confirm(
+            "Supprimer définitivement cet avis ?"
+        )
+    ) return;
+
+
+    const { error } =
+        await supabaseClient
+        .from("avis")
+        .delete()
+        .eq("id",id);
+
+
+    if (error) {
+
+        alert(
+            "Erreur : " +
+            error.message
+        );
+
+        return;
+    }
+
+
+    alert(
+        "Avis supprimé."
+    );
+
+
+    chargerAvis();
+}
+
+
+/* =========================
+   DÉMARRAGE
+========================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    chargerAvis
+);
 
 </script>
 
-
-
 </body>
-
 </html>
