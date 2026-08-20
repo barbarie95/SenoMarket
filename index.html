@@ -13,6 +13,11 @@ data-en="SenoMarket - AI training, guides and digital resources">
 SenoMarket - Formations IA, guides et ressources numériques
 </title>
 
+
+<!-- =========================================
+     DESCRIPTION SEO
+========================================= -->
+
 <meta
 name="description"
 content="SenoMarket propose des formations, guides, templates et ressources numériques pour développer vos compétences, utiliser l'intelligence artificielle et réussir vos projets en ligne."
@@ -28,12 +33,25 @@ name="author"
 content="SenoMarket"
 >
 
+
+<!-- =========================================
+     URL PRINCIPALE
+========================================= -->
+
 <link
 rel="canonical"
 href="https://barbarie95.github.io/SenoMarket/"
 >
 
-<meta property="og:type" content="website">
+
+<!-- =========================================
+     OPEN GRAPH
+========================================= -->
+
+<meta
+property="og:type"
+content="website"
+>
 
 <meta
 property="og:title"
@@ -60,6 +78,11 @@ property="og:image"
 content="https://barbarie95.github.io/SenoMarket/images/logo-seno.png"
 >
 
+
+<!-- =========================================
+     TWITTER / X
+========================================= -->
+
 <meta
 name="twitter:card"
 content="summary"
@@ -82,7 +105,7 @@ content="https://barbarie95.github.io/SenoMarket/images/logo-seno.png"
 
 
 <!-- =========================================
-     DONNÉES STRUCTURÉES
+     IDENTITÉ DU SITE
 ========================================= -->
 
 <script type="application/ld+json">
@@ -95,6 +118,10 @@ content="https://barbarie95.github.io/SenoMarket/images/logo-seno.png"
 }
 </script>
 
+
+<!-- =========================================
+     ORGANISATION
+========================================= -->
 
 <script type="application/ld+json">
 {
@@ -115,17 +142,22 @@ content="https://barbarie95.github.io/SenoMarket/images/logo-seno.png"
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
+<!-- =========================================
+     CSS PRINCIPAL
+========================================= -->
+
 <link
 rel="stylesheet"
 href="css/style.css"
 >
 
 
-<!-- =========================================
-     CSS AVIS + LANGUE
-========================================= -->
-
 <style>
+
+/* =========================================
+   BOUTON LANGUE
+========================================= */
 
 .lang-btn{
     background:transparent;
@@ -167,7 +199,9 @@ href="css/style.css"
 }
 
 
-/* Un seul avis visible à la fois */
+/*
+   Un seul avis est visible à la fois.
+*/
 
 .review-card{
     width:90%;
@@ -176,16 +210,11 @@ href="css/style.css"
     padding:30px;
     border-radius:18px;
     text-align:center;
-
     background:rgba(255,255,255,0.04);
-
     border:1px solid rgba(255,215,0,0.25);
-
-    box-shadow:
-        0 8px 30px rgba(0,0,0,0.25);
+    box-shadow:0 8px 30px rgba(0,0,0,0.25);
 
     opacity:0;
-
     transform:translateY(15px);
 
     transition:
@@ -233,6 +262,29 @@ href="css/style.css"
     color:#aaa;
     font-size:14px;
     margin-top:10px;
+}
+
+
+/* =========================================
+   NOUVEAU : MESSAGE D'ERREUR AVIS
+========================================= */
+
+.dynamic-reviews-error{
+    text-align:center;
+    padding:25px;
+    color:#ff7777;
+}
+
+
+/* =========================================
+   NOUVEAU : MESSAGE DE DIAGNOSTIC
+========================================= */
+
+.dynamic-reviews-debug{
+    text-align:center;
+    padding:15px;
+    color:#888;
+    font-size:13px;
 }
 
 </style>
@@ -589,9 +641,7 @@ class="slides"
 id="avisAccueil">
 
 <div class="dynamic-reviews-message">
-
 Chargement des avis...
-
 </div>
 
 </div>
@@ -942,6 +992,10 @@ Politique de confidentialité
 
 <script>
 
+/* =========================================
+   SUPABASE
+========================================= */
+
 const SUPABASE_URL =
 "https://vfnqwdwgkocpkkaofrum.supabase.co";
 
@@ -981,6 +1035,46 @@ let avisListe = [];
 let avisIndex = 0;
 
 let avisTimer = null;
+
+
+/* =========================================
+   NOUVEAU : TIMEOUT DE SÉCURITÉ
+========================================= */
+
+/*
+   Cette fonction empêche la page de rester
+   bloquée indéfiniment si Supabase ne répond pas.
+
+   Exemple :
+   si une requête reste bloquée pendant 8 secondes,
+   elle est considérée comme ayant échoué.
+*/
+
+function avecTimeout(promise, duree = 8000){
+
+    return Promise.race([
+
+        promise,
+
+        new Promise(function(_, reject){
+
+            setTimeout(function(){
+
+                reject(
+                    new Error(
+                        "La connexion à Supabase a dépassé " +
+                        duree / 1000 +
+                        " secondes."
+                    )
+                );
+
+            }, duree);
+
+        })
+
+    ]);
+
+}
 
 
 /* =========================================
@@ -1038,13 +1132,16 @@ function afficherAvis(index){
         );
 
 
+    /*
+       Compatible avec plusieurs noms
+       possibles pour le produit.
+    */
+
     const produit =
-        echapperHTML(
-            avis.produit_nom ||
-            avis.produit ||
-            avis.nom_produit ||
-            ""
-        );
+        avis.produit_nom ||
+        avis.produit ||
+        avis.nom_produit ||
+        "";
 
 
     const produitHTML =
@@ -1052,9 +1149,7 @@ function afficherAvis(index){
         ?
         `
         <div class="dynamic-review-product">
-
-            🛍️ ${produit}
-
+            🛍️ ${echapperHTML(produit)}
         </div>
         `
         :
@@ -1069,32 +1164,31 @@ function afficherAvis(index){
         >
 
             <div class="dynamic-review-stars">
-
                 ${etoiles}
-
             </div>
-
 
             <div class="dynamic-review-comment">
-
                 "${commentaire}"
-
             </div>
-
 
             ${produitHTML}
 
-
             <div class="dynamic-review-name">
-
                 — ${nom}
-
             </div>
 
         </div>
 
     `;
 
+
+    /*
+       On attend un cycle d'affichage
+       avant d'ajouter "visible".
+
+       Cela permet à la transition CSS
+       de fonctionner correctement.
+    */
 
     requestAnimationFrame(function(){
 
@@ -1123,15 +1217,6 @@ function afficherAvis(index){
 
 function prochainAvis(){
 
-    if(
-        !avisListe.length
-    ){
-
-        return;
-
-    }
-
-
     const carte =
         document.getElementById(
             "avisActuel"
@@ -1140,151 +1225,4 @@ function prochainAvis(){
 
     if(carte){
 
-        carte.classList.remove(
-            "visible"
-        );
-
-
-        carte.classList.add(
-            "leaving"
-        );
-
-    }
-
-
-    setTimeout(function(){
-
-        avisIndex++;
-
-
-        if(
-            avisIndex >=
-            avisListe.length
-        ){
-
-            avisIndex = 0;
-
-        }
-
-
-        afficherAvis(
-            avisIndex
-        );
-
-    }, 700);
-
-}
-
-
-/* =========================================
-   DÉMARRER LE DÉFILEMENT
-========================================= */
-
-function demarrerDefilementAvis(){
-
-    if(avisTimer){
-
-        clearInterval(
-            avisTimer
-        );
-
-    }
-
-
-    if(
-        avisListe.length <= 1
-    ){
-
-        return;
-
-    }
-
-
-    avisTimer =
-        setInterval(
-            prochainAvis,
-            3000
-        );
-
-}
-
-
-/* =========================================
-   CHARGER LES AVIS
-========================================= */
-
-async function chargerAvisAccueil(){
-
-    const zone =
-        document.getElementById(
-            "avisAccueil"
-        );
-
-
-    if(!zone){
-
-        return;
-
-    }
-
-
-    zone.innerHTML = `
-
-        <div class="dynamic-reviews-message">
-
-            Chargement des avis...
-
-        </div>
-
-    `;
-
-
-    try{
-
-        /*
-         * MODIFICATION PRINCIPALE :
-         *
-         * On utilise directement la fonction
-         * obtenir_avis_publics() qui fonctionne
-         * déjà dans Supabase.
-         */
-
-        const resultat =
-            await supabaseClient
-            .rpc(
-                "obtenir_avis_publics"
-            );
-
-
-        const data =
-            resultat.data;
-
-
-        const error =
-            resultat.error;
-
-
-        /*
-         * ERREUR SUPABASE
-         */
-
-        if(error){
-
-            console.error(
-                "Erreur obtenir_avis_publics :",
-                error
-            );
-
-
-            zone.innerHTML = `
-
-                <div class="dynamic-reviews-message">
-
-                    Impossible de charger les avis.
-
-                    <br><br>
-
-                    <small>
-                        ${echapperHTML(
-                            error.message ||
-                            "Erreur Supabase
+        carte.c
