@@ -2,295 +2,155 @@
 <html lang="fr">
 
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Statistiques - SenoMarket</title>
 
 <link rel="stylesheet" href="css/style.css">
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 </head>
-
 
 <body>
 
-
 <header>
-
 <div class="logo">
-
-<img
-src="images/logo-seno.png"
-alt="Logo SenoMarket">
-
+<img src="images/logo-seno.png" alt="Logo SenoMarket">
 </div>
-
 </header>
-
-
 
 <section class="affiliate">
 
-
 <h2>📈 Statistiques SenoMarket</h2>
+<p>Vue générale des performances de votre plateforme.</p>
+
+
+<!-- NOTIFICATIONS -->
+
+<div class="card" style="margin:20px 0;text-align:left;">
+
+<h3>🔔 Notifications</h3>
 
 <p>
-Vue générale des performances de votre plateforme.
+Notifications non lues :
+<b id="nombreNotifications">0</b>
 </p>
-
-
-
-<!-- =========================================
-     NOTIFICATIONS
-========================================= -->
-
-<div
-class="card"
-style="
-margin-top:25px;
-margin-bottom:25px;
-text-align:left;
-">
-
-<h3>
-🔔 Notifications
-</h3>
-
-
-<div
-style="
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:15px;
-">
-
-<p style="margin:0;">
-Nouvelles activités
-</p>
-
-
-<span
-id="nombreNotifications"
-style="
-font-weight:bold;
-font-size:20px;
-color:#111;
-">
-0
-</span>
-
-</div>
-
 
 <div id="listeNotifications">
-
-<p>
-Chargement des notifications...
-</p>
+<p>Chargement...</p>
+</div>
 
 </div>
 
 
-</div>
-
-
-
-<!-- =========================================
-     STATISTIQUES
-========================================= -->
+<!-- STATISTIQUES -->
 
 <div class="cards">
 
-
 <div class="card">
-
-<h3>🛒 Produits</h3>
-
-<h2 id="nombreProduits">
-Chargement...
-</h2>
-
-<p>
-Produits enregistrés
-</p>
-
+<h3>🛍️ Produits</h3>
+<h2 id="nombreProduits">...</h2>
+<p>Produits enregistrés</p>
 </div>
 
-
-
 <div class="card">
-
 <h3>🤝 Affiliés</h3>
-
-<h2 id="nombreAffilies">
-Chargement...
-</h2>
-
-<p>
-Partenaires enregistrés
-</p>
-
+<h2 id="nombreAffilies">...</h2>
+<p>Affiliés enregistrés</p>
 </div>
 
-
-
 <div class="card">
-
 <h3>💰 Ventes</h3>
-
-<h2 id="nombreVentes">
-Chargement...
-</h2>
-
-<p>
-Ventes enregistrées
-</p>
-
+<h2 id="nombreVentes">...</h2>
+<p>Ventes enregistrées</p>
 </div>
-
-
 
 <div class="card">
-
 <h3>💳 Retraits</h3>
-
-<h2 id="nombreRetraits">
-Chargement...
-</h2>
-
-<p>
-Demandes de retrait
-</p>
+<h2 id="nombreRetraits">...</h2>
+<p>Demandes de retrait</p>
+</div>
 
 </div>
 
 
-</div>
-
+<p id="messageErreur"
+style="color:#b00020;font-weight:bold;"></p>
 
 
 <br>
 
-
-
-<p
-id="messageErreur"
-style="
-color:#b00020;
-font-weight:bold;
-margin-top:20px;
-">
-</p>
-
-
-
-<a
-href="dashboard.html"
-class="gold-btn">
-
+<a href="dashboard.html" class="gold-btn">
 ⬅ Retour au tableau de bord
-
 </a>
-
 
 </section>
 
 
-
 <footer>
-
-<p>
-© 2026 SenoMarket - Transformez vos idées en réussite
-</p>
-
+<p>© 2026 SenoMarket - Transformez vos idées en réussite</p>
 </footer>
 
 
+<!-- FENÊTRE DÉTAIL -->
 
-<!-- =========================================
-     FENÊTRE DE DÉTAIL
-========================================= -->
-
-<div
-id="fenetreDetail"
+<div id="fenetreDetail"
 style="
 display:none;
 position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.65);
+inset:0;
+background:rgba(0,0,0,.65);
 z-index:9999;
 align-items:center;
 justify-content:center;
 padding:20px;
-box-sizing:border-box;
 ">
 
-
-<div
-style="
+<div style="
 background:white;
 color:#111;
 width:100%;
 max-width:500px;
-border-radius:15px;
 padding:25px;
-box-sizing:border-box;
+border-radius:15px;
 max-height:90vh;
-overflow-y:auto;
+overflow:auto;
 ">
 
-
-<h2 id="titreDetail">
-Détails
-</h2>
-
+<h2 id="titreDetail">Détails</h2>
 
 <div id="contenuDetail">
+Chargement...
 </div>
-
 
 <br>
 
-
 <button
-class="gold-btn"
 onclick="fermerDetail()"
 style="
-color:#111;
+padding:12px 20px;
+border:0;
+border-radius:8px;
 cursor:pointer;
+font-weight:bold;
 ">
-
 Fermer
-
 </button>
 
-
 </div>
-
 </div>
-
 
 
 <script>
 
-/* =========================================
-   CONNEXION SUPABASE
-========================================= */
+/* =========================
+   SUPABASE
+========================= */
 
 const SUPABASE_URL =
 "https://vfnqwdwgkocpkkaofrum.supabase.co";
 
-
 const SUPABASE_PUBLISHABLE_KEY =
 "sb_publishable_BOFyx3zpbcwtN6h-3N0wLw_L1QOJWR-";
-
 
 const supabaseClient =
 supabase.createClient(
@@ -299,158 +159,83 @@ supabase.createClient(
 );
 
 
-
-/* =========================================
+/* =========================
    STATISTIQUES
-========================================= */
+========================= */
 
-async function chargerStatistiques() {
+async function compter(table, element) {
 
-    const messageErreur =
-        document.getElementById(
-            "messageErreur"
+    const { count, error } =
+        await supabaseClient
+        .from(table)
+        .select("*", {
+            count:"exact",
+            head:true
+        });
+
+    if (error) {
+        throw new Error(
+            table + " : " + error.message
         );
-
-
-    try {
-
-
-        const produits =
-            await supabaseClient
-            .from("produits")
-            .select("*", {
-                count: "exact",
-                head: true
-            });
-
-
-        if (produits.error) {
-
-            throw new Error(
-                "Produits : " +
-                produits.error.message
-            );
-
-        }
-
-
-
-        const affilies =
-            await supabaseClient
-            .from("affilies")
-            .select("*", {
-                count: "exact",
-                head: true
-            });
-
-
-        if (affilies.error) {
-
-            throw new Error(
-                "Affiliés : " +
-                affilies.error.message
-            );
-
-        }
-
-
-
-        const ventes =
-            await supabaseClient
-            .from("ventes")
-            .select("*", {
-                count: "exact",
-                head: true
-            });
-
-
-        if (ventes.error) {
-
-            throw new Error(
-                "Ventes : " +
-                ventes.error.message
-            );
-
-        }
-
-
-
-        const retraits =
-            await supabaseClient
-            .from("retraits")
-            .select("*", {
-                count: "exact",
-                head: true
-            });
-
-
-        if (retraits.error) {
-
-            throw new Error(
-                "Retraits : " +
-                retraits.error.message
-            );
-
-        }
-
-
-
-        document.getElementById(
-            "nombreProduits"
-        ).textContent =
-            produits.count ?? 0;
-
-
-        document.getElementById(
-            "nombreAffilies"
-        ).textContent =
-            affilies.count ?? 0;
-
-
-        document.getElementById(
-            "nombreVentes"
-        ).textContent =
-            ventes.count ?? 0;
-
-
-        document.getElementById(
-            "nombreRetraits"
-        ).textContent =
-            retraits.count ?? 0;
-
-
     }
 
-    catch (erreur) {
-
-        console.error(
-            "Erreur statistiques :",
-            erreur
-        );
-
-
-        messageErreur.textContent =
-            "Erreur : " +
-            erreur.message;
-
-    }
-
+    document.getElementById(element)
+        .textContent = count ?? 0;
 }
 
 
+async function chargerStatistiques() {
 
-/* =========================================
+    const erreur =
+        document.getElementById("messageErreur");
+
+    try {
+
+        await Promise.all([
+
+            compter(
+                "produits",
+                "nombreProduits"
+            ),
+
+            compter(
+                "affilies",
+                "nombreAffilies"
+            ),
+
+            compter(
+                "ventes",
+                "nombreVentes"
+            ),
+
+            compter(
+                "retraits",
+                "nombreRetraits"
+            )
+
+        ]);
+
+    } catch (error) {
+
+        console.error(error);
+
+        erreur.textContent =
+            "Erreur statistiques : " +
+            error.message;
+    }
+}
+
+
+/* =========================
    NOTIFICATIONS
-========================================= */
+========================= */
 
 async function chargerNotifications() {
 
-
-    const liste =
+    const zone =
         document.getElementById(
             "listeNotifications"
         );
-
 
     const compteur =
         document.getElementById(
@@ -458,740 +243,479 @@ async function chargerNotifications() {
         );
 
 
-    const resultat =
+    const { data, error } =
         await supabaseClient
         .from("notifications")
         .select("*")
         .order(
             "date_creation",
-            {
-                ascending: false
-            }
+            { ascending:false }
         );
 
 
-    if (resultat.error) {
+    if (error) {
 
-        console.error(
-            "Erreur notifications :",
-            resultat.error
-        );
+        console.error(error);
 
-
-        liste.innerHTML = `
-            <div style="
-                padding:15px;
-                background:#ffe5e5;
-                color:#8b0000;
-                border:1px solid #ffb3b3;
-                border-radius:8px;
-            ">
-                Impossible de charger les notifications.
-            </div>
+        zone.innerHTML = `
+            <p style="color:#b00020;">
+                Erreur notifications :
+                ${error.message}
+            </p>
         `;
 
         return;
-
     }
 
 
     const notifications =
-        resultat.data || [];
-
-
-    const nonLues =
-        notifications.filter(
-            notification =>
-                notification.lu === false
-        );
+        data || [];
 
 
     compteur.textContent =
-        nonLues.length;
+        notifications.filter(
+            n => n.lu === false
+        ).length;
 
 
+    if (!notifications.length) {
 
-    if (notifications.length === 0) {
+        zone.innerHTML =
+            "<p>Aucune notification.</p>";
 
-        liste.innerHTML = `
+        return;
+    }
+
+
+    zone.innerHTML = "";
+
+
+    notifications.forEach(n => {
+
+        const vente =
+            n.type === "vente";
+
+        const retrait =
+            n.type === "retrait";
+
+
+        const div =
+            document.createElement("div");
+
+
+        div.style.cssText = `
+            padding:15px;
+            margin-bottom:12px;
+            border-radius:10px;
+            border:1px solid #ddd;
+            background:${n.lu
+                ? "#f4f4f4"
+                : "#fff8d6"};
+            color:#111;
+        `;
+
+
+        div.innerHTML = `
+
+            <strong>
+                ${vente
+                    ? "🛒 Nouvelle vente"
+                    : retrait
+                    ? "💳 Nouvelle demande de retrait"
+                    : "🔔 Notification"}
+            </strong>
+
+            <p style="color:#222;">
+                ${n.message || ""}
+            </p>
+
+            <small style="color:#666;">
+                ${
+                    n.date_creation
+                    ? new Date(
+                        n.date_creation
+                      ).toLocaleString("fr-FR")
+                    : ""
+                }
+            </small>
+
             <div style="
-                padding:15px;
-                background:#f4f4f4;
-                color:#222;
-                border:1px solid #d9d9d9;
-                border-radius:8px;
+                margin-top:10px;
+                display:flex;
+                gap:8px;
+                flex-wrap:wrap;
             ">
-                Aucune notification pour le moment.
+
+                ${
+                    vente && n.vente_id
+                    ? `
+                    <button
+                        onclick="voirVente('${n.vente_id}')"
+                        style="
+                            padding:10px;
+                            cursor:pointer;
+                        ">
+                        🛒 Voir la vente
+                    </button>
+                    `
+                    : ""
+                }
+
+                ${
+                    retrait && n.retrait_id
+                    ? `
+                    <button
+                        onclick="voirRetrait('${n.retrait_id}')"
+                        style="
+                            padding:10px;
+                            cursor:pointer;
+                        ">
+                        💳 Voir le retrait
+                    </button>
+                    `
+                    : ""
+                }
+
+                ${
+                    !n.lu
+                    ? `
+                    <button
+                        onclick="marquerLue('${n.id}')"
+                        style="
+                            padding:10px;
+                            cursor:pointer;
+                        ">
+                        ✓ Marquer comme lu
+                    </button>
+                    `
+                    : `
+                    <span style="padding:10px;">
+                        ✓ Lu
+                    </span>
+                    `
+                }
+
             </div>
         `;
 
-        return;
 
-    }
+        zone.appendChild(div);
+    });
+}
 
 
+/* =========================
+   DÉTAIL VENTE
+========================= */
 
-    liste.innerHTML = "";
+async function voirVente(id) {
 
-
-
-    notifications.forEach(
-        function(notification) {
-
-
-            const element =
-                document.createElement(
-                    "div"
-                );
-
-
-            element.style.padding =
-                "15px";
-
-
-            element.style.marginBottom =
-                "12px";
-
-
-            element.style.borderRadius =
-                "10px";
-
-
-            element.style.border =
-                notification.lu
-                ? "1px solid #d9d9d9"
-                : "2px solid #d4a900";
-
-
-            element.style.background =
-                notification.lu
-                ? "#f4f4f4"
-                : "#fff8d6";
-
-
-            element.style.color =
-                "#111";
-
-
-            element.style.boxShadow =
-                "0 2px 6px rgba(0,0,0,0.08)";
-
-
-
-            const estVente =
-                notification.type === "vente";
-
-
-            const titre =
-                estVente
-                ? "🛒 Nouvelle vente"
-                : "💳 Nouvelle demande de retrait";
-
-
-
-            element.innerHTML = `
-
-                <div style="
-                    font-size:17px;
-                    font-weight:bold;
-                    color:#111;
-                    margin-bottom:6px;
-                ">
-                    ${titre}
-                </div>
-
-
-                <div style="
-                    font-size:15px;
-                    color:#222;
-                    margin-bottom:8px;
-                ">
-                    ${notification.message || ""}
-                </div>
-
-
-                <div style="
-                    font-size:13px;
-                    color:#666;
-                    margin-bottom:12px;
-                ">
-                    ${new Date(
-                        notification.date_creation
-                    ).toLocaleString("fr-FR")}
-                </div>
-
-
-                <div style="
-                    display:flex;
-                    gap:8px;
-                    flex-wrap:wrap;
-                ">
-
-
-                    ${
-                        estVente &&
-                        notification.vente_id
-
-                        ?
-
-                        `
-                        <button
-                            class="gold-btn"
-                            onclick="voirVente('${notification.vente_id}')"
-                            style="
-                                color:#111;
-                                cursor:pointer;
-                            "
-                        >
-                            🛒 Voir la vente
-                        </button>
-                        `
-
-                        :
-
-                        ""
-                    }
-
-
-
-                    ${
-                        !estVente &&
-                        notification.retrait_id
-
-                        ?
-
-                        `
-                        <button
-                            class="gold-btn"
-                            onclick="voirRetrait('${notification.retrait_id}')"
-                            style="
-                                color:#111;
-                                cursor:pointer;
-                            "
-                        >
-                            💳 Voir le retrait
-                        </button>
-                        `
-
-                        :
-
-                        ""
-                    }
-
-
-
-                    ${
-                        notification.lu
-
-                        ?
-
-                        `
-                        <span style="
-                            padding:10px;
-                            color:#555;
-                            font-size:14px;
-                            font-weight:bold;
-                        ">
-                            ✓ Déjà lue
-                        </span>
-                        `
-
-                        :
-
-                        `
-                        <button
-                            class="gold-btn"
-                            onclick="marquerCommeLue('${notification.id}')"
-                            style="
-                                color:#111;
-                                font-weight:bold;
-                                cursor:pointer;
-                            "
-                        >
-                            ✓ Marquer comme lu
-                        </button>
-                        `
-
-                    }
-
-                </div>
-
-            `;
-
-
-            liste.appendChild(
-                element
-            );
-
-
-        }
+    ouvrirDetail(
+        "🛒 Détails de la vente",
+        "Chargement..."
     );
 
-}
+
+    const { data: vente, error } =
+        await supabaseClient
+        .from("ventes")
+        .select("*")
+        .eq("id",id)
+        .single();
 
 
+    if (error) {
 
-/* =========================================
-   VOIR UNE VENTE
-========================================= */
-
-async function voirVente(venteId) {
-
-
-    const contenu =
-        document.getElementById(
-            "contenuDetail"
+        afficherDetail(
+            "Erreur : " +
+            error.message
         );
 
-
-    const titre =
-        document.getElementById(
-            "titreDetail"
-        );
+        return;
+    }
 
 
-    const fenetre =
-        document.getElementById(
-            "fenetreDetail"
-        );
+    let produit = null;
+    let affilie = null;
+    let commission = null;
 
 
-    contenu.innerHTML =
-        "<p>Chargement...</p>";
+    if (vente.produit_id) {
 
-
-    titre.textContent =
-        "🛒 Détails de la vente";
-
-
-    fenetre.style.display =
-        "flex";
-
-
-
-    try {
-
-
-        const venteResultat =
+        const r =
             await supabaseClient
-            .from("ventes")
+            .from("produits")
             .select("*")
-            .eq(
-                "id",
-                venteId
-            )
-            .single();
-
-
-        if (venteResultat.error) {
-
-            throw venteResultat.error;
-
-        }
-
-
-        const vente =
-            venteResultat.data;
-
-
-
-        let produit =
-            null;
-
-
-        if (vente.produit_id) {
-
-
-            const produitResultat =
-                await supabaseClient
-                .from("produits")
-                .select("*")
-                .eq(
-                    "id",
-                    vente.produit_id
-                )
-                .maybeSingle();
-
-
-            if (!produitResultat.error) {
-
-                produit =
-                    produitResultat.data;
-
-            }
-
-        }
-
-
-
-        let affilie =
-            null;
-
-
-        if (vente.affilie_id) {
-
-
-            const affilieResultat =
-                await supabaseClient
-                .from("affilies")
-                .select("*")
-                .eq(
-                    "id",
-                    vente.affilie_id
-                )
-                .maybeSingle();
-
-
-            if (!affilieResultat.error) {
-
-                affilie =
-                    affilieResultat.data;
-
-            }
-
-        }
-
-
-
-        let commission =
-            null;
-
-
-        const commissionResultat =
-            await supabaseClient
-            .from("commissions")
-            .select("*")
-            .eq(
-                "vente_id",
-                venteId
-            )
+            .eq("id",vente.produit_id)
             .maybeSingle();
 
-
-        if (!commissionResultat.error) {
-
-            commission =
-                commissionResultat.data;
-
-        }
-
-
-
-        contenu.innerHTML = `
-
-            <p>
-                🆔 <b>ID vente :</b>
-                ${vente.id}
-            </p>
-
-
-            <p>
-                🛍️ <b>Produit :</b>
-                ${
-                    produit
-                    ? produit.nom
-                    : "Produit introuvable"
-                }
-            </p>
-
-
-            <p>
-                👤 <b>Affilié :</b>
-                ${
-                    affilie
-                    ? affilie.nom
-                    : "Affilié introuvable"
-                }
-            </p>
-
-
-            <p>
-                🔑 <b>Code utilisé :</b>
-                ${
-                    vente.code_affilie_utilise
-                    || "Non renseigné"
-                }
-            </p>
-
-
-            <p>
-                💰 <b>Montant :</b>
-                ${Number(
-                    vente.montant || 0
-                ).toLocaleString("fr-FR")}
-                FCFA
-            </p>
-
-
-            <p>
-                💵 <b>Commission :</b>
-                ${
-                    commission
-                    ?
-                    Number(
-                        commission.montant || 0
-                    ).toLocaleString("fr-FR")
-                    + " FCFA"
-                    :
-                    "Aucune commission trouvée"
-                }
-            </p>
-
-
-            ${
-                commission
-
-                ?
-
-                `
-                <p>
-                    ⏳ <b>Statut commission :</b>
-                    ${commission.statut}
-                </p>
-                `
-
-                :
-
-                ""
-            }
-
-        `;
-
-
+        produit = r.data;
     }
 
-    catch(error) {
 
+    if (vente.affilie_id) {
 
-        console.error(
-            "Erreur détails vente :",
-            error
-        );
-
-
-        contenu.innerHTML = `
-            <p style="
-                color:#b00020;
-                font-weight:bold;
-            ">
-                Impossible de charger les détails de cette vente.
-            </p>
-        `;
-
-    }
-
-}
-
-
-
-/* =========================================
-   VOIR UN RETRAIT
-========================================= */
-
-async function voirRetrait(retraitId) {
-
-
-    const contenu =
-        document.getElementById(
-            "contenuDetail"
-        );
-
-
-    const titre =
-        document.getElementById(
-            "titreDetail"
-        );
-
-
-    const fenetre =
-        document.getElementById(
-            "fenetreDetail"
-        );
-
-
-    contenu.innerHTML =
-        "<p>Chargement...</p>";
-
-
-    titre.textContent =
-        "💳 Détails du retrait";
-
-
-    fenetre.style.display =
-        "flex";
-
-
-
-    try {
-
-
-        const retraitResultat =
+        const r =
             await supabaseClient
-            .from("retraits")
+            .from("affilies")
             .select("*")
-            .eq(
-                "id",
-                retraitId
-            )
-            .single();
+            .eq("id",vente.affilie_id)
+            .maybeSingle();
 
-
-        if (retraitResultat.error) {
-
-            throw retraitResultat.error;
-
-        }
-
-
-        const retrait =
-            retraitResultat.data;
-
-
-
-        let affilie =
-            null;
-
-
-        if (retrait.affilie_id) {
-
-
-            const affilieResultat =
-                await supabaseClient
-                .from("affilies")
-                .select("*")
-                .eq(
-                    "id",
-                    retrait.affilie_id
-                )
-                .maybeSingle();
-
-
-            if (!affilieResultat.error) {
-
-                affilie =
-                    affilieResultat.data;
-
-            }
-
-        }
-
-
-
-        contenu.innerHTML = `
-
-            <p>
-                🆔 <b>ID retrait :</b>
-                ${retrait.id}
-            </p>
-
-
-            <p>
-                👤 <b>Affilié :</b>
-                ${
-                    affilie
-                    ? affilie.nom
-                    : "Affilié introuvable"
-                }
-            </p>
-
-
-            <p>
-                🔑 <b>Code affilié :</b>
-                ${
-                    affilie
-                    ? affilie.code_affilie
-                    : "Non renseigné"
-                }
-            </p>
-
-
-            <p>
-                💰 <b>Montant demandé :</b>
-                ${Number(
-                    retrait.montant_demande || 0
-                ).toLocaleString("fr-FR")}
-                FCFA
-            </p>
-
-
-            <p>
-                ⏳ <b>Statut :</b>
-                ${retrait.statut || "pending"}
-            </p>
-
-
-            <p>
-                📅 <b>Date de demande :</b>
-                ${
-                    retrait.date_demande
-                    ?
-                    new Date(
-                        retrait.date_demande
-                    ).toLocaleString("fr-FR")
-                    :
-                    "Non renseignée"
-                }
-            </p>
-
-
-            <p>
-                💳 <b>Moyen de paiement :</b>
-                ${
-                    retrait.moyen_paiement
-                    || "Non renseigné"
-                }
-            </p>
-
-
-            <p>
-                📱 <b>Numéro de paiement :</b>
-                ${
-                    retrait.numero_paiement
-                    || "Non renseigné"
-                }
-            </p>
-
-
-            <p>
-                💵 <b>Date de paiement :</b>
-                ${
-                    retrait.date_paiement
-                    ?
-                    new Date(
-                        retrait.date_paiement
-                    ).toLocaleString("fr-FR")
-                    :
-                    "Pas encore payé"
-                }
-            </p>
-
-        `;
-
-
+        affilie = r.data;
     }
 
-    catch(error) {
+
+    const c =
+        await supabaseClient
+        .from("commissions")
+        .select("*")
+        .eq("vente_id",id)
+        .maybeSingle();
 
 
-        console.error(
-            "Erreur détails retrait :",
-            error
-        );
+    commission = c.data;
 
 
-        contenu.innerHTML = `
-            <p style="
-                color:#b00020;
-                font-weight:bold;
-            ">
-                Impossible de charger les détails de ce retrait.
+    afficherDetail(`
+
+        <p>
+        🆔 <b>ID :</b> ${vente.id}
+        </p>
+
+        <p>
+        🛍️ <b>Produit :</b>
+        ${produit?.nom || "Non trouvé"}
+        </p>
+
+        <p>
+        👤 <b>Affilié :</b>
+        ${affilie?.nom || "Non trouvé"}
+        </p>
+
+        <p>
+        🔑 <b>Code :</b>
+        ${vente.code_affilie_utilise || "Non renseigné"}
+        </p>
+
+        <p>
+        💰 <b>Montant :</b>
+        ${Number(vente.montant || 0)
+            .toLocaleString("fr-FR")} FCFA
+        </p>
+
+        <p>
+        💵 <b>Commission :</b>
+        ${
+            commission
+            ? Number(commission.montant || 0)
+                .toLocaleString("fr-FR")
+                + " FCFA"
+            : "Non trouvée"
+        }
+        </p>
+
+        ${
+            commission
+            ? `
+            <p>
+            ⏳ <b>Statut commission :</b>
+            ${commission.statut}
             </p>
-        `;
+            `
+            : ""
+        }
 
-    }
-
+    `);
 }
 
 
+/* =========================
+   DÉTAIL RETRAIT
+========================= */
 
-/* =========
+async function voirRetrait(id) {
+
+    ouvrirDetail(
+        "💳 Détails du retrait",
+        "Chargement..."
+    );
+
+
+    const { data: retrait, error } =
+        await supabaseClient
+        .from("retraits")
+        .select("*")
+        .eq("id",id)
+        .single();
+
+
+    if (error) {
+
+        afficherDetail(
+            "Erreur : " +
+            error.message
+        );
+
+        return;
+    }
+
+
+    let affilie = null;
+
+
+    if (retrait.affilie_id) {
+
+        const r =
+            await supabaseClient
+            .from("affilies")
+            .select("*")
+            .eq("id",retrait.affilie_id)
+            .maybeSingle();
+
+        affilie = r.data;
+    }
+
+
+    afficherDetail(`
+
+        <p>
+        👤 <b>Affilié :</b>
+        ${affilie?.nom || "Non trouvé"}
+        </p>
+
+        <p>
+        🔑 <b>Code :</b>
+        ${affilie?.code_affilie || "Non renseigné"}
+        </p>
+
+        <p>
+        💰 <b>Montant :</b>
+        ${Number(
+            retrait.montant_demande || 0
+        ).toLocaleString("fr-FR")} FCFA
+        </p>
+
+        <p>
+        ⏳ <b>Statut :</b>
+        ${retrait.statut || "Non renseigné"}
+        </p>
+
+        <p>
+        📅 <b>Date de demande :</b>
+        ${
+            retrait.date_demande
+            ? new Date(
+                retrait.date_demande
+              ).toLocaleString("fr-FR")
+            : "Non renseignée"
+        }
+        </p>
+
+        <p>
+        💳 <b>Moyen :</b>
+        ${retrait.moyen_paiement || "Non renseigné"}
+        </p>
+
+        <p>
+        📱 <b>Numéro :</b>
+        ${retrait.numero_paiement || "Non renseigné"}
+        </p>
+
+        <p>
+        ✅ <b>Date de paiement :</b>
+        ${
+            retrait.date_paiement
+            ? new Date(
+                retrait.date_paiement
+              ).toLocaleString("fr-FR")
+            : "Pas encore payé"
+        }
+        </p>
+
+    `);
+}
+
+
+/* =========================
+   NOTIFICATION LUE
+========================= */
+
+async function marquerLue(id) {
+
+    const { error } =
+        await supabaseClient
+        .from("notifications")
+        .update({lu:true})
+        .eq("id",id);
+
+
+    if (error) {
+
+        alert(
+            "Erreur : " +
+            error.message
+        );
+
+        return;
+    }
+
+
+    chargerNotifications();
+}
+
+
+/* =========================
+   FENÊTRE
+========================= */
+
+function ouvrirDetail(titre,contenu) {
+
+    document.getElementById(
+        "titreDetail"
+    ).textContent = titre;
+
+    document.getElementById(
+        "contenuDetail"
+    ).innerHTML = contenu;
+
+    document.getElementById(
+        "fenetreDetail"
+    ).style.display = "flex";
+}
+
+
+function afficherDetail(contenu) {
+
+    document.getElementById(
+        "contenuDetail"
+    ).innerHTML = contenu;
+}
+
+
+function fermerDetail() {
+
+    document.getElementById(
+        "fenetreDetail"
+    ).style.display = "none";
+}
+
+
+/* =========================
+   DÉMARRAGE
+========================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        chargerStatistiques();
+        chargerNotifications();
+
+    }
+);
+
+</script>
+
+</body>
+     </html>
