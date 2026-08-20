@@ -4,11 +4,14 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>Espace Affilié - SenoMarket</title>
 
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet"
+      href="css/style.css">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -31,26 +34,35 @@ alt="Logo SenoMarket">
 
 <nav>
 
-<a href="index.html">Accueil</a>
+<a href="index.html">
+Accueil
+</a>
 
-<a href="boutique.html">Boutique</a>
+<a href="boutique.html">
+Boutique
+</a>
 
-<a href="blog.html">Blog</a>
+<a href="blog.html">
+Blog
+</a>
 
-<a href="affiliation.html">Affiliation</a>
+<a href="affiliation.html">
+Affiliation
+</a>
 
 <a href="espace-affilie.html">
 Espace Affilié
 </a>
 
-<a href="contact.html">Contact</a>
+<a href="contact.html">
+Contact
+</a>
 
 </nav>
 
 
-<a
-href="boutique.html"
-class="btn">
+<a href="boutique.html"
+   class="btn">
 
 Boutique
 
@@ -79,9 +91,9 @@ Entrez votre code affilié pour accéder à votre tableau de bord.
      CONNEXION
 ===================================================== -->
 
-<div
-class="card"
-id="login-box">
+<div class="card"
+     id="login-box">
+
 
 <h3>
 🔑 Accès affilié
@@ -101,7 +113,8 @@ box-sizing:border-box;
 ">
 
 
-<br><br>
+<br>
+<br>
 
 
 <button
@@ -123,32 +136,30 @@ style="color:red;">
 
 
 <!-- =====================================================
-     NOUVEAU BOUTON
+     NOUVEAU : CODE OUBLIÉ
 ===================================================== -->
-
-<p style="margin-top:20px;">
-
-Vous avez oublié votre code affilié ?
-
-</p>
-
 
 <button
 type="button"
 class="gold-btn"
-onclick="afficherOubliCode()">
+onclick="afficherRecuperation()"
+style="
+margin-top:15px;
+background:transparent;
+color:#FFD700;
+">
 
-🔑 J'ai oublié mon code affilié
+🔐 J'ai oublié mon code affilié
 
 </button>
 
 
 <!-- =====================================================
-     FORMULAIRE OUBLI CODE
+     FORMULAIRE DE RÉCUPÉRATION
 ===================================================== -->
 
 <div
-id="oubli-code-box"
+id="recuperation-box"
 style="
 display:none;
 margin-top:20px;
@@ -157,13 +168,17 @@ background:#111;
 border-radius:12px;
 ">
 
+
 <h3>
-📧 Retrouver mon code affilié
+📧 Récupérer mon code affilié
 </h3>
 
 
 <p>
-Entrez l'adresse email utilisée lors de votre inscription.
+
+Entrez l'adresse email utilisée lors
+de votre inscription.
+
 </p>
 
 
@@ -180,7 +195,8 @@ box-sizing:border-box;
 ">
 
 
-<br><br>
+<br>
+<br>
 
 
 <button
@@ -189,7 +205,20 @@ class="gold-btn"
 id="bouton-recuperation"
 onclick="recupererCodeAffilie()">
 
-🔍 Retrouver mon code
+📩 Récupérer mon code
+
+</button>
+
+
+<button
+type="button"
+class="gold-btn"
+onclick="fermerRecuperation()"
+style="
+margin-left:8px;
+">
+
+Annuler
 
 </button>
 
@@ -203,45 +232,6 @@ font-weight:bold;
 
 </p>
 
-
-<div
-id="resultat-code"
-style="
-display:none;
-margin-top:20px;
-padding:15px;
-background:#222;
-border-radius:10px;
-">
-
-<p>
-Votre code affilié est :
-</p>
-
-
-<strong
-id="code-retrouve"
-style="
-font-size:24px;
-color:#FFD700;
-">
-
-</strong>
-
-
-<br><br>
-
-
-<button
-type="button"
-class="gold-btn"
-onclick="utiliserCodeRetrouve()">
-
-➡️ Utiliser ce code
-
-</button>
-
-</div>
 
 </div>
 
@@ -264,14 +254,17 @@ style="display:none;">
 
 <div class="card">
 
+
 <h3>
 👤 Votre profil affilié
 </h3>
 
 
 <p>
+
 Nom :
 <strong id="aff-nom"></strong>
+
 </p>
 
 
@@ -292,6 +285,7 @@ font-size:22px;
 
 </div>
 
+
 </div>
 
 
@@ -299,6 +293,7 @@ font-size:22px;
 <!-- LIEN -->
 
 <div class="card">
+
 
 <h3>
 🔗 Votre lien affilié
@@ -336,6 +331,7 @@ style="display:none;">
 
 </p>
 
+
 </div>
 
 
@@ -343,6 +339,7 @@ style="display:none;">
 <!-- STATISTIQUES -->
 
 <div class="card">
+
 
 <h3>
 📊 Vos statistiques
@@ -396,22 +393,21 @@ Commission par vente :
 </p>
 
 
-<h2
-style="color:#FFD700;">
+<h2 style="color:#FFD700;">
 
 25 %
 
 </h2>
 
+
 </div>
 
 
 
-<!-- =====================================================
-     RETRAIT
-===================================================== -->
+<!-- RETRAIT -->
 
 <div class="card">
+
 
 <h3>
 💰 Demander mon paiement
@@ -419,13 +415,18 @@ style="color:#FFD700;">
 
 
 <p>
-Vous pouvez demander le paiement de la totalité
-de votre commission disponible.
+
+Vous pouvez demander le paiement
+de la totalité de votre commission disponible.
+
 </p>
 
 
 <p
-style="font-size:13px;color:#aaa;">
+style="
+font-size:13px;
+color:#aaa;
+">
 
 ⚠️ Aucun retrait partiel n'est possible.
 
@@ -483,10 +484,13 @@ font-weight:bold;
 
 
 <p
-style="font-size:13px;color:#aaa;">
+style="
+font-size:13px;
+color:#aaa;
+">
 
-Le montant correspond automatiquement à la totalité
-de votre commission disponible.
+Le montant correspond automatiquement
+à la totalité de votre commission disponible.
 
 </p>
 
@@ -506,25 +510,31 @@ border-radius:10px;
 box-sizing:border-box;
 ">
 
+
 <option value="">
 Sélectionnez un moyen de paiement
 </option>
+
 
 <option value="Orange Money">
 Orange Money
 </option>
 
+
 <option value="Moov Money">
 Moov Money
 </option>
+
 
 <option value="Wave">
 Wave
 </option>
 
+
 <option value="Virement bancaire">
 Virement bancaire
 </option>
+
 
 </select>
 
@@ -581,6 +591,7 @@ font-weight:bold;
 
 </div>
 
+
 </div>
 
 
@@ -588,6 +599,7 @@ font-weight:bold;
 <!-- HISTORIQUE -->
 
 <div class="card">
+
 
 <h3>
 📋 Historique des commissions
@@ -602,6 +614,7 @@ Vos commissions apparaîtront ici.
 
 </div>
 
+
 </div>
 
 
@@ -609,6 +622,7 @@ Vos commissions apparaîtront ici.
 <!-- EXPLICATION -->
 
 <div class="card">
+
 
 <h3>
 ❓ Comment ça fonctionne ?
@@ -639,10 +653,12 @@ et le solde devient <strong>0 FCFA</strong>.
 
 </p>
 
+
 </div>
 
 
 </div>
+
 
 </section>
 
@@ -650,9 +666,12 @@ et le solde devient <strong>0 FCFA</strong>.
 
 <footer>
 
+
 <p>
+
 © 2026 SenoMarket -
 Transformez vos idées en réussite
+
 </p>
 
 
@@ -662,11 +681,13 @@ Politique de confidentialité
 
 </a>
 
+
 </footer>
 
 
 
 <script>
+
 
 /* =====================================================
    SUPABASE
@@ -676,15 +697,21 @@ const SUPABASE_URL =
 'https://vfnqwdwgkocpkkaofrum.supabase.co';
 
 
+/*
+   IMPORTANT :
+   Clé conservée exactement comme fournie.
+*/
+
 const SUPABASE_PUBLISHABLE_KEY =
 'sb_publishable_BOFyx3zpbcNT6h-3N0wLw_L1QOJWR-';
 
 
 const supabaseClient =
 supabase.createClient(
-SUPABASE_URL,
-SUPABASE_PUBLISHABLE_KEY
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
 );
+
 
 
 /* =====================================================
@@ -695,12 +722,10 @@ let affiliéActuel = null;
 
 let lienAffilieActuel = '';
 
-let codeRetrouve = '';
-
 
 
 /* =====================================================
-   VÉRIFIER LE CODE
+   CONNEXION
 ===================================================== */
 
 async function verifierCode(){
@@ -743,15 +768,19 @@ button.textContent =
 
 try{
 
+
 const response =
 await fetch(
 SUPABASE_URL +
 '/rest/v1/rpc/obtenir_espace_affilie',
 {
+
 method:'POST',
 
 headers:{
-'Content-Type':'application/json',
+
+'Content-Type':
+'application/json',
 
 'apikey':
 SUPABASE_PUBLISHABLE_KEY,
@@ -759,14 +788,17 @@ SUPABASE_PUBLISHABLE_KEY,
 'Authorization':
 'Bearer ' +
 SUPABASE_PUBLISHABLE_KEY
+
 },
 
 body:JSON.stringify({
-p_code_affilie:code
+
+p_code_affilie:
+code
+
 })
 
-}
-);
+});
 
 
 const texte =
@@ -781,8 +813,7 @@ try{
 data =
 JSON.parse(texte);
 
-}
-catch{
+}catch{
 
 throw new Error(
 'Réponse inattendue de Supabase.'
@@ -794,9 +825,11 @@ throw new Error(
 if(!response.ok){
 
 throw new Error(
+
 data.message ||
 data.error_description ||
 JSON.stringify(data)
+
 );
 
 }
@@ -821,6 +854,7 @@ affiliéActuel =
 affilié;
 
 
+
 /* PROFIL */
 
 document
@@ -835,6 +869,7 @@ document
 affilié.code_affilie || code;
 
 
+
 /* LIEN */
 
 let lien =
@@ -847,8 +882,7 @@ if(
 ){
 
 const page =
-lien ||
-'boutique.html';
+lien || 'boutique.html';
 
 
 const separateur =
@@ -881,11 +915,13 @@ document
 lien;
 
 
+
 /* STATISTIQUES */
 
 afficherStatistiques(
 affilié
 );
+
 
 
 /* DASHBOARD */
@@ -907,6 +943,7 @@ sessionStorage.setItem(
 affilié.code_affilie || code
 );
 
+
 }
 catch(error){
 
@@ -923,6 +960,7 @@ error.message ||
 'Code affilié introuvable.'
 );
 
+
 }
 finally{
 
@@ -938,51 +976,55 @@ button.textContent =
 
 
 /* =====================================================
-   NOUVEAU :
-   AFFICHER FORMULAIRE OUBLI CODE
+   NOUVEAU : AFFICHER RÉCUPÉRATION
 ===================================================== */
 
-function afficherOubliCode(){
+function afficherRecuperation(){
 
-const box =
 document
-.getElementById('oubli-code-box');
-
-
-box.style.display =
+.getElementById('recuperation-box')
+.style.display =
 'block';
-
 
 document
 .getElementById('email-recuperation')
 .focus();
 
+}
+
+
+/* =====================================================
+   NOUVEAU : FERMER RÉCUPÉRATION
+===================================================== */
+
+function fermerRecuperation(){
+
+document
+.getElementById('recuperation-box')
+.style.display =
+'none';
 
 document
 .getElementById('message-recuperation')
 .textContent =
 '';
 
-
-document
-.getElementById('resultat-code')
-.style.display =
-'none';
-
 }
 
 
 
 /* =====================================================
-   NOUVEAU :
-   RÉCUPÉRER LE CODE PAR EMAIL
+   NOUVEAU : RÉCUPÉRER CODE
 ===================================================== */
 
 async function recupererCodeAffilie(){
 
-const emailInput =
+const email =
 document
-.getElementById('email-recuperation');
+.getElementById('email-recuperation')
+.value
+.trim()
+.toLowerCase();
 
 
 const message =
@@ -995,22 +1037,7 @@ document
 .getElementById('bouton-recuperation');
 
 
-const resultat =
-document
-.getElementById('resultat-code');
-
-
-const email =
-emailInput
-.value
-.trim()
-.toLowerCase();
-
-
 message.textContent = '';
-
-resultat.style.display =
-'none';
 
 
 if(!email){
@@ -1034,14 +1061,24 @@ bouton.textContent =
 
 try{
 
+
+/*
+   Cette fonction RPC doit être créée
+   dans Supabase :
+   
+   recuperer_code_affilie
+*/
+
 const response =
 await fetch(
 SUPABASE_URL +
 '/rest/v1/rpc/recuperer_code_affilie',
 {
+
 method:'POST',
 
 headers:{
+
 'Content-Type':
 'application/json',
 
@@ -1051,14 +1088,17 @@ SUPABASE_PUBLISHABLE_KEY,
 'Authorization':
 'Bearer ' +
 SUPABASE_PUBLISHABLE_KEY
+
 },
 
 body:JSON.stringify({
-p_email:email
+
+p_email:
+email
+
 })
 
-}
-);
+});
 
 
 const texte =
@@ -1073,8 +1113,7 @@ try{
 data =
 JSON.parse(texte);
 
-}
-catch{
+}catch{
 
 throw new Error(
 'Réponse inattendue de Supabase.'
@@ -1086,52 +1125,55 @@ throw new Error(
 if(!response.ok){
 
 throw new Error(
+
 data.message ||
 data.error_description ||
+data.hint ||
 JSON.stringify(data)
+
 );
 
 }
 
 
-const affilié =
+const resultat =
 Array.isArray(data)
 ? data[0]
 : data;
 
 
-if(!affilié){
+if(!resultat){
 
-message.style.color =
-'red';
-
-message.textContent =
-'❌ Aucun compte affilié ne correspond à cette adresse email.';
-
-return;
+throw new Error(
+'Impossible de récupérer le code affilié.'
+);
 
 }
 
 
-codeRetrouve =
-affilié.code_affilie;
+/*
+   Pour l'instant, on affiche le résultat
+   uniquement si Supabase retourne un code.
+*/
 
-
-document
-.getElementById('code-retrouve')
-.textContent =
-codeRetrouve;
-
-
-resultat.style.display =
-'block';
-
+if(resultat.code_affilie){
 
 message.style.color =
 '#FFD700';
 
 message.textContent =
-'✅ Votre compte affilié a été retrouvé.';
+'✅ Votre code affilié est : ' +
+resultat.code_affilie;
+
+}else{
+
+message.style.color =
+'#FFD700';
+
+message.textContent =
+'✅ Votre demande a été traitée.';
+
+}
 
 
 }
@@ -1151,8 +1193,9 @@ message.textContent =
 '❌ ' +
 (
 error.message ||
-'Impossible de retrouver votre code.'
+'Impossible de récupérer votre code.'
 );
+
 
 }
 finally{
@@ -1160,40 +1203,9 @@ finally{
 bouton.disabled = false;
 
 bouton.textContent =
-'🔍 Retrouver mon code';
+'📩 Récupérer mon code';
 
 }
-
-}
-
-
-
-/* =====================================================
-   UTILISER LE CODE RETROUVÉ
-===================================================== */
-
-function utiliserCodeRetrouve(){
-
-if(!codeRetrouve){
-
-return;
-
-}
-
-
-document
-.getElementById('code-input')
-.value =
-codeRetrouve;
-
-
-document
-.getElementById('oubli-code-box')
-.style.display =
-'none';
-
-
-verifierCode();
 
 }
 
@@ -1203,9 +1215,7 @@ verifierCode();
    STATISTIQUES
 ===================================================== */
 
-function afficherStatistiques(
-affilié
-){
+function afficherStatistiques(affilié){
 
 const ventes =
 Number(
@@ -1234,14 +1244,18 @@ ventes;
 document
 .getElementById('aff-total-ventes')
 .textContent =
-totalVentes.toLocaleString('fr-FR') +
+totalVentes.toLocaleString(
+'fr-FR'
+) +
 ' FCFA';
 
 
 document
 .getElementById('aff-commission')
 .textContent =
-commission.toLocaleString('fr-FR') +
+commission.toLocaleString(
+'fr-FR'
+) +
 ' FCFA';
 
 }
@@ -1285,23 +1299,28 @@ return;
 document
 .getElementById('montant-retrait')
 .textContent =
-commission.toLocaleString('fr-FR') +
+commission.toLocaleString(
+'fr-FR'
+) +
 ' FCFA';
 
 
 document
 .getElementById('moyen-paiement')
-.value = '';
+.value =
+'';
 
 
 document
 .getElementById('numero-paiement')
-.value = '';
+.value =
+'';
 
 
 document
 .getElementById('message-retrait')
-.textContent = '';
+.textContent =
+'';
 
 
 document
@@ -1370,7 +1389,7 @@ message.textContent =
 '❌ Identifiant affilié introuvable.';
 
 console.error(
-'Affilié reçu par Supabase :',
+'Affilié reçu par Supabase:',
 affiliéActuel
 );
 
@@ -1438,19 +1457,17 @@ return;
 }
 
 
-bouton.disabled =
-true;
-
+bouton.disabled = true;
 
 bouton.textContent =
 'Envoi en cours...';
-
 
 message.textContent =
 '';
 
 
 try{
+
 
 const { data, error } =
 await supabaseClient
@@ -1508,12 +1525,14 @@ montant.toLocaleString('fr-FR') +
 
 document
 .getElementById('moyen-paiement')
-.value = '';
+.value =
+'';
 
 
 document
 .getElementById('numero-paiement')
-.value = '';
+.value =
+'';
 
 
 setTimeout(
@@ -1524,6 +1543,7 @@ fermerFormulaireRetrait();
 },
 4000
 );
+
 
 }
 catch(error){
@@ -1548,9 +1568,7 @@ error.message ||
 }
 finally{
 
-bouton.disabled =
-false;
-
+bouton.disabled = false;
 
 bouton.textContent =
 '✅ Envoyer ma demande';
@@ -1562,7 +1580,7 @@ bouton.textContent =
 
 
 /* =====================================================
-   COPIER LE LIEN
+   COPIER LIEN
 ===================================================== */
 
 async function copierLien(){
@@ -1595,7 +1613,6 @@ lienAffilieActuel
 message.style.display =
 'block';
 
-
 message.textContent =
 '✅ Lien copié !';
 
@@ -1610,12 +1627,12 @@ message.style.display =
 3000
 );
 
+
 }
 catch(error){
 
 message.style.display =
 'block';
-
 
 message.textContent =
 '❌ Impossible de copier le lien.';
@@ -1624,9 +1641,10 @@ message.textContent =
 
 }
 
+
 </script>
 
 
 </body>
 
-</html>
+     </html>
