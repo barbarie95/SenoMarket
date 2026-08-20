@@ -10,7 +10,6 @@
 
 <link rel="stylesheet" href="css/style.css">
 
-<!-- Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 </head>
@@ -37,7 +36,6 @@ alt="Logo SenoMarket">
 
 
 <h2>📈 Statistiques SenoMarket</h2>
-
 
 <p>
 Vue générale des performances de votre plateforme.
@@ -70,9 +68,7 @@ align-items:center;
 margin-bottom:15px;
 ">
 
-<p
-style="margin:0;"
->
+<p style="margin:0;">
 Nouvelles activités
 </p>
 
@@ -82,8 +78,8 @@ id="nombreNotifications"
 style="
 font-weight:bold;
 font-size:20px;
-"
->
+color:#111;
+">
 0
 </span>
 
@@ -108,6 +104,7 @@ Chargement des notifications...
 ========================================= -->
 
 <div class="cards">
+
 
 
 <!-- PRODUITS -->
@@ -189,12 +186,11 @@ Demandes de retrait
 <br>
 
 
-<!-- MESSAGE D'ERREUR -->
 
 <p
 id="messageErreur"
 style="
-color:red;
+color:#b00020;
 font-weight:bold;
 margin-top:20px;
 ">
@@ -248,29 +244,27 @@ supabase.createClient(
 
 
 /* =========================================
-   CHARGER LES STATISTIQUES
+   STATISTIQUES
 ========================================= */
 
 async function chargerStatistiques() {
 
     const messageErreur =
-    document.getElementById(
-        "messageErreur"
-    );
+        document.getElementById(
+            "messageErreur"
+        );
 
 
     try {
 
 
-        /* PRODUITS */
-
         const produits =
-        await supabaseClient
-        .from("produits")
-        .select("*", {
-            count: "exact",
-            head: true
-        });
+            await supabaseClient
+            .from("produits")
+            .select("*", {
+                count: "exact",
+                head: true
+            });
 
 
         if (produits.error) {
@@ -284,15 +278,13 @@ async function chargerStatistiques() {
 
 
 
-        /* AFFILIÉS */
-
         const affilies =
-        await supabaseClient
-        .from("affilies")
-        .select("*", {
-            count: "exact",
-            head: true
-        });
+            await supabaseClient
+            .from("affilies")
+            .select("*", {
+                count: "exact",
+                head: true
+            });
 
 
         if (affilies.error) {
@@ -306,15 +298,13 @@ async function chargerStatistiques() {
 
 
 
-        /* VENTES */
-
         const ventes =
-        await supabaseClient
-        .from("ventes")
-        .select("*", {
-            count: "exact",
-            head: true
-        });
+            await supabaseClient
+            .from("ventes")
+            .select("*", {
+                count: "exact",
+                head: true
+            });
 
 
         if (ventes.error) {
@@ -328,15 +318,13 @@ async function chargerStatistiques() {
 
 
 
-        /* RETRAITS */
-
         const retraits =
-        await supabaseClient
-        .from("retraits")
-        .select("*", {
-            count: "exact",
-            head: true
-        });
+            await supabaseClient
+            .from("retraits")
+            .select("*", {
+                count: "exact",
+                head: true
+            });
 
 
         if (retraits.error) {
@@ -350,30 +338,28 @@ async function chargerStatistiques() {
 
 
 
-        /* AFFICHAGE */
-
         document.getElementById(
             "nombreProduits"
         ).textContent =
-        produits.count ?? 0;
+            produits.count ?? 0;
 
 
         document.getElementById(
             "nombreAffilies"
         ).textContent =
-        affilies.count ?? 0;
+            affilies.count ?? 0;
 
 
         document.getElementById(
             "nombreVentes"
         ).textContent =
-        ventes.count ?? 0;
+            ventes.count ?? 0;
 
 
         document.getElementById(
             "nombreRetraits"
         ).textContent =
-        retraits.count ?? 0;
+            retraits.count ?? 0;
 
 
     }
@@ -387,8 +373,8 @@ async function chargerStatistiques() {
 
 
         messageErreur.textContent =
-        "Erreur : " +
-        erreur.message;
+            "Erreur : " +
+            erreur.message;
 
     }
 
@@ -397,34 +383,34 @@ async function chargerStatistiques() {
 
 
 /* =========================================
-   CHARGER LES NOTIFICATIONS
+   NOTIFICATIONS
 ========================================= */
 
 async function chargerNotifications() {
 
 
     const liste =
-    document.getElementById(
-        "listeNotifications"
-    );
+        document.getElementById(
+            "listeNotifications"
+        );
 
 
     const compteur =
-    document.getElementById(
-        "nombreNotifications"
-    );
+        document.getElementById(
+            "nombreNotifications"
+        );
 
 
     const resultat =
-    await supabaseClient
-    .from("notifications")
-    .select("*")
-    .order(
-        "date_creation",
-        {
-            ascending: false
-        }
-    );
+        await supabaseClient
+        .from("notifications")
+        .select("*")
+        .order(
+            "date_creation",
+            {
+                ascending: false
+            }
+        );
 
 
     if (resultat.error) {
@@ -435,8 +421,17 @@ async function chargerNotifications() {
         );
 
 
-        liste.innerHTML =
-        "<p>Impossible de charger les notifications.</p>";
+        liste.innerHTML = `
+            <div style="
+                padding:15px;
+                background:#ffe5e5;
+                color:#8b0000;
+                border:1px solid #ffb3b3;
+                border-radius:8px;
+            ">
+                Impossible de charger les notifications.
+            </div>
+        `;
 
         return;
 
@@ -444,25 +439,34 @@ async function chargerNotifications() {
 
 
     const notifications =
-    resultat.data || [];
+        resultat.data || [];
 
 
     const nonLues =
-    notifications.filter(
-        notification =>
-        notification.lu === false
-    );
+        notifications.filter(
+            notification =>
+                notification.lu === false
+        );
 
 
     compteur.textContent =
-    nonLues.length;
+        nonLues.length;
 
 
 
     if (notifications.length === 0) {
 
-        liste.innerHTML =
-        "<p>Aucune notification pour le moment.</p>";
+        liste.innerHTML = `
+            <div style="
+                padding:15px;
+                background:#f4f4f4;
+                color:#222;
+                border:1px solid #d9d9d9;
+                border-radius:8px;
+            ">
+                Aucune notification pour le moment.
+            </div>
+        `;
 
         return;
 
@@ -475,94 +479,147 @@ async function chargerNotifications() {
 
 
     notifications.forEach(
-    function(notification) {
+        function(notification) {
 
 
-        const element =
-        document.createElement("div");
+            const element =
+                document.createElement(
+                    "div"
+                );
 
 
-        element.style.padding =
-        "12px";
+            element.style.padding =
+                "15px";
 
 
-        element.style.marginBottom =
-        "10px";
+            element.style.marginBottom =
+                "12px";
 
 
-        element.style.borderRadius =
-        "8px";
+            element.style.borderRadius =
+                "10px";
 
 
-        element.style.background =
-        notification.lu
-        ? "#f1f1f1"
-        : "#fff3cd";
-
-
-        element.innerHTML = `
-
-            <strong>
-                ${notification.message}
-            </strong>
-
-            <br>
-
-            <small>
-                ${new Date(
-                    notification.date_creation
-                ).toLocaleString("fr-FR")}
-            </small>
-
-            <br><br>
-
-            ${
+            element.style.border =
                 notification.lu
-                ?
-
-                "<span>✓ Déjà lue</span>"
-
-                :
-
-                `<button
-                    class="gold-btn"
-                    onclick="marquerCommeLue('${notification.id}')"
-                >
-                    Marquer comme lu
-                </button>`
-            }
-
-        `;
+                ? "1px solid #d9d9d9"
+                : "2px solid #d4a900";
 
 
-        liste.appendChild(
-            element
-        );
+            element.style.background =
+                notification.lu
+                ? "#f4f4f4"
+                : "#fff8d6";
 
 
-    });
+            element.style.color =
+                "#111";
+
+
+            element.style.boxShadow =
+                "0 2px 6px rgba(0,0,0,0.08)";
+
+
+
+            const titre =
+                notification.type === "vente"
+                ? "🛒 Nouvelle vente"
+                : "💳 Nouvelle demande de retrait";
+
+
+
+            element.innerHTML = `
+
+                <div style="
+                    font-size:17px;
+                    font-weight:bold;
+                    color:#111;
+                    margin-bottom:6px;
+                ">
+                    ${titre}
+                </div>
+
+
+                <div style="
+                    font-size:15px;
+                    color:#222;
+                    margin-bottom:6px;
+                ">
+                    ${notification.message}
+                </div>
+
+
+                <div style="
+                    font-size:13px;
+                    color:#666;
+                    margin-bottom:12px;
+                ">
+                    ${new Date(
+                        notification.date_creation
+                    ).toLocaleString("fr-FR")}
+                </div>
+
+
+                ${
+                    notification.lu
+
+                    ?
+
+                    `<span style="
+                        color:#555;
+                        font-size:14px;
+                        font-weight:bold;
+                    ">
+                        ✓ Déjà lue
+                    </span>`
+
+                    :
+
+                    `<button
+                        class="gold-btn"
+                        onclick="marquerCommeLue('${notification.id}')"
+                        style="
+                            color:#111;
+                            font-weight:bold;
+                            cursor:pointer;
+                        "
+                    >
+                        ✓ Marquer comme lu
+                    </button>`
+                }
+
+            `;
+
+
+            liste.appendChild(
+                element
+            );
+
+
+        }
+    );
 
 }
 
 
 
 /* =========================================
-   MARQUER UNE NOTIFICATION COMME LUE
+   MARQUER COMME LUE
 ========================================= */
 
 async function marquerCommeLue(id) {
 
 
     const resultat =
-    await supabaseClient
-    .from("notifications")
-    .update({
-        lu: true
-    })
-    .eq(
-        "id",
-        id
-    );
+        await supabaseClient
+        .from("notifications")
+        .update({
+            lu: true
+        })
+        .eq(
+            "id",
+            id
+        );
 
 
     if (resultat.error) {
