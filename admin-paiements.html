@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Gestion Paiements - SenoMarket</title>
+
 <link rel="stylesheet" href="css/style.css">
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
+
 
 <body>
 
@@ -16,19 +21,29 @@
 </div>
 </header>
 
+
 <section class="affiliate">
 
 <h2>💰 Gestion des paiements</h2>
-<p>Consultez et gérez les demandes de retrait des affiliés.</p>
+
+<p>
+Consultez et gérez les demandes de retrait des affiliés.
+</p>
+
 
 <div class="card">
+
 <h3>📋 Demandes de retrait</h3>
+
 <div id="listePaiements">
 <p>Chargement...</p>
 </div>
+
 </div>
 
+
 <br>
+
 
 <a href="dashboard.html" class="gold-btn">
 ⬅ Retour au tableau de bord
@@ -36,14 +51,21 @@
 
 </section>
 
+
 <footer>
-<p>© 2026 SenoMarket - Transformez vos idées en réussite</p>
+
+<p>
+© 2026 SenoMarket - Transformez vos idées en réussite
+</p>
+
 </footer>
 
 
 <script>
 
-/* SUPABASE */
+/* ================================
+   SUPABASE
+================================ */
 
 const SUPABASE_URL =
 "https://vfnqwdwgkocpkkaofrum.supabase.co";
@@ -58,244 +80,351 @@ supabase.createClient(
 );
 
 
-/* CHARGER LES RETRAITS */
+/* ================================
+   CHARGER LES RETRAITS
+================================ */
 
 async function chargerPaiements() {
 
     const zone =
         document.getElementById("listePaiements");
 
-    try {
-
-        const { data, error } =
-            await supabaseClient
-            .from("retraits")
-            .select("*")
-            .order("date_demande", {
-                ascending: false
-            });
-
-        if (error) throw error;
-
-        if (!data || data.length === 0) {
-            zone.innerHTML =
-                "<p>Aucune demande de retrait.</p>";
-            return;
-        }
-
-        zone.innerHTML = "";
-
-        for (const retrait of data) {
-
-            let affilié = null;
-
-            if (retrait.affilie_id) {
-
-                const resultat =
-                    await supabaseClient
-                    .from("affilies")
-                    .select("nom, code_affilie, email")
-                    .eq("id", retrait.affilie_id)
-                    .maybeSingle();
-
-                affilié = resultat.data;
-            }
-
-            const nom =
-                affilié?.nom || "Affilié inconnu";
-
-            const code =
-                affilié?.code_affilie || "Non renseigné";
-
-            const email =
-                affilié?.email || "Non renseigné";
-
-            const statut =
-                retrait.statut || "pending";
-
-            const montant =
-                Number(retrait.montant_demande || 0)
-                .toLocaleString("fr-FR");
-
-            const dateDemande =
-                retrait.date_demande
-                ? new Date(
-                    retrait.date_demande
-                  ).toLocaleString("fr-FR")
-                : "Non renseignée";
-
-            const datePaiement =
-                retrait.date_paiement
-                ? new Date(
-                    retrait.date_paiement
-                  ).toLocaleString("fr-FR")
-                : "Pas encore payé";
+    zone.innerHTML =
+        "<p>Chargement...</p>";
 
 
-            const carte =
-                document.createElement("div");
+    const { data, error } =
+        await supabaseClient
+        .from("retraits")
+        .select("*")
+        .order(
+            "date_demande",
+            { ascending: false }
+        );
 
-            carte.className = "card";
-            carte.style.marginBottom = "20px";
-            carte.style.textAlign = "left";
+
+    console.log("RETRAITS :", data);
+    console.log("ERREUR :", error);
 
 
-            carte.innerHTML = `
-
-                <h3>👤 ${nom}</h3>
-
-                <p>🔑 Code affilié :
-                    <b>${code}</b>
-                </p>
-
-                <p>📧 Email :
-                    <b>${email}</b>
-                </p>
-
-                <p>💰 Montant demandé :
-                    <b>${montant} FCFA</b>
-                </p>
-
-                <p>⏳ Statut :
-                    <b>${statut}</b>
-                </p>
-
-                <p>📅 Date de demande :
-                    ${dateDemande}
-                </p>
-
-                <p>💳 Moyen de paiement :
-                    <b>${retrait.moyen_paiement || "Non renseigné"}</b>
-                </p>
-
-                <p>📱 Numéro de paiement :
-                    <b>${retrait.numero_paiement || "Non renseigné"}</b>
-                </p>
-
-                <p>✅ Date de paiement :
-                    ${datePaiement}
-                </p>
-
-                ${
-                    statut === "pending"
-                    ? `
-                    <div style="
-                        display:flex;
-                        gap:10px;
-                        flex-wrap:wrap;
-                        margin-top:15px;
-                    ">
-
-                        <button
-                            class="gold-btn"
-                            onclick="marquerPaye('${retrait.id}')">
-                            ✅ Marquer comme payé
-                        </button>
-
-                        <button
-                            class="gold-btn"
-                            style="
-                                background:#b00020;
-                                color:white;
-                            "
-                            onclick="refuserRetrait('${retrait.id}')">
-                            ❌ Refuser
-                        </button>
-
-                    </div>
-                    `
-                    : ""
-                }
-
-            `;
-
-            zone.appendChild(carte);
-        }
-
-    } catch (error) {
-
-        console.error(error);
+    if (error) {
 
         zone.innerHTML = `
-            <p style="color:red;font-weight:bold;">
-                Erreur de chargement des paiements.
+            <p style="color:red;">
+                Erreur Supabase :
+                ${error.message}
             </p>
+        `;
+
+        return;
+    }
+
+
+    if (!data || data.length === 0) {
+
+        zone.innerHTML = `
+            <p>
+                Aucune demande de retrait.
+            </p>
+        `;
+
+        return;
+    }
+
+
+    zone.innerHTML = "";
+
+
+    for (const retrait of data) {
+
+
+        /* AFFILIÉ */
+
+        let affilie = null;
+
+
+        if (retrait.affilie_id) {
+
+            const resultat =
+                await supabaseClient
+                .from("affilies")
+                .select(
+                    "nom,email,code_affilie"
+                )
+                .eq(
+                    "id",
+                    retrait.affilie_id
+                )
+                .maybeSingle();
+
+
+            affilie =
+                resultat.data;
+        }
+
+
+        const nom =
+            affilie?.nom ||
+            "Affilié inconnu";
+
+
+        const email =
+            affilie?.email ||
+            "Non renseigné";
+
+
+        const code =
+            affilie?.code_affilie ||
+            "Non renseigné";
+
+
+        const montant =
+            Number(
+                retrait.montant_demande || 0
+            ).toLocaleString("fr-FR");
+
+
+        const statut =
+            retrait.statut ||
+            "pending";
+
+
+        const dateDemande =
+            retrait.date_demande
+            ? new Date(
+                retrait.date_demande
+              ).toLocaleString("fr-FR")
+            : "Non renseignée";
+
+
+        const datePaiement =
+            retrait.date_paiement
+            ? new Date(
+                retrait.date_paiement
+              ).toLocaleString("fr-FR")
+            : "Pas encore payé";
+
+
+        zone.innerHTML += `
+
+        <div class="card"
+             style="
+                margin-bottom:20px;
+                text-align:left;
+             ">
+
+            <h3>
+                👤 ${nom}
+            </h3>
+
+            <p>
+                📧 Email :
+                <b>${email}</b>
+            </p>
+
+            <p>
+                🔑 Code affilié :
+                <b>${code}</b>
+            </p>
+
+            <p>
+                💰 Montant demandé :
+                <b>${montant} FCFA</b>
+            </p>
+
+            <p>
+                ⏳ Statut :
+                <b>${statut}</b>
+            </p>
+
+            <p>
+                📅 Date de demande :
+                ${dateDemande}
+            </p>
+
+            <p>
+                💳 Moyen de paiement :
+                <b>
+                ${
+                    retrait.moyen_paiement ||
+                    "Non renseigné"
+                }
+                </b>
+            </p>
+
+            <p>
+                📱 Numéro de paiement :
+                <b>
+                ${
+                    retrait.numero_paiement ||
+                    "Non renseigné"
+                }
+                </b>
+            </p>
+
+            <p>
+                ✅ Date de paiement :
+                ${datePaiement}
+            </p>
+
+
+            ${
+                statut === "pending"
+
+                ?
+
+                `
+                <div style="
+                    display:flex;
+                    gap:10px;
+                    flex-wrap:wrap;
+                    margin-top:15px;
+                ">
+
+                    <button
+                        class="gold-btn"
+                        onclick="
+                            marquerPaye(
+                                '${retrait.id}'
+                            )
+                        "
+                        style="cursor:pointer;"
+                    >
+                        ✅ Marquer comme payé
+                    </button>
+
+
+                    <button
+                        class="gold-btn"
+                        onclick="
+                            refuserRetrait(
+                                '${retrait.id}'
+                            )
+                        "
+                        style="
+                            background:#b00020;
+                            color:white;
+                            cursor:pointer;
+                        "
+                    >
+                        ❌ Refuser
+                    </button>
+
+                </div>
+                `
+
+                :
+
+                ""
+            }
+
+        </div>
+
         `;
     }
 }
 
 
-/* MARQUER COMME PAYÉ */
+/* ================================
+   MARQUER PAYÉ
+================================ */
 
 async function marquerPaye(id) {
 
-    if (!confirm(
-        "Confirmer que ce retrait a été payé ?"
-    )) return;
+    if (
+        !confirm(
+            "Confirmer le paiement de ce retrait ?"
+        )
+    ) return;
+
 
     const { error } =
         await supabaseClient
         .from("retraits")
         .update({
+
             statut: "paid",
+
             date_paiement:
                 new Date().toISOString()
+
         })
-        .eq("id", id);
+        .eq(
+            "id",
+            id
+        );
+
 
     if (error) {
 
         alert(
-            "Erreur : " + error.message
+            "Erreur : " +
+            error.message
         );
 
-        console.error(error);
         return;
     }
 
+
     alert(
-        "Retrait marqué comme payé !"
+        "Retrait marqué comme payé."
     );
+
 
     chargerPaiements();
 }
 
 
-/* REFUSER */
+/* ================================
+   REFUSER
+================================ */
 
 async function refuserRetrait(id) {
 
-    if (!confirm(
-        "Voulez-vous refuser cette demande de retrait ?"
-    )) return;
+    if (
+        !confirm(
+            "Refuser cette demande de retrait ?"
+        )
+    ) return;
+
 
     const { error } =
         await supabaseClient
         .from("retraits")
         .update({
+
             statut: "rejected"
+
         })
-        .eq("id", id);
+        .eq(
+            "id",
+            id
+        );
+
 
     if (error) {
 
         alert(
-            "Erreur : " + error.message
+            "Erreur : " +
+            error.message
         );
 
-        console.error(error);
         return;
     }
 
+
     alert(
-        "Demande de retrait refusée."
+        "Demande refusée."
     );
+
 
     chargerPaiements();
 }
 
 
-/* INITIALISATION */
+/* ================================
+   DÉMARRAGE
+================================ */
 
 document.addEventListener(
     "DOMContentLoaded",
