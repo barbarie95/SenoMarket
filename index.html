@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -100,19 +99,13 @@ content="https://barbarie95.github.io/SenoMarket/images/logo-seno.png"
 </script>
 
 
-<!-- =========================================
-     SUPABASE
-========================================= -->
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <link rel="stylesheet" href="css/style.css">
 
 
 <style>
 
 /* =========================================
-   LANGUE
+   BOUTON LANGUE
 ========================================= */
 
 .lang-btn{
@@ -134,162 +127,144 @@ content="https://barbarie95.github.io/SenoMarket/images/logo-seno.png"
 
 /* =========================================
    AVIS CLIENTS
+   IMPORTANT :
+   Les avis sont maintenant intégrés
+   directement dans index.html.
+   Aucun chargement Supabase.
 ========================================= */
-
-/*
-   MODIFICATION :
-
-   On utilise maintenant des classes spécifiques
-   "dynamic-review-card" au lieu de "review-card".
-
-   Pourquoi ?
-
-   Ton style.css contient déjà une classe
-   ".review-card" avec une animation CSS.
-   Cette animation pouvait entrer en conflit
-   avec notre JavaScript.
-
-   On isole donc complètement les avis
-   dynamiques du style.css.
-*/
 
 .testimonials{
     overflow:hidden;
+    background:#0d0d0d;
 }
 
 .slider{
     width:100%;
+    max-width:800px;
+    margin:0 auto;
     overflow:hidden;
 }
 
 .slides{
     width:100%;
-    min-height:260px;
+    min-height:300px;
     display:flex;
     justify-content:center;
     align-items:center;
     position:relative;
 }
 
-.dynamic-reviews-message{
-    text-align:center;
-    padding:25px;
-    color:#aaa;
-    width:100%;
-}
 
-.dynamic-review-card{
+/*
+   Une seule carte est affichée à la fois.
+*/
 
+.review-card{
     width:90%;
     max-width:650px;
-
     box-sizing:border-box;
-
     padding:30px;
-
     border-radius:18px;
-
     text-align:center;
 
     background:#151515;
 
     border:1px solid #FFD700;
 
-    box-shadow:0 8px 30px rgba(0,0,0,0.25);
+    box-shadow:
+        0 8px 30px rgba(0,0,0,0.25),
+        0 0 20px rgba(255,215,0,0.08);
 
     opacity:0;
 
-    transform:translateY(15px);
+    transform:
+        translateY(20px);
 
     transition:
         opacity 0.7s ease,
         transform 0.7s ease;
 }
 
-.dynamic-review-card.visible{
 
+/*
+   Avis qui apparaît.
+*/
+
+.review-card.visible{
     opacity:1;
-
     transform:translateY(0);
 }
 
-.dynamic-review-card.leaving{
 
+/*
+   Avis qui disparaît vers le haut.
+*/
+
+.review-card.leaving{
     opacity:0;
-
-    transform:translateY(-15px);
+    transform:translateY(-20px);
 }
+
+
+/* Étoiles */
 
 .dynamic-review-stars{
-
     color:#FFD700;
-
-    font-size:24px;
-
+    font-size:25px;
     letter-spacing:3px;
-
-    margin-bottom:15px;
+    margin-bottom:18px;
 }
+
+
+/* Commentaire */
 
 .dynamic-review-comment{
-
-    font-size:17px;
-
-    line-height:1.7;
-
-    margin:15px 0;
-
     color:#ddd;
+    font-size:17px;
+    line-height:1.8;
+    margin:15px 0;
 }
+
+
+/* Nom */
 
 .dynamic-review-name{
-
     color:#FFD700;
-
-    font-size:18px;
-
+    font-size:19px;
     font-weight:bold;
-
-    margin-top:18px;
+    margin-top:20px;
 }
 
+
+/* Produit */
+
 .dynamic-review-product{
-
-    color:#aaa;
-
+    color:#888;
     font-size:14px;
-
     margin-top:10px;
 }
 
 
 /*
-   MODIFICATION :
-
-   Style spécial pour les erreurs de connexion.
+   Responsive téléphone
 */
 
-.dynamic-review-error{
+@media(max-width:768px){
 
-    width:90%;
+    .review-card{
+        width:95%;
+        padding:25px 20px;
+    }
 
-    max-width:650px;
+    .dynamic-review-comment{
+        font-size:15px;
+        line-height:1.7;
+    }
 
-    padding:25px;
+    .dynamic-review-stars{
+        font-size:22px;
+    }
 
-    margin:auto;
-
-    border:1px solid #b00020;
-
-    border-radius:15px;
-
-    background:#180b0b;
-
-    color:#ff8080;
-
-    text-align:center;
-
-    line-height:1.6;
 }
 
 </style>
@@ -617,12 +592,27 @@ Devenir affilié
 
 <!-- =========================================
      AVIS CLIENTS
+     
+     MODIFICATION IMPORTANTE :
+     Les avis sont maintenant écrits directement
+     dans le HTML.
+
+     Il n'y a plus :
+     - de requête Supabase
+     - de RPC
+     - de "Chargement des avis..."
+     - de dépendance à la base de données
+
 ========================================= -->
 
 <section class="testimonials">
 
-<h2>
+<h2
+data-fr="⭐ Ce que disent nos clients"
+data-en="⭐ What our customers say">
+
 ⭐ Ce que disent nos clients
+
 </h2>
 
 
@@ -632,8 +622,125 @@ Devenir affilié
 class="slides"
 id="avisAccueil">
 
-<div class="dynamic-reviews-message">
-Chargement des avis...
+<!-- =========================================
+     AVIS 1 — JULIEN K
+========================================= -->
+
+<div
+class="review-card"
+data-review-index="0">
+
+<div class="dynamic-review-stars">
+★★★★★
+</div>
+
+<div class="dynamic-review-comment">
+
+« Waouh. Au début, je n'y croyais pas,
+mais grâce aux guides, j'ai réussi à faire
+5 000 abonnés en moins de deux semaines. »
+
+</div>
+
+<div class="dynamic-review-name">
+— Julien K
+</div>
+
+<div class="dynamic-review-product">
+TikTok Viral Pro – 500 idées de vidéos
+</div>
+
+</div>
+
+
+<!-- =========================================
+     AVIS 2 — FATOU Z
+========================================= -->
+
+<div
+class="review-card"
+data-review-index="1">
+
+<div class="dynamic-review-stars">
+★★★☆☆
+</div>
+
+<div class="dynamic-review-comment">
+
+« J'ai apprécié, mais c'est pas ce que
+je recherchais. »
+
+</div>
+
+<div class="dynamic-review-name">
+— Fatou Z
+</div>
+
+<div class="dynamic-review-product">
+Guide IA pour débutants
+</div>
+
+</div>
+
+
+<!-- =========================================
+     AVIS 3 — DAVID D
+========================================= -->
+
+<div
+class="review-card"
+data-review-index="2">
+
+<div class="dynamic-review-stars">
+★★★★★
+</div>
+
+<div class="dynamic-review-comment">
+
+« Les ressources sont bien expliquées
+et faciles à utiliser. »
+
+</div>
+
+<div class="dynamic-review-name">
+— David D
+</div>
+
+<div class="dynamic-review-product">
+Pack Templates IA
+</div>
+
+</div>
+
+
+<!-- =========================================
+     AVIS 4 — BIS G
+========================================= -->
+
+<div
+class="review-card"
+data-review-index="3">
+
+<div class="dynamic-review-stars">
+★★★★☆
+</div>
+
+<div class="dynamic-review-comment">
+
+« Un contenu intéressant et pratique.
+Quelques explications supplémentaires
+auraient été appréciées. »
+
+</div>
+
+<div class="dynamic-review-name">
+— Bis G
+</div>
+
+<div class="dynamic-review-product">
+Guide Business en ligne
+</div>
+
 </div>
 
 </div>
@@ -970,325 +1077,195 @@ Politique de confidentialité
 
 
 
+<!-- =========================================
+     JAVASCRIPT PRINCIPAL
+========================================= -->
+
 <script src="js/script.js"></script>
 
 
 
-<!-- =========================================
-     SUPABASE + AVIS CLIENTS
-========================================= -->
-
 <script>
 
-/*
-=================================================
-MODIFICATION IMPORTANTE
-=================================================
+/* =========================================
+   CHANGEMENT DE LANGUE
+========================================= */
 
-Nous ne faisons PLUS :
+function changerLangue(){
 
-supabaseClient.rpc("obtenir_avis_publics")
+    const elements =
+        document.querySelectorAll(
+            "[data-fr][data-en]"
+        );
 
-Nous allons directement interroger :
+    const bouton =
+        document.getElementById(
+            "lang-toggle"
+        );
 
-TABLE : avis
-STATUT : approved
-
-Cela permet de savoir immédiatement si le problème
-vient de la fonction PostgreSQL ou de la lecture
-directe de la table.
-*/
-
-
-const SUPABASE_URL =
-"https://vfnqwdwgkocpkkaofrum.supabase.co";
-
-const SUPABASE_PUBLISHABLE_KEY =
-"sb_publishable_BOFyx3zpbcwtN6h-3N0wLw_L1QOJWR-";
+    const langueActuelle =
+        document.documentElement
+        .getAttribute("lang") || "fr";
 
 
-/*
-=================================================
-PROTECTION HTML
-=================================================
-*/
+    const nouvelleLangue =
+        langueActuelle === "fr"
+        ? "en"
+        : "fr";
 
-function echapperHTML(texte){
 
-    return String(texte ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    document.documentElement
+        .setAttribute(
+            "lang",
+            nouvelleLangue
+        );
+
+
+    elements.forEach(function(element){
+
+        element.textContent =
+            element.getAttribute(
+                "data-" + nouvelleLangue
+            );
+
+    });
+
+
+    if(bouton){
+
+        bouton.textContent =
+            nouvelleLangue === "fr"
+            ? "EN"
+            : "FR";
+
+    }
+
+
+    localStorage.setItem(
+        "senomarket-langue",
+        nouvelleLangue
+    );
 
 }
 
 
-/*
-=================================================
-VARIABLES AVIS
-=================================================
-*/
+/* =========================================
+   RESTAURER LA LANGUE
+========================================= */
 
-let avisListe = [];
+function restaurerLangue(){
+
+    const langue =
+        localStorage.getItem(
+            "senomarket-langue"
+        );
+
+
+    if(langue === "en"){
+
+        const elements =
+            document.querySelectorAll(
+                "[data-fr][data-en]"
+            );
+
+
+        document.documentElement
+            .setAttribute(
+                "lang",
+                "en"
+            );
+
+
+        elements.forEach(function(element){
+
+            element.textContent =
+                element.getAttribute(
+                    "data-en"
+                );
+
+        });
+
+
+        const bouton =
+            document.getElementById(
+                "lang-toggle"
+            );
+
+
+        if(bouton){
+
+            bouton.textContent = "FR";
+
+        }
+
+    }
+
+}
+
+
+/* =========================================
+   AVIS CLIENTS — ANIMATION
+========================================= */
+
+/*
+   IMPORTANT :
+   Les avis existent déjà dans le HTML.
+
+   Le JavaScript sert uniquement à :
+   - afficher le premier avis
+   - faire disparaître l'avis actuel
+   - afficher le suivant
+   - recommencer après le dernier
+*/
 
 let avisIndex = 0;
 
 let avisTimer = null;
 
-let avisTransitionTimer = null;
-
-
-/*
-=================================================
-AFFICHER UN AVIS
-=================================================
-*/
 
 function afficherAvis(index){
 
-    const zone =
-        document.getElementById(
-            "avisAccueil"
-        );
-
-
-    if(!zone){
-
-        return;
-
-    }
-
-
-    if(
-        !avisListe ||
-        avisListe.length === 0
-    ){
-
-        return;
-
-    }
-
-
     const avis =
-        avisListe[index];
+        document.querySelectorAll(
+            "#avisAccueil .review-card"
+        );
 
 
-    if(!avis){
+    if(!avis.length){
 
         return;
 
     }
-
-
-    const note =
-        Math.max(
-            0,
-            Math.min(
-                5,
-                Number(avis.note || 0)
-            )
-        );
-
-
-    const etoiles =
-        "★".repeat(note) +
-        "☆".repeat(5 - note);
-
-
-    const nom =
-        echapperHTML(
-            avis.nom_client ||
-            "Client"
-        );
-
-
-    const commentaire =
-        echapperHTML(
-            avis.commentaire ||
-            ""
-        );
-
-
-    const produit =
-        echapperHTML(
-            avis.produit_nom ||
-            avis.nom_produit ||
-            ""
-        );
 
 
     /*
-       MODIFICATION :
-
-       On utilise dynamic-review-card
-       et non review-card.
-
-       Cela évite le conflit avec style.css.
+       On masque tous les avis.
     */
 
-    zone.innerHTML = `
-
-        <div
-            class="dynamic-review-card"
-            id="avisActuel"
-        >
-
-            <div class="dynamic-review-stars">
-                ${etoiles}
-            </div>
-
-
-            <div class="dynamic-review-comment">
-                "${commentaire}"
-            </div>
-
-
-            <div class="dynamic-review-name">
-                — ${nom}
-            </div>
-
-
-            ${
-                produit
-                ?
-                `
-                <div class="dynamic-review-product">
-                    ${produit}
-                </div>
-                `
-                :
-                ""
-            }
-
-        </div>
-
-    `;
-
-
-    requestAnimationFrame(function(){
-
-        const carte =
-            document.getElementById(
-                "avisActuel"
-            );
-
-
-        if(carte){
-
-            carte.classList.add(
-                "visible"
-            );
-
-        }
-
-    });
-
-}
-
-
-/*
-=================================================
-AVIS SUIVANT
-=================================================
-*/
-
-function prochainAvis(){
-
-    if(
-        !avisListe ||
-        avisListe.length <= 1
-    ){
-
-        return;
-
-    }
-
-
-    const carte =
-        document.getElementById(
-            "avisActuel"
-        );
-
-
-    if(carte){
+    avis.forEach(function(carte){
 
         carte.classList.remove(
-            "visible"
-        );
-
-        carte.classList.add(
+            "visible",
             "leaving"
         );
 
-    }
+    });
 
 
-    if(avisTransitionTimer){
+    /*
+       On affiche l'avis demandé.
+    */
 
-        clearTimeout(
-            avisTransitionTimer
-        );
-
-    }
-
-
-    avisTransitionTimer =
-        setTimeout(function(){
-
-            avisIndex++;
-
-            if(
-                avisIndex >=
-                avisListe.length
-            ){
-
-                avisIndex = 0;
-
-            }
+    const avisActuel =
+        avis[index];
 
 
-            afficherAvis(
-                avisIndex
-            );
+    if(!avisActuel){
 
-        },700);
-
-}
-
-
-/*
-=================================================
-DÉMARRER LE DÉFILEMENT
-=================================================
-*/
-
-function demarrerDefilementAvis(){
-
-    if(avisTimer){
-
-        clearInterval(
-            avisTimer
-        );
+        return;
 
     }
 
 
     /*
-       Un avis reste environ 3 secondes.
-    */
-
-    avisTimer =
-        setInterval(
-            prochainAvis,
-            3000
-        );
-
-}
-
-
-/*
-=================================================
-AFFICHER ERREUR
-==================
+       Petit délai p
