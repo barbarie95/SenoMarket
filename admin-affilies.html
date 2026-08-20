@@ -10,6 +10,8 @@
 
 <link rel="stylesheet" href="css/style.css">
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 
 
@@ -19,7 +21,9 @@
 <header>
 
 <div class="logo">
-<img src="images/logo-seno.png" alt="Logo SenoMarket">
+<img
+src="images/logo-seno.png"
+alt="Logo SenoMarket">
 </div>
 
 </header>
@@ -38,26 +42,35 @@ Consultez et gérez vos partenaires affiliés SenoMarket.
 
 
 
+<!-- =========================================
+     RECHERCHE
+========================================= -->
+
 <div class="card">
 
 <h3>🔎 Rechercher un affilié</h3>
 
-
-<input 
+<input
 type="text"
 id="recherche"
 placeholder="Nom ou code affilié..."
 onkeyup="filtrerAffilies()"
-style="padding:12px;width:80%;border-radius:10px;">
-
+style="
+padding:12px;
+width:80%;
+border-radius:10px;
+border:1px solid #ccc;
+">
 
 </div>
 
 
 
+<!-- =========================================
+     LISTE
+========================================= -->
 
 <div class="card">
-
 
 <h3>📋 Liste des affiliés</h3>
 
@@ -76,7 +89,9 @@ style="padding:12px;width:80%;border-radius:10px;">
 <br>
 
 
-<a href="dashboard.html" class="gold-btn">
+<a
+href="dashboard.html"
+class="gold-btn">
 
 ⬅ Retour au tableau de bord
 
@@ -84,7 +99,6 @@ style="padding:12px;width:80%;border-radius:10px;">
 
 
 </section>
-
 
 
 
@@ -98,230 +112,824 @@ style="padding:12px;width:80%;border-radius:10px;">
 
 
 
-
-
 <script>
 
+/* =========================================
+   CONNEXION SUPABASE
+========================================= */
 
-const WEBHOOK_AFFILIES =
-"https://senomarket.app.n8n.cloud/webhook/admin-affilies";
+const SUPABASE_URL =
+"https://vfnqwdwgkocpkkaofrum.supabase.co";
+
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_BOFyx3zpbcwtN6h-3N0wLw_L1QOJWR-";
+
+
+const supabaseClient =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
 
 
 let tousLesAffilies = [];
 
 
 
+/* =========================================
+   CHARGER LES AFFILIÉS
+========================================= */
 
-async function chargerAffilies(){
+async function chargerAffilies() {
 
+    const zone =
+        document.getElementById(
+            "listeAffilies"
+        );
 
-const zone = document.getElementById("listeAffilies");
 
+    try {
 
-try{
 
+        const resultat =
+            await supabaseClient
+            .from("affilies")
+            .select("*")
+            .order(
+                "date_inscription",
+                {
+                    ascending: false
+                }
+            );
 
-const reponse = await fetch(WEBHOOK_AFFILIES);
 
+        if (resultat.error) {
 
-tousLesAffilies = await reponse.json();
+            throw resultat.error;
 
+        }
 
 
-afficherAffilies(tousLesAffilies);
+        tousLesAffilies =
+            resultat.data || [];
 
 
+        await chargerStatistiquesAffilies();
 
-}
 
+    }
 
-catch(error){
+    catch (error) {
 
+        console.error(
+            "Erreur affiliés :",
+            error
+        );
 
-zone.innerHTML =
-"<p style='color:red;'>Erreur de chargement.</p>";
 
+        zone.innerHTML = `
+            <p style="
+                color:red;
+                font-weight:bold;
+            ">
+                Erreur de chargement des affiliés.
+            </p>
+        `;
 
-console.log(error);
-
-
-}
-
-
-}
-
-
-
-
-
-function afficherAffilies(liste){
-
-
-const zone =
-document.getElementById("listeAffilies");
-
-
-
-if(!liste || liste.length === 0){
-
-
-zone.innerHTML =
-"<p>Aucun affilié trouvé.</p>";
-
-return;
-
-
-}
-
-
-
-zone.innerHTML = "";
-
-
-
-liste.forEach(function(affilie){
-
-
-
-let nom =
-affilie.Nom || affilie.nom || "Sans nom";
-
-
-let code =
-affilie["Code Affilié"] || affilie.code || "";
-
-
-let lien =
-affilie["Lien Affilié"] || affilie.lien || "";
-
-
-let ventes =
-affilie["Nombre de ventes"] || affilie.ventes || 0;
-
-
-let commission =
-affilie["Commission totale"] || affilie.commissionTotale || 0;
-
-
-
-zone.innerHTML += `
-
-
-<div class="card">
-
-
-<h3>👤 ${nom}</h3>
-
-
-<p>🔑 Code :
-${code}
-</p>
-
-
-<p>
-🔗 Lien affilié :
-<br>
-${lien}
-</p>
-
-
-<button 
-class="gold-btn"
-onclick="copierLien('${lien}')">
-
-📋 Copier le lien
-
-</button>
-
-
-<p>
-📈 Nombre de ventes :
-<b>${ventes}</b>
-</p>
-
-
-<p>
-💰 Commission totale :
-<b>${commission} FCFA</b>
-</p>
-
-
-
-</div>
-
-
-`;
-
-
-
-});
-
+    }
 
 }
 
 
 
+/* =========================================
+   CHARGER VENTES ET COMMISSIONS
+========================================= */
+
+async function chargerStatistiquesAffilies() {
 
 
-function filtrerAffilies(){
+    try {
 
 
-let recherche =
-document.getElementById("recherche").value.toLowerCase();
+        const ventesResultat =
+            await supabaseClient
+            .from("ventes")
+            .select(
+                "id, affilie_id, montant"
+            );
+
+
+        if (ventesResultat.error) {
+
+            throw ventesResultat.error;
+
+        }
+
+
+        const commissionsResultat =
+            await supabaseClient
+            .from("commissions")
+            .select(
+                "id, affilie_id, montant, statut"
+            );
+
+
+        if (commissionsResultat.error) {
+
+            throw commissionsResultat.error;
+
+        }
+
+
+        const ventes =
+            ventesResultat.data || [];
+
+
+        const commissions =
+            commissionsResultat.data || [];
 
 
 
-let resultat =
-tousLesAffilies.filter(function(affilie){
+        tousLesAffilies =
+            tousLesAffilies.map(
+                function(affilie) {
 
 
-let nom =
-(affilie.Nom || affilie.nom || "").toLowerCase();
+                    const ventesAffilie =
+                        ventes.filter(
+                            function(vente) {
+
+                                return (
+                                    vente.affilie_id ===
+                                    affilie.id
+                                );
+
+                            }
+                        );
+
+
+                    const commissionsAffilie =
+                        commissions.filter(
+                            function(commission) {
+
+                                return (
+                                    commission.affilie_id ===
+                                    affilie.id
+                                );
+
+                            }
+                        );
+
+
+                    const totalVentes =
+                        ventesAffilie.length;
+
+
+                    const totalCommissions =
+                        commissionsAffilie.reduce(
+                            function(total, commission) {
+
+                                return (
+                                    total +
+                                    Number(
+                                        commission.montant || 0
+                                    )
+                                );
+
+                            },
+                            0
+                        );
+
+
+                    return {
+
+                        ...affilie,
+
+                        nombreVentes:
+                            totalVentes,
+
+                        commissionTotale:
+                            totalCommissions
+
+                    };
+
+
+                }
+            );
 
 
 
-let code =
-(affilie["Code Affilié"] || affilie.code || "").toLowerCase();
+        afficherAffilies(
+            tousLesAffilies
+        );
 
 
+    }
 
-return nom.includes(recherche)
-||
-code.includes(recherche);
+    catch (error) {
 
-
-
-});
-
-
-
-afficherAffilies(resultat);
+        console.error(
+            "Erreur statistiques affiliés :",
+            error
+        );
 
 
+        afficherAffilies(
+            tousLesAffilies
+        );
+
+    }
 
 }
 
 
 
+/* =========================================
+   AFFICHER LES AFFILIÉS
+========================================= */
 
-function copierLien(lien){
+function afficherAffilies(liste) {
 
 
-navigator.clipboard.writeText(lien);
+    const zone =
+        document.getElementById(
+            "listeAffilies"
+        );
 
 
-alert("Lien affilié copié !");
+    if (!liste || liste.length === 0) {
 
+        zone.innerHTML = `
+            <p>
+                Aucun affilié trouvé.
+            </p>
+        `;
+
+        return;
+
+    }
+
+
+    zone.innerHTML = "";
+
+
+
+    liste.forEach(
+        function(affilie) {
+
+
+            const nom =
+                affilie.nom ||
+                "Sans nom";
+
+
+            const email =
+                affilie.email ||
+                "Non renseigné";
+
+
+            const whatsapp =
+                affilie.whatsapp ||
+                "Non renseigné";
+
+
+            const code =
+                affilie.code_affilie ||
+                "Non renseigné";
+
+
+            const lien =
+                affilie.lien_affilie ||
+                "";
+
+
+            const pays =
+                affilie.pays ||
+                "Non renseigné";
+
+
+            const methodePaiement =
+                affilie.methode_paiement ||
+                "Non renseignée";
+
+
+            const numeroPaiement =
+                affilie.numero_paiement ||
+                "Non renseigné";
+
+
+            const motivation =
+                affilie.motivation ||
+                "Non renseignée";
+
+
+            const statut =
+                affilie.statut ||
+                "pending";
+
+
+            const nombreVentes =
+                affilie.nombreVentes ||
+                0;
+
+
+            const commissionTotale =
+                affilie.commissionTotale ||
+                0;
+
+
+
+            let couleurStatut =
+                "#d4a900";
+
+
+            if (
+                statut.toLowerCase() ===
+                "approved"
+                ||
+                statut.toLowerCase() ===
+                "active"
+            ) {
+
+                couleurStatut =
+                    "#16803a";
+
+            }
+
+
+            if (
+                statut.toLowerCase() ===
+                "disabled"
+                ||
+                statut.toLowerCase() ===
+                "rejected"
+            ) {
+
+                couleurStatut =
+                    "#b00020";
+
+            }
+
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "card";
+
+
+            card.style.marginBottom =
+                "20px";
+
+
+            card.style.textAlign =
+                "left";
+
+
+
+            card.innerHTML = `
+
+                <h3>
+                    👤 ${nom}
+                </h3>
+
+
+                <p>
+                    📧 Email :
+                    <b>${email}</b>
+                </p>
+
+
+                <p>
+                    📱 WhatsApp :
+                    <b>${whatsapp}</b>
+                </p>
+
+
+                <p>
+                    🌍 Pays :
+                    <b>${pays}</b>
+                </p>
+
+
+                <p>
+                    🔑 Code affilié :
+                    <b>${code}</b>
+                </p>
+
+
+                <p>
+                    🔗 Lien affilié :
+                </p>
+
+
+                ${
+                    lien
+                    ?
+
+                    `
+                    <input
+                        type="text"
+                        value="${lien}"
+                        readonly
+                        style="
+                            width:90%;
+                            padding:10px;
+                            border-radius:8px;
+                            border:1px solid #ccc;
+                            margin-bottom:10px;
+                        "
+                    >
+
+                    <br>
+
+                    <button
+                        class="gold-btn"
+                        onclick="copierLien(${JSON.stringify(lien)})"
+                    >
+                        📋 Copier le lien
+                    </button>
+                    `
+
+                    :
+
+                    `
+                    <p>
+                        Aucun lien enregistré.
+                    </p>
+                    `
+                }
+
+
+
+                <p>
+                    📊 Nombre de ventes :
+                    <b>${nombreVentes}</b>
+                </p>
+
+
+                <p>
+                    💰 Commission totale :
+                    <b>
+                        ${commissionTotale.toLocaleString("fr-FR")}
+                        FCFA
+                    </b>
+                </p>
+
+
+                <p>
+                    💳 Méthode de paiement :
+                    <b>${methodePaiement}</b>
+                </p>
+
+
+                <p>
+                    📞 Numéro de paiement :
+                    <b>${numeroPaiement}</b>
+                </p>
+
+
+                <p>
+                    📝 Motivation :
+                    <b>${motivation}</b>
+                </p>
+
+
+                <p>
+                    📌 Statut :
+                    <span
+                        style="
+                            display:inline-block;
+                            padding:6px 10px;
+                            border-radius:20px;
+                            color:white;
+                            background:${couleurStatut};
+                            font-weight:bold;
+                        "
+                    >
+                        ${statut}
+                    </span>
+                </p>
+
+
+                <div
+                    style="
+                        margin-top:15px;
+                        display:flex;
+                        gap:10px;
+                        flex-wrap:wrap;
+                    "
+                >
+
+                    ${
+                        statut.toLowerCase() !==
+                        "approved"
+
+                        ?
+
+                        `
+                        <button
+                            class="gold-btn"
+                            onclick="modifierStatut(
+                                '${affilie.id}',
+                                'approved'
+                            )"
+                        >
+                            ✅ Approuver
+                        </button>
+                        `
+
+                        :
+
+                        ""
+                    }
+
+
+                    ${
+                        statut.toLowerCase() !==
+                        "disabled"
+
+                        ?
+
+                        `
+                        <button
+                            class="gold-btn"
+                            onclick="modifierStatut(
+                                '${affilie.id}',
+                                'disabled'
+                            )"
+                            style="
+                                background:#b00020;
+                                color:white;
+                            "
+                        >
+                            🚫 Désactiver
+                        </button>
+                        `
+
+                        :
+
+                        `
+                        <button
+                            class="gold-btn"
+                            onclick="modifierStatut(
+                                '${affilie.id}',
+                                'approved'
+                            )"
+                        >
+                            🔄 Réactiver
+                        </button>
+                        `
+                    }
+
+                </div>
+
+            `;
+
+
+            zone.appendChild(
+                card
+            );
+
+
+        }
+    );
 
 }
 
 
 
+/* =========================================
+   RECHERCHE
+========================================= */
+
+function filtrerAffilies() {
 
 
-chargerAffilies();
+    const recherche =
+        document
+        .getElementById("recherche")
+        .value
+        .toLowerCase()
+        .trim();
 
 
+
+    const resultat =
+        tousLesAffilies.filter(
+            function(affilie) {
+
+
+                const nom =
+                    (
+                        affilie.nom ||
+                        ""
+                    ).toLowerCase();
+
+
+                const code =
+                    (
+                        affilie.code_affilie ||
+                        ""
+                    ).toLowerCase();
+
+
+                const email =
+                    (
+                        affilie.email ||
+                        ""
+                    ).toLowerCase();
+
+
+
+                return (
+                    nom.includes(recherche)
+                    ||
+                    code.includes(recherche)
+                    ||
+                    email.includes(recherche)
+                );
+
+            }
+        );
+
+
+    afficherAffilies(
+        resultat
+    );
+
+}
+
+
+
+/* =========================================
+   COPIER LE LIEN
+========================================= */
+
+async function copierLien(lien) {
+
+
+    try {
+
+
+        await navigator
+        .clipboard
+        .writeText(lien);
+
+
+        alert(
+            "Lien affilié copié !"
+        );
+
+
+    }
+
+    catch(error) {
+
+
+        console.error(
+            error
+        );
+
+
+        alert(
+            "Impossible de copier le lien."
+        );
+
+    }
+
+}
+
+
+
+/* =========================================
+   MODIFIER LE STATUT
+========================================= */
+
+async function modifierStatut(
+    id,
+    nouveauStatut
+) {
+
+
+    const confirmation =
+        confirm(
+            nouveauStatut === "approved"
+
+            ?
+
+            "Voulez-vous approuver cet affilié ?"
+
+            :
+
+            "Voulez-vous désactiver cet affilié ?"
+        );
+
+
+    if (!confirmation) {
+
+        return;
+
+    }
+
+
+
+    const donnees =
+        {
+            statut:
+                nouveauStatut
+        };
+
+
+
+    if (
+        nouveauStatut ===
+        "approved"
+    ) {
+
+        donnees.approved_at =
+            new Date().toISOString();
+
+    }
+
+
+    else {
+
+        donnees.approved_at =
+            null;
+
+    }
+
+
+
+    const resultat =
+        await supabaseClient
+        .from("affilies")
+        .update(donnees)
+        .eq(
+            "id",
+            id
+        );
+
+
+    if (resultat.error) {
+
+
+        console.error(
+            resultat.error
+        );
+
+
+        alert(
+            "Erreur : " +
+            resultat.error.message
+        );
+
+
+        return;
+
+    }
+
+
+
+    alert(
+        nouveauStatut === "approved"
+
+        ?
+
+        "Affilié approuvé avec succès !"
+
+        :
+
+        "Affilié désactivé avec succès !"
+    );
+
+
+    chargerAffilies();
+
+}
+
+
+
+/* =========================================
+   INITIALISATION
+========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        chargerAffilies();
+
+    }
+);
 
 </script>
 
