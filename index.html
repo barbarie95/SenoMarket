@@ -13,11 +13,6 @@ data-en="SenoMarket - AI training, guides and digital resources">
 SenoMarket - Formations IA, guides et ressources numériques
 </title>
 
-
-<!-- =========================================
-     DESCRIPTION SEO
-========================================= -->
-
 <meta
 name="description"
 content="SenoMarket propose des formations, guides, templates et ressources numériques pour développer vos compétences, utiliser l'intelligence artificielle et réussir vos projets en ligne."
@@ -33,25 +28,12 @@ name="author"
 content="SenoMarket"
 >
 
-
-<!-- =========================================
-     URL PRINCIPALE
-========================================= -->
-
 <link
 rel="canonical"
 href="https://barbarie95.github.io/SenoMarket/"
 >
 
-
-<!-- =========================================
-     OPEN GRAPH
-========================================= -->
-
-<meta
-property="og:type"
-content="website"
->
+<meta property="og:type" content="website">
 
 <meta
 property="og:title"
@@ -68,25 +50,14 @@ property="og:url"
 content="https://barbarie95.github.io/SenoMarket/"
 >
 
-<meta
-property="og:site_name"
-content="SenoMarket"
->
+<meta property="og:site_name" content="SenoMarket">
 
 <meta
 property="og:image"
 content="https://barbarie95.github.io/SenoMarket/images/logo-seno.png"
 >
 
-
-<!-- =========================================
-     TWITTER / X
-========================================= -->
-
-<meta
-name="twitter:card"
-content="summary"
->
+<meta name="twitter:card" content="summary">
 
 <meta
 name="twitter:title"
@@ -104,10 +75,6 @@ content="https://barbarie95.github.io/SenoMarket/images/logo-seno.png"
 >
 
 
-<!-- =========================================
-     IDENTITÉ DU SITE
-========================================= -->
-
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -118,10 +85,6 @@ content="https://barbarie95.github.io/SenoMarket/images/logo-seno.png"
 }
 </script>
 
-
-<!-- =========================================
-     ORGANISATION
-========================================= -->
 
 <script type="application/ld+json">
 {
@@ -142,21 +105,13 @@ content="https://barbarie95.github.io/SenoMarket/images/logo-seno.png"
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
-<!-- =========================================
-     CSS PRINCIPAL
-========================================= -->
-
-<link
-rel="stylesheet"
-href="css/style.css"
->
+<link rel="stylesheet" href="css/style.css">
 
 
 <style>
 
 /* =========================================
-   BOUTON LANGUE
+   LANGUE
 ========================================= */
 
 .lang-btn{
@@ -177,7 +132,7 @@ href="css/style.css"
 
 
 /* =========================================
-   AVIS CLIENTS
+   AVIS CLIENTS DYNAMIQUES
 ========================================= */
 
 .testimonials{
@@ -200,21 +155,56 @@ href="css/style.css"
 
 
 /*
-   Un seul avis est visible à la fois.
+=================================================
+IMPORTANT
+
+Le style.css possède déjà une ancienne animation
+pour .review-card.
+
+Pour les avis venant de Supabase, on désactive
+cette ancienne animation afin qu'elle ne puisse
+pas entrer en conflit avec notre nouveau système.
+=================================================
 */
 
-.review-card{
+.testimonials .review-card{
+
     width:90%;
     max-width:650px;
+
     box-sizing:border-box;
+
     padding:30px;
+
     border-radius:18px;
+
     text-align:center;
+
     background:rgba(255,255,255,0.04);
+
     border:1px solid rgba(255,215,0,0.25);
+
     box-shadow:0 8px 30px rgba(0,0,0,0.25);
 
+    /*
+       IMPORTANT :
+       on annule l'ancienne animation CSS.
+    */
+
+    animation:none !important;
+
+    /*
+       On utilise maintenant le système
+       visible / leaving en JavaScript.
+    */
+
     opacity:0;
+
+    position:relative;
+
+    top:auto;
+    left:auto;
+
     transform:translateY(15px);
 
     transition:
@@ -222,69 +212,74 @@ href="css/style.css"
         transform 0.7s ease;
 }
 
-.review-card.visible{
+
+.testimonials .review-card.visible{
+
     opacity:1;
+
     transform:translateY(0);
 }
 
-.review-card.leaving{
+
+.testimonials .review-card.leaving{
+
     opacity:0;
+
     transform:translateY(-15px);
 }
 
+
 .dynamic-reviews-message{
+
     text-align:center;
+
     padding:25px;
+
     color:#aaa;
 }
 
+
 .dynamic-review-stars{
+
     color:#FFD700;
+
     font-size:24px;
+
     letter-spacing:3px;
+
     margin-bottom:15px;
 }
 
+
 .dynamic-review-comment{
+
     font-size:17px;
+
     line-height:1.7;
+
     margin:15px 0;
 }
 
+
 .dynamic-review-name{
+
     color:#FFD700;
+
     font-size:18px;
+
     font-weight:bold;
+
     margin-top:18px;
 }
 
+
 .dynamic-review-product{
+
     color:#aaa;
+
     font-size:14px;
+
     margin-top:10px;
-}
-
-
-/* =========================================
-   NOUVEAU : MESSAGE D'ERREUR AVIS
-========================================= */
-
-.dynamic-reviews-error{
-    text-align:center;
-    padding:25px;
-    color:#ff7777;
-}
-
-
-/* =========================================
-   NOUVEAU : MESSAGE DE DIAGNOSTIC
-========================================= */
-
-.dynamic-reviews-debug{
-    text-align:center;
-    padding:15px;
-    color:#888;
-    font-size:13px;
 }
 
 </style>
@@ -320,7 +315,6 @@ data-en="Home">
 Accueil
 </a>
 
-
 <a
 href="boutique.html"
 data-fr="Boutique"
@@ -328,14 +322,12 @@ data-en="Shop">
 Boutique
 </a>
 
-
 <a
 href="affiliation.html"
 data-fr="Affiliation"
 data-en="Affiliate">
 Affiliation
 </a>
-
 
 <a
 href="espace-affilie.html"
@@ -356,7 +348,6 @@ data-fr="Commencer"
 data-en="Get Started">
 Commencer
 </a>
-
 
 <button
 class="lang-btn"
@@ -410,13 +401,11 @@ Découvrir la boutique
 </div>
 
 
-
 <div class="hero-box">
 
 <h2>
 🚀 SenoMarket
 </h2>
-
 
 <p
 data-fr="Des outils numériques pour construire votre avenir."
@@ -460,7 +449,6 @@ Produits Premium
 
 </h3>
 
-
 <p
 data-fr="Des ressources numériques conçues pour vous aider à apprendre et progresser."
 data-en="Digital resources designed to help you learn and grow.">
@@ -470,7 +458,6 @@ Des ressources numériques conçues pour vous aider à apprendre et progresser.
 </p>
 
 </div>
-
 
 
 <div class="card">
@@ -483,7 +470,6 @@ Paiement sécurisé
 
 </h3>
 
-
 <p
 data-fr="Achetez facilement vos produits numériques via nos solutions de paiement."
 data-en="Easily buy your digital products through our payment solutions.">
@@ -493,7 +479,6 @@ Achetez facilement vos produits numériques via nos solutions de paiement.
 </p>
 
 </div>
-
 
 
 <div class="card">
@@ -506,7 +491,6 @@ Accès rapide
 
 </h3>
 
-
 <p
 data-fr="Recevez rapidement vos ressources après votre achat."
 data-en="Receive your digital resources quickly after your purchase.">
@@ -518,7 +502,6 @@ Recevez rapidement vos ressources après votre achat.
 </div>
 
 
-
 <div class="card">
 
 <h3
@@ -528,7 +511,6 @@ data-en="Support">
 Support
 
 </h3>
-
 
 <p
 data-fr="Une assistance disponible pour vous accompagner dans vos projets."
@@ -979,7 +961,7 @@ Politique de confidentialité
 
 
 <!-- =========================================
-     SCRIPT PRINCIPAL
+     JAVASCRIPT PRINCIPAL
 ========================================= -->
 
 <script src="js/script.js"></script>
@@ -992,9 +974,19 @@ Politique de confidentialité
 
 <script>
 
-/* =========================================
-   SUPABASE
-========================================= */
+/*
+=================================================
+CORRECTION IMPORTANTE
+
+La connexion Supabase est créée ICI.
+
+Elle n'est PAS recréée dans js/script.js.
+
+Avant cette correction, les deux fichiers
+déclaraient "const supabaseClient", ce qui pouvait
+bloquer l'exécution de ce script.
+=================================================
+*/
 
 const SUPABASE_URL =
 "https://vfnqwdwgkocpkkaofrum.supabase.co";
@@ -1038,46 +1030,6 @@ let avisTimer = null;
 
 
 /* =========================================
-   NOUVEAU : TIMEOUT DE SÉCURITÉ
-========================================= */
-
-/*
-   Cette fonction empêche la page de rester
-   bloquée indéfiniment si Supabase ne répond pas.
-
-   Exemple :
-   si une requête reste bloquée pendant 8 secondes,
-   elle est considérée comme ayant échoué.
-*/
-
-function avecTimeout(promise, duree = 8000){
-
-    return Promise.race([
-
-        promise,
-
-        new Promise(function(_, reject){
-
-            setTimeout(function(){
-
-                reject(
-                    new Error(
-                        "La connexion à Supabase a dépassé " +
-                        duree / 1000 +
-                        " secondes."
-                    )
-                );
-
-            }, duree);
-
-        })
-
-    ]);
-
-}
-
-
-/* =========================================
    AFFICHER UN AVIS
 ========================================= */
 
@@ -1089,10 +1041,7 @@ function afficherAvis(index){
         );
 
 
-    if(
-        !zone ||
-        !avisListe.length
-    ){
+    if(!zone || !avisListe.length){
 
         return;
 
@@ -1132,30 +1081,6 @@ function afficherAvis(index){
         );
 
 
-    /*
-       Compatible avec plusieurs noms
-       possibles pour le produit.
-    */
-
-    const produit =
-        avis.produit_nom ||
-        avis.produit ||
-        avis.nom_produit ||
-        "";
-
-
-    const produitHTML =
-        produit
-        ?
-        `
-        <div class="dynamic-review-product">
-            🛍️ ${echapperHTML(produit)}
-        </div>
-        `
-        :
-        "";
-
-
     zone.innerHTML = `
 
         <div
@@ -1164,17 +1089,23 @@ function afficherAvis(index){
         >
 
             <div class="dynamic-review-stars">
+
                 ${etoiles}
+
             </div>
+
 
             <div class="dynamic-review-comment">
+
                 "${commentaire}"
+
             </div>
 
-            ${produitHTML}
 
             <div class="dynamic-review-name">
+
                 — ${nom}
+
             </div>
 
         </div>
@@ -1183,11 +1114,12 @@ function afficherAvis(index){
 
 
     /*
-       On attend un cycle d'affichage
-       avant d'ajouter "visible".
+    =========================================
+    ANIMATION
 
-       Cela permet à la transition CSS
-       de fonctionner correctement.
+    On attend que la carte soit créée dans le DOM,
+    puis on ajoute "visible".
+    =========================================
     */
 
     requestAnimationFrame(function(){
@@ -1225,4 +1157,114 @@ function prochainAvis(){
 
     if(carte){
 
-        carte.c
+        carte.classList.remove(
+            "visible"
+        );
+
+        carte.classList.add(
+            "leaving"
+        );
+
+    }
+
+
+    setTimeout(function(){
+
+        avisIndex++;
+
+
+        if(
+            avisIndex >=
+            avisListe.length
+        ){
+
+            avisIndex = 0;
+
+        }
+
+
+        afficherAvis(
+            avisIndex
+        );
+
+
+    }, 700);
+
+}
+
+
+/* =========================================
+   DÉMARRER LE DÉFILEMENT
+========================================= */
+
+function demarrerDefilementAvis(){
+
+    if(avisTimer){
+
+        clearInterval(
+            avisTimer
+        );
+
+    }
+
+
+    avisTimer =
+        setInterval(
+            prochainAvis,
+            3000
+        );
+
+}
+
+
+/* =========================================
+   CHARGER LES AVIS
+========================================= */
+
+async function chargerAvisAccueil(){
+
+    const zone =
+        document.getElementById(
+            "avisAccueil"
+        );
+
+
+    if(!zone){
+
+        return;
+
+    }
+
+
+    zone.innerHTML = `
+
+        <div class="dynamic-reviews-message">
+
+            Chargement des avis...
+
+        </div>
+
+    `;
+
+
+    try{
+
+        console.log(
+            "AVIS : début du chargement"
+        );
+
+
+        /*
+        =========================================
+        APPEL SUPABASE
+
+        On conserve la fonction RPC que nous avons
+        vérifiée ensemble dans Supabase.
+
+        Elle retourne les avis publics approuvés.
+        =========================================
+        */
+
+        const resultat =
+            await supabaseClient.rpc(
+                "obtenir_avis_
