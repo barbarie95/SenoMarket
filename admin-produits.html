@@ -15,191 +15,601 @@
 
 </head>
 
+
 <body>
 
+
 <header>
+
 <div class="logo">
-<img src="images/logo-seno.png" alt="Logo SenoMarket">
+
+<img
+src="images/logo-seno.png"
+alt="Logo SenoMarket">
+
 </div>
+
 </header>
+
 
 
 <section class="affiliate">
 
-<h2>🛒 Gestion des produits</h2>
-<p>Ajoutez et gérez les produits de SenoMarket.</p>
 
+<h2>
+🛒 Gestion des produits
+</h2>
+
+
+<p>
+Ajoutez et gérez les produits de SenoMarket.
+</p>
+
+
+
+<!-- =========================================
+     FORMULAIRE PRODUIT
+========================================= -->
 
 <div class="card">
 
-<h3 id="titreFormulaire">➕ Ajouter un produit</h3>
 
-<input id="nom" type="text" placeholder="Nom du produit">
-<input id="prix" type="number" placeholder="Prix" step="0.01" min="0">
-<textarea id="description" placeholder="Description du produit" rows="4"></textarea>
-<input id="categorie" type="text" placeholder="Catégorie">
-<input id="image_url" type="url" placeholder="URL de l'image du produit">
-<input id="lien_achat" type="url" placeholder="Lien d'achat">
+<h3 id="titreFormulaire">
+➕ Ajouter un produit
+</h3>
+
+
+<input
+type="text"
+id="nom"
+placeholder="Nom du produit"
+style="
+padding:12px;
+width:90%;
+margin:6px 0;
+border-radius:10px;
+border:1px solid #ddd;
+"
+>
+
+
+<input
+type="number"
+id="prix"
+placeholder="Prix"
+step="0.01"
+min="0"
+style="
+padding:12px;
+width:90%;
+margin:6px 0;
+border-radius:10px;
+border:1px solid #ddd;
+"
+>
+
+
+<textarea
+id="description"
+placeholder="Description du produit"
+rows="4"
+style="
+padding:12px;
+width:90%;
+margin:6px 0;
+border-radius:10px;
+border:1px solid #ddd;
+resize:vertical;
+"
+></textarea>
+
+
+<input
+type="text"
+id="categorie"
+placeholder="Catégorie"
+style="
+padding:12px;
+width:90%;
+margin:6px 0;
+border-radius:10px;
+border:1px solid #ddd;
+"
+>
+
+
+<input
+type="url"
+id="image_url"
+placeholder="URL de l'image du produit"
+style="
+padding:12px;
+width:90%;
+margin:6px 0;
+border-radius:10px;
+border:1px solid #ddd;
+"
+>
+
+
+<input
+type="url"
+id="lien_achat"
+placeholder="Lien d'achat"
+style="
+padding:12px;
+width:90%;
+margin:6px 0;
+border-radius:10px;
+border:1px solid #ddd;
+"
+>
+
+
+<br>
+
 
 <label>
-<input id="actif" type="checkbox" checked>
+
+<input
+type="checkbox"
+id="actif"
+checked
+>
+
 Produit actif
+
 </label>
+
 
 <br><br>
 
-<button
-id="boutonEnregistrer"
-class="gold-btn"
-onclick="enregistrerProduit()">
-Ajouter le produit
-</button>
 
 <button
-id="boutonAnnuler"
+type="button"
+onclick="enregistrerProduit()"
 class="gold-btn"
-onclick="annulerModification()"
-style="display:none;">
-Annuler
+id="boutonEnregistrer"
+>
+
+Ajouter le produit
+
 </button>
+
+
+<button
+type="button"
+onclick="annulerModification()"
+class="gold-btn"
+id="boutonAnnuler"
+style="display:none;"
+>
+
+Annuler
+
+</button>
+
 
 <p id="message"></p>
 
+
 </div>
 
 
-<br>
 
+<br><br>
+
+
+
+<!-- =========================================
+     LISTE PRODUITS
+========================================= -->
 
 <div class="card">
 
-<h3>📦 Produits enregistrés</h3>
+
+<h3>
+📦 Produits enregistrés
+</h3>
+
 
 <div id="listeProduits">
-<p>Chargement des produits...</p>
-</div>
+
+<p>
+Chargement des produits...
+</p>
 
 </div>
+
+
+</div>
+
 
 
 <br>
 
-<a href="dashboard.html" class="gold-btn">
+
+
+<a
+href="dashboard.html"
+class="gold-btn"
+>
+
 ⬅ Retour au tableau de bord
+
 </a>
+
 
 </section>
 
 
+
 <footer>
+
 
 <p>
 © 2026 SenoMarket - Transformez vos idées en réussite
 </p>
 
+
 </footer>
+
 
 
 <script>
 
-if (localStorage.getItem("adminConnecte") !== "oui") {
-window.location.href = "administrateur.html";
+
+/* =========================================
+   PROTECTION ADMIN
+========================================= */
+
+if (
+localStorage.getItem("adminConnecte")
+!== "oui"
+) {
+
+window.location.href =
+"administrateur.html";
+
 }
+
+
+
+/* =========================================
+   VARIABLE DE MODIFICATION
+========================================= */
 
 let produitEnModification = null;
 
 
+
+/* =========================================
+   CHARGER LES PRODUITS
+========================================= */
+
 async function chargerProduits() {
 
-const zone = document.getElementById("listeProduits");
 
-if (!supabaseClient) {
-zone.innerHTML = "<p style='color:red'>❌ Supabase indisponible.</p>";
-return;
-}
+const zone =
+document.getElementById(
+"listeProduits"
+);
 
-const { data, error } = await supabaseClient
-.from("produits")
-.select("*")
-.order("created_at", { ascending:false });
 
-if (error) {
 zone.innerHTML =
-"<p style='color:red'>❌ " +
-echapperHTML(error.message) +
-"</p>";
+"<p>Chargement des produits...</p>";
+
+
+
+if (
+typeof supabaseClient
+=== "undefined"
+||
+!supabaseClient
+) {
+
+zone.innerHTML = `
+
+<p style="color:red;">
+
+❌ Supabase n'est pas disponible.
+
+</p>
+
+`;
+
 return;
+
 }
 
-if (!data || data.length === 0) {
-zone.innerHTML = "<p>Aucun produit enregistré.</p>";
-return;
+
+
+const resultat =
+await supabaseClient
+
+.from("produits")
+
+.select("*")
+
+.order(
+"created_at",
+{
+ascending:false
 }
+);
+
+
+
+if (resultat.error) {
+
+console.error(
+resultat.error
+);
+
+
+zone.innerHTML = `
+
+<p style="color:red;">
+
+❌ Erreur Supabase
+
+</p>
+
+<p style="color:red;">
+
+${echapperHTML(
+resultat.error.message
+)}
+
+</p>
+
+`;
+
+return;
+
+}
+
+
+
+const data =
+resultat.data;
+
+
+
+if (
+!data
+||
+data.length === 0
+) {
+
+zone.innerHTML = `
+
+<p>
+Aucun produit enregistré.
+</p>
+
+`;
+
+return;
+
+}
+
+
 
 zone.innerHTML = "";
 
-data.forEach(produit => {
+
+
+data.forEach(
+produit => {
+
+
+const statut =
+produit.actif
+?
+
+"🟢 Actif"
+
+:
+
+"🔴 Inactif";
+
+
+
+const image =
+produit.image_url
+?
+
+`
+
+<img
+src="${echapperHTML(
+produit.image_url
+)}"
+alt="${echapperHTML(
+produit.nom || ""
+)}"
+style="
+max-width:200px;
+border-radius:10px;
+margin-bottom:10px;
+"
+>
+
+`
+
+:
+
+"";
+
+
+
+const lien =
+produit.lien_achat
+?
+
+`
+
+<p>
+
+<a
+href="${echapperHTML(
+produit.lien_achat
+)}"
+target="_blank"
+rel="noopener noreferrer"
+class="gold-btn"
+>
+
+🔗 Voir le lien d'achat
+
+</a>
+
+</p>
+
+`
+
+:
+
+"";
+
+
 
 zone.innerHTML += `
 
-<div class="card" style="margin-bottom:20px;">
+<div
+class="card"
+style="
+margin-bottom:20px;
+"
+>
 
-${produit.image_url ?
-`<img src="${echapperHTML(produit.image_url)}"
-style="max-width:200px;border-radius:10px;">`
-: ""}
+
+${image}
+
+
 
 <h3>
-🛒 ${echapperHTML(produit.nom || "")}
+
+🛒
+${echapperHTML(
+produit.nom || ""
+)}
+
 </h3>
 
+
+
 <p>
-<strong>Prix :</strong>
+
+<strong>
+Prix :
+</strong>
+
 ${produit.prix ?? ""}
+
 </p>
+
+
 
 <p>
-<strong>Catégorie :</strong>
-${echapperHTML(produit.categorie || "Non définie")}
+
+<strong>
+Catégorie :
+</strong>
+
+${echapperHTML(
+produit.categorie
+||
+"Non définie"
+)}
+
 </p>
+
+
 
 <p>
-<strong>Description :</strong>
-${echapperHTML(produit.description || "Aucune description")}
+
+<strong>
+Description :
+</strong>
+
+${echapperHTML(
+produit.description
+||
+"Aucune description"
+)}
+
 </p>
+
+
 
 <p>
-<strong>Statut :</strong>
-${produit.actif ? "🟢 Actif" : "🔴 Inactif"}
+
+<strong>
+Statut :
+</strong>
+
+${statut}
+
 </p>
 
-${produit.lien_achat ?
-`<p>
-<a href="${echapperHTML(produit.lien_achat)}"
-target="_blank"
-class="gold-btn">
-🔗 Voir le lien d'achat
-</a>
-</p>`
-: ""}
+
+
+${lien}
+
+
 
 <button
 class="gold-btn"
-onclick="modifierProduit('${produit.id}')">
+onclick="
+modifierProduit(
+'${produit.id}'
+)
+"
+>
+
 ✏️ Modifier
+
 </button>
+
+
 
 <button
 class="gold-btn"
-onclick="changerStatut('${produit.id}',${!produit.actif})">
-${produit.actif ? "🔴 Désactiver" : "🟢 Activer"}
+onclick="
+changerStatut(
+'${produit.id}',
+${!produit.actif}
+)
+"
+>
+
+${
+produit.actif
+?
+"🔴 Désactiver"
+:
+"🟢 Activer"
+}
+
 </button>
+
+
 
 <button
 class="gold-btn"
-onclick="supprimerProduit('${produit.id}')">
+onclick="
+supprimerProduit(
+'${produit.id}'
+)
+"
+>
+
 🗑️ Supprimer
+
 </button>
+
 
 </div>
 
@@ -210,206 +620,584 @@ onclick="supprimerProduit('${produit.id}')">
 }
 
 
+
+/* =========================================
+   AJOUTER / MODIFIER PRODUIT
+========================================= */
+
 async function enregistrerProduit() {
 
-const nom = document.getElementById("nom").value.trim();
-const prix = document.getElementById("prix").value;
-const description = document.getElementById("description").value.trim();
-const categorie = document.getElementById("categorie").value.trim();
-const image_url = document.getElementById("image_url").value.trim();
-const lien_achat = document.getElementById("lien_achat").value.trim();
-const actif = document.getElementById("actif").checked;
-const message = document.getElementById("message");
 
-if (!nom || prix === "") {
-message.style.color = "red";
-message.textContent = "Veuillez entrer le nom et le prix.";
+const nom =
+document.getElementById(
+"nom"
+).value.trim();
+
+
+const prix =
+document.getElementById(
+"prix"
+).value;
+
+
+const description =
+document.getElementById(
+"description"
+).value.trim();
+
+
+const categorie =
+document.getElementById(
+"categorie"
+).value.trim();
+
+
+const image_url =
+document.getElementById(
+"image_url"
+).value.trim();
+
+
+const lien_achat =
+document.getElementById(
+"lien_achat"
+).value.trim();
+
+
+const actif =
+document.getElementById(
+"actif"
+).checked;
+
+
+const message =
+document.getElementById(
+"message"
+);
+
+
+
+if (!nom) {
+
+message.style.color =
+"red";
+
+message.textContent =
+"Veuillez entrer le nom du produit.";
+
 return;
+
 }
 
+
+
+if (prix === "") {
+
+message.style.color =
+"red";
+
+message.textContent =
+"Veuillez entrer le prix.";
+
+return;
+
+}
+
+
+
 const produit = {
+
 nom,
-prix:Number(prix),
-description:description || null,
-categorie:categorie || null,
-image_url:image_url || null,
-lien_achat:lien_achat || null,
+
+prix:
+Number(prix),
+
+description:
+description || null,
+
+categorie:
+categorie || null,
+
+image_url:
+image_url || null,
+
+lien_achat:
+lien_achat || null,
+
 actif
+
 };
+
+
 
 let resultat;
 
+
+
 if (produitEnModification) {
 
-resultat = await supabaseClient
+
+resultat =
+await supabaseClient
+
 .from("produits")
+
 .update(produit)
-.eq("id", produitEnModification);
 
-} else {
+.eq(
+"id",
+produitEnModification
+);
 
-resultat = await supabaseClient
+
+}
+
+else {
+
+
+resultat =
+await supabaseClient
+
 .from("produits")
+
 .insert(produit);
 
+
 }
+
+
 
 if (resultat.error) {
-message.style.color = "red";
-message.textContent = resultat.error.message;
+
+message.style.color =
+"red";
+
+message.textContent =
+resultat.error.message;
+
 return;
+
 }
 
-message.style.color = "green";
+
+
+message.style.color =
+"green";
+
+
 message.textContent =
 produitEnModification
-? "✅ Produit modifié."
-: "✅ Produit ajouté.";
+
+?
+
+"✅ Produit modifié avec succès."
+
+:
+
+"✅ Produit ajouté avec succès.";
+
+
 
 reinitialiserFormulaire();
-chargerProduits();
+
+
+await chargerProduits();
 
 }
 
+
+
+/* =========================================
+   MODIFIER
+========================================= */
 
 async function modifierProduit(id) {
 
-const { data, error } = await supabaseClient
+
+const resultat =
+await supabaseClient
+
 .from("produits")
+
 .select("*")
-.eq("id", id)
+
+.eq(
+"id",
+id
+)
+
 .single();
 
-if (error) {
-alert(error.message);
-return;
-}
 
-produitEnModification = data.id;
-
-document.getElementById("nom").value = data.nom || "";
-document.getElementById("prix").value = data.prix ?? "";
-document.getElementById("description").value = data.description || "";
-document.getElementById("categorie").value = data.categorie || "";
-document.getElementById("image_url").value = data.image_url || "";
-document.getElementById("lien_achat").value = data.lien_achat || "";
-document.getElementById("actif").checked = data.actif;
-
-document.getElementById("titreFormulaire").textContent =
-"✏️ Modifier le produit";
-
-document.getElementById("boutonEnregistrer").textContent =
-"Enregistrer les modifications";
-
-document.getElementById("boutonAnnuler").style.display =
-"inline-block";
-
-window.scrollTo({top:0,behavior:"smooth"});
-
-}
-
-
-async function changerStatut(id, nouveauStatut) {
-
-const resultat = await supabaseClient
-.from("produits")
-.update({ actif:nouveauStatut })
-.eq("id",id)
-.select("id,nom,actif");
-
-console.log("UPDATE :", resultat);
 
 if (resultat.error) {
-alert("❌ Erreur UPDATE :\n\n" + resultat.error.message);
-return;
-}
-
-if (!resultat.data || resultat.data.length === 0) {
-alert("⚠️ Aucun produit modifié.\n\nID : " + id);
-return;
-}
 
 alert(
-"✅ Statut modifié : " +
-(resultat.data[0].actif ? "ACTIF" : "INACTIF")
+resultat.error.message
 );
 
-chargerProduits();
+return;
 
 }
 
+
+
+const data =
+resultat.data;
+
+
+
+produitEnModification =
+data.id;
+
+
+
+document.getElementById(
+"nom"
+).value =
+data.nom || "";
+
+
+document.getElementById(
+"prix"
+).value =
+data.prix ?? "";
+
+
+document.getElementById(
+"description"
+).value =
+data.description || "";
+
+
+document.getElementById(
+"categorie"
+).value =
+data.categorie || "";
+
+
+document.getElementById(
+"image_url"
+).value =
+data.image_url || "";
+
+
+document.getElementById(
+"lien_achat"
+).value =
+data.lien_achat || "";
+
+
+document.getElementById(
+"actif"
+).checked =
+data.actif;
+
+
+
+document.getElementById(
+"titreFormulaire"
+).textContent =
+"✏️ Modifier le produit";
+
+
+document.getElementById(
+"boutonEnregistrer"
+).textContent =
+"Enregistrer les modifications";
+
+
+document.getElementById(
+"boutonAnnuler"
+).style.display =
+"inline-block";
+
+
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
+
+}
+
+
+
+/* =========================================
+   ACTIVER / DESACTIVER
+========================================= */
+
+async function changerStatut(
+id,
+nouveauStatut
+) {
+
+
+const resultat =
+await supabaseClient
+
+.from("produits")
+
+.update({
+
+actif:
+nouveauStatut
+
+})
+
+.eq(
+"id",
+id
+);
+
+
+
+if (resultat.error) {
+
+
+alert(
+
+"❌ Impossible de modifier le statut.\n\n" +
+
+resultat.error.message
+
+);
+
+
+return;
+
+}
+
+
+
+alert(
+
+nouveauStatut
+
+?
+
+"✅ Produit activé."
+
+:
+
+"✅ Produit désactivé."
+
+);
+
+
+
+await chargerProduits();
+
+}
+
+
+
+/* =========================================
+   SUPPRIMER
+========================================= */
 
 async function supprimerProduit(id) {
 
-if (!confirm("Voulez-vous vraiment supprimer ce produit ?")) {
+
+if (
+!confirm(
+"Voulez-vous vraiment supprimer ce produit ?"
+)
+) {
+
 return;
+
 }
 
-const { error } = await supabaseClient
+
+
+const resultat =
+await supabaseClient
+
 .from("produits")
+
 .delete()
-.eq("id",id);
 
-if (error) {
-alert(
-"❌ Impossible de supprimer ce produit.\n\n" +
-error.message
+.eq(
+"id",
+id
 );
+
+
+
+if (resultat.error) {
+
+
+alert(
+
+"❌ Impossible de supprimer ce produit.\n\n" +
+
+resultat.error.message
+
+);
+
+
 return;
-}
-
-chargerProduits();
 
 }
 
+
+
+alert(
+"✅ Produit supprimé."
+);
+
+
+
+await chargerProduits();
+
+}
+
+
+
+/* =========================================
+   ANNULER
+========================================= */
 
 function annulerModification() {
+
 reinitialiserFormulaire();
+
 }
 
+
+
+/* =========================================
+   REINITIALISER
+========================================= */
 
 function reinitialiserFormulaire() {
 
-produitEnModification = null;
 
-document.getElementById("nom").value = "";
-document.getElementById("prix").value = "";
-document.getElementById("description").value = "";
-document.getElementById("categorie").value = "";
-document.getElementById("image_url").value = "";
-document.getElementById("lien_achat").value = "";
-document.getElementById("actif").checked = true;
+produitEnModification =
+null;
 
-document.getElementById("titreFormulaire").textContent =
+
+
+document.getElementById(
+"nom"
+).value =
+"";
+
+
+document.getElementById(
+"prix"
+).value =
+"";
+
+
+document.getElementById(
+"description"
+).value =
+"";
+
+
+document.getElementById(
+"categorie"
+).value =
+"";
+
+
+document.getElementById(
+"image_url"
+).value =
+"";
+
+
+document.getElementById(
+"lien_achat"
+).value =
+"";
+
+
+document.getElementById(
+"actif"
+).checked =
+true;
+
+
+
+document.getElementById(
+"titreFormulaire"
+).textContent =
 "➕ Ajouter un produit";
 
-document.getElementById("boutonEnregistrer").textContent =
+
+document.getElementById(
+"boutonEnregistrer"
+).textContent =
 "Ajouter le produit";
 
-document.getElementById("boutonAnnuler").style.display =
+
+document.getElementById(
+"boutonAnnuler"
+).style.display =
 "none";
 
 }
 
 
+
+/* =========================================
+   PROTECTION HTML
+========================================= */
+
 function echapperHTML(texte) {
 
 return String(texte)
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/'/g,
+"&#039;"
+);
 
 }
 
 
+
+/* =========================================
+   DEMARRAGE
+========================================= */
+
 document.addEventListener(
 "DOMContentLoaded",
-chargerProduits
-);
+function() {
+
+chargerProduits();
+
+});
 
 </script>
 
+
 </body>
+
 </html>
