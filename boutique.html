@@ -2,7 +2,6 @@
 <html lang="fr">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -11,49 +10,31 @@
 <link rel="stylesheet" href="css/style.css">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 </head>
 
-
 <body>
-
 
 <header>
 
 <div class="logo">
-
-<img
-src="images/logo-seno.png"
-alt="Logo SenoMarket">
-
+<img src="images/logo-seno.png" alt="Logo SenoMarket">
 </div>
 
-
 <nav>
-
 <a href="index.html">Accueil</a>
-
 <a href="boutique.html">Boutique</a>
-
 <a href="affiliation.html">Affiliation</a>
-
 <a href="espace-affilie.html">Espace Affilié</a>
-
 </nav>
 
-
-<a href="boutique.html" class="btn">
-Commencer
-</a>
+<a href="boutique.html" class="btn">Commencer</a>
 
 </header>
-
 
 
 <section class="products">
 
 <h2>🛒 Boutique SenoMarket</h2>
-
 
 <div class="search-box">
 
@@ -66,8 +47,9 @@ onkeyup="searchProduct()">
 </div>
 
 
-
-<!-- PRODUITS -->
+<!-- =========================
+     ANCIENS PRODUITS
+========================= -->
 
 <div class="product-grid">
 
@@ -91,7 +73,6 @@ Acheter maintenant
 </div>
 
 
-
 <div class="product">
 
 <img src="images/produits/tiktok-pro.png" alt="Seno TikTok Pro">
@@ -109,7 +90,6 @@ Acheter maintenant
 </a>
 
 </div>
-
 
 
 <div class="product">
@@ -131,7 +111,6 @@ Acheter maintenant
 </div>
 
 
-
 <div class="product">
 
 <img src="images/produits/ecommerce.png" alt="Seno E-commerce Pro">
@@ -149,7 +128,6 @@ Acheter maintenant
 </a>
 
 </div>
-
 
 
 <div class="product">
@@ -171,7 +149,6 @@ Acheter maintenant
 </div>
 
 
-
 <div class="product">
 
 <img src="images/produits/finance.png" alt="Seno Finance Pro">
@@ -189,7 +166,6 @@ Acheter maintenant
 </a>
 
 </div>
-
 
 
 <div class="product">
@@ -211,7 +187,6 @@ Acheter maintenant
 </div>
 
 
-
 <div class="product">
 
 <img src="images/produits/tiktok-viral-pro.png" alt="TikTok Viral Pro">
@@ -229,7 +204,6 @@ Acheter maintenant
 </a>
 
 </div>
-
 
 
 <div class="product">
@@ -250,12 +224,12 @@ Acheter maintenant
 
 </div>
 
-
 </div>
 
 
-
-<!-- NOUVEAUX PRODUITS -->
+<!-- =========================
+     NOUVEAUX PRODUITS
+========================= -->
 
 <br><br>
 
@@ -270,38 +244,44 @@ id="nouveaux-produits">
 </div>
 
 
-
-<!-- =========================================
-     AVIS
-========================================= -->
+<!-- =========================
+     AVIS CLIENT
+========================= -->
 
 <br><br>
 
-<div class="card" id="zone-avis">
+<div
+class="card"
+style="
+max-width:650px;
+margin:25px auto;
+padding:20px;
+">
 
-<h2>⭐ Laisser un avis</h2>
+<h2 style="margin-top:0;">
+⭐ Votre avis
+</h2>
 
-<p>
-Vous avez acheté un produit SenoMarket ?
-Partagez votre expérience.
+<p style="margin-bottom:18px;">
+Vous avez acheté un produit ?
+Dites-nous ce que vous en pensez.
 </p>
 
 
-<label>
-Produit
-</label>
+<!-- PRODUIT -->
 
 <select
 id="avisProduit"
 style="
 width:100%;
-padding:12px;
-margin:8px 0 15px;
+padding:10px;
+margin-bottom:10px;
 border-radius:8px;
+box-sizing:border-box;
 ">
 
 <option value="">
--- Choisir un produit --
+Choisir le produit
 </option>
 
 <option>🤖 Guide IA</option>
@@ -317,9 +297,7 @@ border-radius:8px;
 </select>
 
 
-<label>
-Votre nom
-</label>
+<!-- NOM -->
 
 <input
 type="text"
@@ -327,85 +305,145 @@ id="avisNom"
 placeholder="Votre nom"
 style="
 width:100%;
-padding:12px;
-margin:8px 0 15px;
+padding:10px;
+margin-bottom:10px;
 border-radius:8px;
 box-sizing:border-box;
 ">
 
 
-<label>
-Votre email
-</label>
+<!-- EMAIL FACULTATIF -->
 
 <input
 type="email"
 id="avisEmail"
-placeholder="Votre email"
+placeholder="Email (facultatif)"
 style="
 width:100%;
-padding:12px;
-margin:8px 0 15px;
+padding:10px;
+margin-bottom:12px;
 border-radius:8px;
 box-sizing:border-box;
 ">
 
 
-<label>
-Votre note
-</label>
+<!-- ÉTOILES -->
+
+<div
+style="
+text-align:center;
+margin:8px 0 14px;
+">
 
 <div
 id="etoiles"
 style="
-font-size:32px;
-margin:8px 0 15px;
-cursor:pointer;
+display:flex;
+justify-content:center;
+gap:5px;
+font-size:34px;
+line-height:1;
 ">
 
-<span onclick="choisirNote(1)">☆</span>
-<span onclick="choisirNote(2)">☆</span>
-<span onclick="choisirNote(3)">☆</span>
-<span onclick="choisirNote(4)">☆</span>
-<span onclick="choisirNote(5)">☆</span>
+<button
+type="button"
+class="etoile"
+data-note="1"
+onclick="choisirNote(1)"
+aria-label="1 étoile">
+☆</button>
+
+<button
+type="button"
+class="etoile"
+data-note="2"
+onclick="choisirNote(2)"
+aria-label="2 étoiles">
+☆</button>
+
+<button
+type="button"
+class="etoile"
+data-note="3"
+onclick="choisirNote(3)"
+aria-label="3 étoiles">
+☆</button>
+
+<button
+type="button"
+class="etoile"
+data-note="4"
+onclick="choisirNote(4)"
+aria-label="4 étoiles">
+☆</button>
+
+<button
+type="button"
+class="etoile"
+data-note="5"
+onclick="choisirNote(5)"
+aria-label="5 étoiles">
+☆</button>
+
+</div>
+
+<p
+id="noteTexte"
+style="
+margin:7px 0 0;
+font-size:14px;
+">
+Choisissez une note
+</p>
 
 </div>
 
 
-<label>
-Votre commentaire
-</label>
+<!-- COMMENTAIRE -->
 
 <textarea
 id="avisCommentaire"
-placeholder="Écrivez votre avis..."
-rows="5"
+rows="3"
+placeholder="Votre commentaire..."
 style="
 width:100%;
-padding:12px;
-margin:8px 0 15px;
+padding:10px;
+margin-bottom:12px;
 border-radius:8px;
 box-sizing:border-box;
+resize:vertical;
 "></textarea>
 
+
+<!-- ENVOYER -->
 
 <button
 type="button"
 class="gold-btn"
 onclick="envoyerAvis()"
-style="border:0;cursor:pointer;">
+style="
+border:0;
+cursor:pointer;
+width:100%;
+">
 
 ⭐ Envoyer mon avis
 
 </button>
 
 
-<p id="messageAvis"></p>
+<p
+id="messageAvis"
+style="
+text-align:center;
+font-weight:bold;
+margin-bottom:0;
+">
+</p>
 
 </div>
 
 </section>
-
 
 
 <footer>
@@ -421,15 +459,14 @@ Politique de confidentialité
 </footer>
 
 
-
 <script src="js/script.js"></script>
 
 
 <script>
 
-/* =========================================
+/* =========================
    SUPABASE
-========================================= */
+========================= */
 
 const SUPABASE_URL =
 "https://vfnqwdwgkocpkkaofrum.supabase.co";
@@ -439,379 +476,395 @@ const SUPABASE_PUBLISHABLE_KEY =
 
 const supabaseClient =
 supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
+SUPABASE_URL,
+SUPABASE_PUBLISHABLE_KEY
 );
 
 
-/* =========================================
+/* =========================
    AFFILIATION
-========================================= */
+========================= */
 
-let parametre =
-new URLSearchParams(window.location.search);
+const parametre =
+new URLSearchParams(
+window.location.search
+);
 
-let code =
+const code =
 parametre.get("ref");
-
 
 if (code) {
 
-    localStorage.setItem(
-        "affilie",
-        code
-    );
+localStorage.setItem(
+"affilie",
+code
+);
 
 }
 
-
-let codeAffilie =
+const codeAffilie =
 localStorage.getItem("affilie");
 
 
 if (codeAffilie) {
 
-    document.body.insertAdjacentHTML(
+document.body.insertAdjacentHTML(
+"afterbegin",
 
-        "afterbegin",
+`<div style="
+background:#FFD700;
+color:#000;
+padding:15px;
+text-align:center;
+font-weight:bold;
+">
+Vous êtes arrivé grâce au partenaire SenoMarket
+</div>`
 
-        `<div style="
-        background:#FFD700;
-        color:#000;
-        padding:15px;
-        text-align:center;
-        font-weight:bold;
-        ">
-        Vous êtes arrivé grâce au partenaire SenoMarket
-        </div>`
-
-    );
+);
 
 }
 
 
-/* =========================================
+/* =========================
    LIEN AFFILIÉ
-========================================= */
+========================= */
 
 function preparerLien(lien) {
 
-    if (!lien) return "#";
+if (!lien) return "#";
 
-    if (!codeAffilie) return lien;
+if (!codeAffilie) return lien;
 
-    try {
+try {
 
-        const url =
-        new URL(lien);
+const url = new URL(lien);
 
-        url.searchParams.set(
-            "custom_fields[code_affilie]",
-            codeAffilie
-        );
+url.searchParams.set(
+"custom_fields[code_affilie]",
+codeAffilie
+);
 
-        return url.toString();
+return url.toString();
 
-    }
+}
 
-    catch (erreur) {
+catch (erreur) {
 
-        return lien;
+return lien;
 
-    }
+}
+
 }
 
 
-/* =========================================
+/* =========================
    NOUVEAUX PRODUITS
-========================================= */
+========================= */
 
 async function chargerNouveauxProduits() {
 
-    const zone =
-    document.getElementById(
-        "nouveaux-produits"
-    );
+const zone =
+document.getElementById(
+"nouveaux-produits"
+);
 
 
-    const { data, error } =
-    await supabaseClient
-    .from("produits")
-    .select("*")
-    .eq("actif",true)
-    .order(
-        "created_at",
-        {ascending:false}
-    );
+const { data, error } =
+await supabaseClient
+.from("produits")
+.select("*")
+.eq("actif",true)
+.order(
+"created_at",
+{ascending:false}
+);
 
 
-    if (error) {
+if (error) {
 
-        console.error(error);
+console.error(error);
 
-        zone.innerHTML =
-        "<p>Impossible de charger les nouveaux produits.</p>";
+zone.innerHTML =
+"<p>Impossible de charger les nouveaux produits.</p>";
 
-        return;
-    }
-
-
-    if (!data || data.length === 0) {
-
-        zone.innerHTML =
-        "<p>Aucun nouveau produit pour le moment.</p>";
-
-        return;
-    }
-
-
-    zone.innerHTML = "";
-
-
-    data.forEach(function(produit) {
-
-        const image =
-        produit.image_url
-        ?
-        `<img
-        src="${produit.image_url}"
-        alt="${produit.nom || "Produit"}">`
-        :
-        "";
-
-
-        const lien =
-        preparerLien(
-            produit.lien_achat
-        );
-
-
-        zone.innerHTML += `
-
-        <div class="product">
-
-            ${image}
-
-            <h3>
-            ${produit.nom || ""}
-            </h3>
-
-            <p>
-            ${produit.description || ""}
-            </p>
-
-            <p>
-            <strong>
-            ${produit.prix || 0} FCFA
-            </strong>
-            </p>
-
-            <a
-            href="${lien}"
-            class="gold-btn">
-            Acheter maintenant
-            </a>
-
-        </div>
-
-        `;
-
-    });
+return;
 
 }
 
 
-/* =========================================
+if (!data || data.length === 0) {
+
+zone.innerHTML =
+"<p>Aucun nouveau produit pour le moment.</p>";
+
+return;
+
+}
+
+
+zone.innerHTML = "";
+
+
+data.forEach(function(produit) {
+
+const image =
+produit.image_url
+?
+`<img
+src="${produit.image_url}"
+alt="${produit.nom || "Produit"}">`
+:
+"";
+
+
+const lien =
+preparerLien(
+produit.lien_achat
+);
+
+
+zone.innerHTML += `
+
+<div class="product">
+
+${image}
+
+<h3>
+${produit.nom || ""}
+</h3>
+
+<p>
+${produit.description || ""}
+</p>
+
+<p>
+<strong>
+${produit.prix || 0} FCFA
+</strong>
+</p>
+
+<a
+href="${lien}"
+class="gold-btn">
+Acheter maintenant
+</a>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+/* =========================
    ÉTOILES
-========================================= */
+========================= */
 
 let noteChoisie = 0;
 
 
 function choisirNote(note) {
 
-    noteChoisie = note;
+noteChoisie = note;
 
 
-    const etoiles =
-    document.querySelectorAll(
-        "#etoiles span"
-    );
+const etoiles =
+document.querySelectorAll(
+".etoile"
+);
 
 
-    etoiles.forEach(
-        function(etoile,index) {
+etoiles.forEach(
+function(etoile) {
 
-            etoile.textContent =
-            index < note
-            ? "★"
-            : "☆";
+const valeur =
+Number(
+etoile.dataset.note
+);
 
-        }
-    );
+etoile.textContent =
+valeur <= note
+? "★"
+: "☆";
+
+}
+);
+
+
+document.getElementById(
+"noteTexte"
+).textContent =
+note + " / 5 étoiles";
+
 }
 
 
-/* =========================================
+/* =========================
    ENVOYER AVIS
-========================================= */
+========================= */
 
 async function envoyerAvis() {
 
-    const produit =
-    document.getElementById(
-        "avisProduit"
-    ).value;
+const produit =
+document.getElementById(
+"avisProduit"
+).value;
+
+const nom =
+document.getElementById(
+"avisNom"
+).value.trim();
+
+const email =
+document.getElementById(
+"avisEmail"
+).value.trim();
+
+const commentaire =
+document.getElementById(
+"avisCommentaire"
+).value.trim();
+
+const message =
+document.getElementById(
+"messageAvis"
+);
 
 
-    const nom =
-    document.getElementById(
-        "avisNom"
-    ).value.trim();
+if (!produit) {
 
+message.style.color = "red";
 
-    const email =
-    document.getElementById(
-        "avisEmail"
-    ).value.trim();
+message.textContent =
+"Choisissez un produit.";
 
-
-    const commentaire =
-    document.getElementById(
-        "avisCommentaire"
-    ).value.trim();
-
-
-    const message =
-    document.getElementById(
-        "messageAvis"
-    );
-
-
-    if (!produit) {
-
-        message.style.color = "red";
-        message.textContent =
-        "Choisissez un produit.";
-
-        return;
-    }
-
-
-    if (!nom) {
-
-        message.style.color = "red";
-        message.textContent =
-        "Veuillez entrer votre nom.";
-
-        return;
-    }
-
-
-    if (!noteChoisie) {
-
-        message.style.color = "red";
-        message.textContent =
-        "Choisissez une note de 1 à 5 étoiles.";
-
-        return;
-    }
-
-
-    if (!commentaire) {
-
-        message.style.color = "red";
-        message.textContent =
-        "Veuillez écrire votre commentaire.";
-
-        return;
-    }
-
-
-    message.style.color = "#555";
-    message.textContent =
-    "Envoi de votre avis...";
-
-
-    const { error } =
-    await supabaseClient
-    .from("avis")
-    .insert({
-
-        nom_client: nom,
-
-        email: email || null,
-
-        produit_nom: produit,
-
-        note: noteChoisie,
-
-        commentaire: commentaire,
-
-        statut: "pending"
-
-    });
-
-
-    if (error) {
-
-        console.error(error);
-
-        message.style.color = "red";
-
-        message.textContent =
-        "Impossible d'envoyer l'avis. Réessayez.";
-
-        return;
-    }
-
-
-    message.style.color = "green";
-
-    message.textContent =
-    "⭐ Merci ! Votre avis a été envoyé et sera vérifié avant publication.";
-
-
-    document.getElementById(
-        "avisNom"
-    ).value = "";
-
-
-    document.getElementById(
-        "avisEmail"
-    ).value = "";
-
-
-    document.getElementById(
-        "avisCommentaire"
-    ).value = "";
-
-
-    document.getElementById(
-        "avisProduit"
-    ).value = "";
-
-
-    choisirNote(0);
+return;
 
 }
 
 
-/* =========================================
+if (!nom) {
+
+message.style.color = "red";
+
+message.textContent =
+"Veuillez entrer votre nom.";
+
+return;
+
+}
+
+
+if (!noteChoisie) {
+
+message.style.color = "red";
+
+message.textContent =
+"Choisissez une note.";
+
+return;
+
+}
+
+
+if (!commentaire) {
+
+message.style.color = "red";
+
+message.textContent =
+"Écrivez votre commentaire.";
+
+return;
+
+}
+
+
+message.style.color = "#555";
+
+message.textContent =
+"Envoi de votre avis...";
+
+
+const { error } =
+await supabaseClient
+.from("avis")
+.insert({
+
+nom_client: nom,
+
+email: email || null,
+
+produit_nom: produit,
+
+note: noteChoisie,
+
+commentaire: commentaire,
+
+statut: "pending"
+
+});
+
+
+if (error) {
+
+console.error(error);
+
+message.style.color = "red";
+
+message.textContent =
+"Impossible d'envoyer l'avis. Réessayez.";
+
+return;
+
+}
+
+
+message.style.color = "green";
+
+message.textContent =
+"⭐ Merci ! Votre avis sera vérifié avant publication.";
+
+
+/* Réinitialisation */
+
+document.getElementById(
+"avisProduit"
+).value = "";
+
+document.getElementById(
+"avisNom"
+).value = "";
+
+document.getElementById(
+"avisEmail"
+).value = "";
+
+document.getElementById(
+"avisCommentaire"
+).value = "";
+
+choisirNote(0);
+
+}
+
+
+/* =========================
    LANCEMENT
-========================================= */
+========================= */
 
 document.addEventListener(
-    "DOMContentLoaded",
-    function() {
+"DOMContentLoaded",
+function() {
 
-        chargerNouveauxProduits();
+chargerNouveauxProduits();
 
-    }
+}
 );
 
 </script>
 
-
 </body>
-     </html>
+</html>
