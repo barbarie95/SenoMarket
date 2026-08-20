@@ -26,12 +26,10 @@ name="description"
 content="SenoMarket propose des formations, guides, templates et ressources numériques pour développer vos compétences, utiliser l'intelligence artificielle et réussir vos projets en ligne."
 >
 
-
 <meta
 name="keywords"
 content="SenoMarket, formation IA, intelligence artificielle, business en ligne, guides numériques, templates IA, ressources digitales"
 >
-
 
 <meta
 name="author"
@@ -40,7 +38,7 @@ content="SenoMarket"
 
 
 <!-- =========================================
-     URL PRINCIPALE DU SITE
+     URL PRINCIPALE
 ========================================= -->
 
 <link
@@ -51,7 +49,6 @@ href="https://barbarie95.github.io/SenoMarket/"
 
 <!-- =========================================
      OPEN GRAPH
-     Présentation lors du partage du site
 ========================================= -->
 
 <meta
@@ -86,7 +83,7 @@ content="https://barbarie95.github.io/SenoMarket/images/logo-seno.png"
 
 
 <!-- =========================================
-     TWITTER / X CARD
+     TWITTER / X
 ========================================= -->
 
 <meta
@@ -111,7 +108,7 @@ content="https://barbarie95.github.io/SenoMarket/images/logo-seno.png"
 
 
 <!-- =========================================
-     IDENTITÉ DU SITE POUR GOOGLE
+     IDENTITÉ DU SITE
 ========================================= -->
 
 <script type="application/ld+json">
@@ -126,7 +123,7 @@ content="https://barbarie95.github.io/SenoMarket/images/logo-seno.png"
 
 
 <!-- =========================================
-     ORGANISATION / MARQUE
+     ORGANISATION
 ========================================= -->
 
 <script type="application/ld+json">
@@ -140,6 +137,13 @@ content="https://barbarie95.github.io/SenoMarket/images/logo-seno.png"
   "telephone": "+22604148416"
 }
 </script>
+
+
+<!-- =========================================
+     SUPABASE
+========================================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
 <!-- =========================================
@@ -168,6 +172,38 @@ href="css/style.css"
 .lang-btn:hover{
     background:#FFD700;
     color:#000;
+}
+
+
+/* =========================================
+   AVIS DYNAMIQUES
+========================================= */
+
+.testimonials{
+    overflow:hidden;
+}
+
+.review-card{
+    box-sizing:border-box;
+}
+
+.dynamic-reviews-message{
+    text-align:center;
+    padding:25px;
+    color:#aaa;
+}
+
+.dynamic-review-product{
+    color:#FFD700;
+    font-size:14px;
+    margin-top:8px;
+}
+
+.dynamic-review-stars{
+    color:#FFD700;
+    font-size:20px;
+    letter-spacing:2px;
+    margin-bottom:10px;
 }
 
 </style>
@@ -507,7 +543,7 @@ Devenir affilié
 
 
 <!-- =========================================
-     TÉMOIGNAGES
+     AVIS CLIENTS
 ========================================= -->
 
 <section class="testimonials">
@@ -519,115 +555,15 @@ Devenir affilié
 
 <div class="slider">
 
-<div class="slides">
+<div
+class="slides"
+id="avisAccueil">
 
+<div class="dynamic-reviews-message">
 
-<div class="review-card">
-
-<div class="stars">
-★★★★★
-</div>
-
-<p>
-"J'ai acheté le guide TikTok et j'ai appris énormément de choses. Très satisfait !"
-</p>
-
-<h4>
-Issa O.
-</h4>
+Chargement des avis...
 
 </div>
-
-
-
-<div class="review-card">
-
-<div class="stars">
-★★★★☆
-</div>
-
-<p>
-"Paiement rapide, téléchargement immédiat et contenu de qualité. J'aurais aimé voir encore plus de ressources."
-</p>
-
-<h4>
-Awa K.
-</h4>
-
-</div>
-
-
-
-<div class="review-card">
-
-<div class="stars">
-★★★★★
-</div>
-
-<p>
-"Le meilleur rapport qualité-prix que j'ai trouvé pour commencer un business en ligne."
-</p>
-
-<h4>
-Moussa D.
-</h4>
-
-</div>
-
-
-
-<div class="review-card">
-
-<div class="stars">
-★★★★☆
-</div>
-
-<p>
-"Une plateforme intéressante avec des produits utiles. Le concept de SenoMarket est vraiment prometteur."
-</p>
-
-<h4>
-Fatou B.
-</h4>
-
-</div>
-
-
-
-<div class="review-card">
-
-<div class="stars">
-★★★★★
-</div>
-
-<p>
-"Les ressources IA m'ont beaucoup aidé dans mes projets. Le contenu est simple et facile à utiliser."
-</p>
-
-<h4>
-Karim T.
-</h4>
-
-</div>
-
-
-
-<div class="review-card">
-
-<div class="stars">
-★★★★☆
-</div>
-
-<p>
-"Très bonne expérience. J'attends avec impatience l'arrivée de nouveaux produits numériques."
-</p>
-
-<h4>
-Sofia R.
-</h4>
-
-</div>
-
 
 </div>
 
@@ -972,6 +908,209 @@ Politique de confidentialité
 
 
 <!-- =========================================
+     SUPABASE + AVIS
+========================================= -->
+
+<script>
+
+const SUPABASE_URL =
+"https://vfnqwdwgkocpkkaofrum.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_BOFyx3zpbcwtN6h-3N0wLw_L1QOJWR-";
+
+const supabaseClient =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+
+/* =========================================
+   PROTECTION HTML
+========================================= */
+
+function echapperHTML(texte){
+
+    return String(texte ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+/* =========================================
+   CHARGER LES AVIS APPROUVÉS
+========================================= */
+
+async function chargerAvisAccueil(){
+
+    const zone =
+        document.getElementById("avisAccueil");
+
+
+    if(!zone){
+        return;
+    }
+
+
+    zone.innerHTML = `
+        <div class="dynamic-reviews-message">
+            Chargement des avis...
+        </div>
+    `;
+
+
+    const { data, error } =
+        await supabaseClient
+        .from("avis")
+        .select("*")
+        .eq("statut", "approved")
+        .order(
+            "date_creation",
+            {
+                ascending:false
+            }
+        );
+
+
+    if(error){
+
+        console.error(
+            "Erreur chargement avis :",
+            error
+        );
+
+
+        zone.innerHTML = `
+            <div class="dynamic-reviews-message">
+                Les avis seront bientôt disponibles.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    if(!data || data.length === 0){
+
+        zone.innerHTML = `
+            <div class="dynamic-reviews-message">
+                Aucun avis publié pour le moment.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    zone.innerHTML = "";
+
+
+    data.forEach(function(avis){
+
+        const note =
+            Math.max(
+                0,
+                Math.min(
+                    5,
+                    Number(avis.note || 0)
+                )
+            );
+
+
+        const etoiles =
+            "★".repeat(note) +
+            "☆".repeat(5 - note);
+
+
+        const nom =
+            echapperHTML(
+                avis.nom_client ||
+                "Client"
+            );
+
+
+        const commentaire =
+            echapperHTML(
+                avis.commentaire ||
+                ""
+            );
+
+
+        /*
+           On accepte plusieurs noms possibles
+           pour le produit afin d'être compatible
+           avec ta table actuelle.
+        */
+
+        const produit =
+            avis.produit_nom ||
+            avis.produit ||
+            avis.nom_produit ||
+            "";
+
+
+        const produitHTML =
+            produit
+            ?
+            `
+            <div class="dynamic-review-product">
+                🛍️ ${echapperHTML(produit)}
+            </div>
+            `
+            :
+            "";
+
+
+        zone.innerHTML += `
+
+            <div class="review-card">
+
+                <div class="dynamic-review-stars">
+                    ${etoiles}
+                </div>
+
+                <p>
+                    "${commentaire}"
+                </p>
+
+                ${produitHTML}
+
+                <h4>
+                    ${nom}
+                </h4>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+
+/* =========================================
+   CHARGEMENT INITIAL
+========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        chargerAvisAccueil();
+
+    }
+);
+
+</script>
+
+
+
+<!-- =========================================
      SYSTÈME FRANÇAIS / ANGLAIS
 ========================================= -->
 
@@ -989,7 +1128,9 @@ function changerLangue(){
     : "fr";
 
 
-    appliquerLangue(nouvelleLangue);
+    appliquerLangue(
+        nouvelleLangue
+    );
 
 
     localStorage.setItem(
@@ -1014,12 +1155,20 @@ function appliquerLangue(langue){
     });
 
 
-    document
-    .getElementById("lang-toggle")
-    .textContent =
-    langue === "fr"
-    ? "EN"
-    : "FR";
+    const bouton =
+        document.getElementById(
+            "lang-toggle"
+        );
+
+
+    if(bouton){
+
+        bouton.textContent =
+        langue === "fr"
+        ? "EN"
+        : "FR";
+
+    }
 
 
     document.documentElement.lang =
