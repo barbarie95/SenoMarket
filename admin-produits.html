@@ -10,10 +10,7 @@
 
 <link rel="stylesheet" href="css/style.css">
 
-<!-- Supabase doit être chargé avant notre JS -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<!-- Ton fichier JS commun -->
 <script src="js/script.js"></script>
 
 </head>
@@ -21,95 +18,49 @@
 <body>
 
 <header>
-    <div class="logo">
-        <img src="images/logo-seno.png" alt="Logo SenoMarket">
-    </div>
+<div class="logo">
+<img src="images/logo-seno.png" alt="Logo SenoMarket">
+</div>
 </header>
 
 
 <section class="affiliate">
 
 <h2>🛒 Gestion des produits</h2>
-
 <p>Ajoutez et gérez les produits de SenoMarket.</p>
 
-
-<!-- FORMULAIRE -->
 
 <div class="card">
 
 <h3 id="titreFormulaire">➕ Ajouter un produit</h3>
 
-<input
-    type="text"
-    id="nom"
-    placeholder="Nom du produit"
-    style="padding:12px;width:90%;margin:6px 0;border-radius:10px;"
->
-
-<input
-    type="number"
-    id="prix"
-    placeholder="Prix"
-    step="0.01"
-    min="0"
-    style="padding:12px;width:90%;margin:6px 0;border-radius:10px;"
->
-
-<textarea
-    id="description"
-    placeholder="Description du produit"
-    rows="4"
-    style="padding:12px;width:90%;margin:6px 0;border-radius:10px;"
-></textarea>
-
-<input
-    type="text"
-    id="categorie"
-    placeholder="Catégorie"
-    style="padding:12px;width:90%;margin:6px 0;border-radius:10px;"
->
-
-<input
-    type="url"
-    id="image_url"
-    placeholder="URL de l'image du produit"
-    style="padding:12px;width:90%;margin:6px 0;border-radius:10px;"
->
-
-<input
-    type="url"
-    id="lien_achat"
-    placeholder="Lien d'achat"
-    style="padding:12px;width:90%;margin:6px 0;border-radius:10px;"
->
-
-<br>
+<input id="nom" type="text" placeholder="Nom du produit">
+<input id="prix" type="number" placeholder="Prix" step="0.01" min="0">
+<textarea id="description" placeholder="Description du produit" rows="4"></textarea>
+<input id="categorie" type="text" placeholder="Catégorie">
+<input id="image_url" type="url" placeholder="URL de l'image du produit">
+<input id="lien_achat" type="url" placeholder="Lien d'achat">
 
 <label>
-    <input type="checkbox" id="actif" checked>
-    Produit actif
+<input id="actif" type="checkbox" checked>
+Produit actif
 </label>
 
 <br><br>
 
 <button
-    type="button"
-    onclick="enregistrerProduit()"
-    class="gold-btn"
-    id="boutonEnregistrer"
->
-    Ajouter le produit
+id="boutonEnregistrer"
+class="gold-btn"
+onclick="enregistrerProduit()">
+Ajouter le produit
 </button>
 
 <button
-    type="button"
-    onclick="annulerModification()"
-    class="gold-btn"
-    id="boutonAnnuler"
-    style="display:none;"
->
-    Annuler
+id="boutonAnnuler"
+class="gold-btn"
+onclick="annulerModification()"
+style="display:none;">
+Annuler
 </button>
 
 <p id="message"></p>
@@ -117,17 +68,15 @@
 </div>
 
 
-<br><br>
+<br>
 
-
-<!-- LISTE DES PRODUITS -->
 
 <div class="card">
 
 <h3>📦 Produits enregistrés</h3>
 
 <div id="listeProduits">
-    <p>Chargement des produits...</p>
+<p>Chargement des produits...</p>
 </div>
 
 </div>
@@ -136,7 +85,7 @@
 <br>
 
 <a href="dashboard.html" class="gold-btn">
-    ⬅ Retour au tableau de bord
+⬅ Retour au tableau de bord
 </a>
 
 </section>
@@ -153,387 +102,312 @@
 
 <script>
 
-/* Protection administrateur */
 if (localStorage.getItem("adminConnecte") !== "oui") {
-    window.location.href = "administrateur.html";
+window.location.href = "administrateur.html";
 }
 
-
-/* Variable de modification */
 let produitEnModification = null;
 
 
-/* Charger les produits */
 async function chargerProduits() {
 
-    const zone = document.getElementById("listeProduits");
+const zone = document.getElementById("listeProduits");
 
-    zone.innerHTML = "<p>Connexion à Supabase...</p>";
+if (!supabaseClient) {
+zone.innerHTML = "<p style='color:red'>❌ Supabase indisponible.</p>";
+return;
+}
 
-    /* Diagnostic visible */
-    if (typeof supabaseClient === "undefined" || !supabaseClient) {
+const { data, error } = await supabaseClient
+.from("produits")
+.select("*")
+.order("created_at", { ascending:false });
 
-        zone.innerHTML = `
-            <p style="color:red;">
-                ❌ supabaseClient n'est pas disponible.
-            </p>
-            <p>
-                Vérifie que ton fichier JS est bien chargé.
-            </p>
-        `;
+if (error) {
+zone.innerHTML =
+"<p style='color:red'>❌ " +
+echapperHTML(error.message) +
+"</p>";
+return;
+}
 
-        return;
-    }
+if (!data || data.length === 0) {
+zone.innerHTML = "<p>Aucun produit enregistré.</p>";
+return;
+}
 
-    zone.innerHTML = "<p>Lecture de la table produits...</p>";
+zone.innerHTML = "";
 
-    const { data, error } = await supabaseClient
-        .from("produits")
-        .select("*")
-        .order("created_at", { ascending: false });
+data.forEach(produit => {
 
+zone.innerHTML += `
 
-    /* Afficher l'erreur exacte */
-    if (error) {
+<div class="card" style="margin-bottom:20px;">
 
-        console.error(error);
+${produit.image_url ?
+`<img src="${echapperHTML(produit.image_url)}"
+style="max-width:200px;border-radius:10px;">`
+: ""}
 
-        zone.innerHTML = `
-            <p style="color:red;">
-                ❌ Erreur Supabase
-            </p>
+<h3>
+🛒 ${echapperHTML(produit.nom || "")}
+</h3>
 
-            <p style="color:red;">
-                ${echapperHTML(error.message)}
-            </p>
-        `;
+<p>
+<strong>Prix :</strong>
+${produit.prix ?? ""}
+</p>
 
-        return;
-    }
+<p>
+<strong>Catégorie :</strong>
+${echapperHTML(produit.categorie || "Non définie")}
+</p>
 
+<p>
+<strong>Description :</strong>
+${echapperHTML(produit.description || "Aucune description")}
+</p>
 
-    /* Aucun produit */
-    if (!data || data.length === 0) {
+<p>
+<strong>Statut :</strong>
+${produit.actif ? "🟢 Actif" : "🔴 Inactif"}
+</p>
 
-        zone.innerHTML = `
-            <p>
-                Aucun produit enregistré.
-            </p>
-        `;
+${produit.lien_achat ?
+`<p>
+<a href="${echapperHTML(produit.lien_achat)}"
+target="_blank"
+class="gold-btn">
+🔗 Voir le lien d'achat
+</a>
+</p>`
+: ""}
 
-        return;
-    }
+<button
+class="gold-btn"
+onclick="modifierProduit('${produit.id}')">
+✏️ Modifier
+</button>
 
+<button
+class="gold-btn"
+onclick="changerStatut('${produit.id}',${!produit.actif})">
+${produit.actif ? "🔴 Désactiver" : "🟢 Activer"}
+</button>
 
-    zone.innerHTML = "";
+<button
+class="gold-btn"
+onclick="supprimerProduit('${produit.id}')">
+🗑️ Supprimer
+</button>
 
+</div>
 
-    /* Afficher les produits */
-    data.forEach(produit => {
+`;
 
-        const statut = produit.actif
-            ? "🟢 Actif"
-            : "🔴 Inactif";
+});
 
-        const image = produit.image_url
-            ? `
-                <img
-                    src="${echapperHTML(produit.image_url)}"
-                    alt="${echapperHTML(produit.nom || "")}"
-                    style="max-width:200px;border-radius:10px;"
-                >
-              `
-            : "";
-
-        const lien = produit.lien_achat
-            ? `
-                <p>
-                    <a
-                        href="${echapperHTML(produit.lien_achat)}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="gold-btn"
-                    >
-                        🔗 Voir le lien d'achat
-                    </a>
-                </p>
-              `
-            : "";
-
-
-        zone.innerHTML += `
-
-            <div class="card" style="margin-bottom:20px;">
-
-                ${image}
-
-                <h3>
-                    🛒 ${echapperHTML(produit.nom || "")}
-                </h3>
-
-                <p>
-                    <strong>Prix :</strong>
-                    ${produit.prix ?? ""}
-                </p>
-
-                <p>
-                    <strong>Catégorie :</strong>
-                    ${echapperHTML(produit.categorie || "Non définie")}
-                </p>
-
-                <p>
-                    <strong>Description :</strong>
-                    ${echapperHTML(produit.description || "Aucune description")}
-                </p>
-
-                <p>
-                    <strong>Statut :</strong>
-                    ${statut}
-                </p>
-
-                ${lien}
-
-                <button
-                    class="gold-btn"
-                    onclick="modifierProduit('${produit.id}')"
-                >
-                    ✏️ Modifier
-                </button>
-
-                <button
-                    class="gold-btn"
-                    onclick="changerStatut('${produit.id}', ${!produit.actif})"
-                >
-                    ${produit.actif ? "🔴 Désactiver" : "🟢 Activer"}
-                </button>
-
-                <button
-                    class="gold-btn"
-                    onclick="supprimerProduit('${produit.id}')"
-                >
-                    🗑️ Supprimer
-                </button>
-
-            </div>
-        `;
-
-    });
 }
 
 
-/* Ajouter ou modifier */
 async function enregistrerProduit() {
 
-    const nom = document.getElementById("nom").value.trim();
-    const prix = document.getElementById("prix").value;
-    const description = document.getElementById("description").value.trim();
-    const categorie = document.getElementById("categorie").value.trim();
-    const image_url = document.getElementById("image_url").value.trim();
-    const lien_achat = document.getElementById("lien_achat").value.trim();
-    const actif = document.getElementById("actif").checked;
-    const message = document.getElementById("message");
+const nom = document.getElementById("nom").value.trim();
+const prix = document.getElementById("prix").value;
+const description = document.getElementById("description").value.trim();
+const categorie = document.getElementById("categorie").value.trim();
+const image_url = document.getElementById("image_url").value.trim();
+const lien_achat = document.getElementById("lien_achat").value.trim();
+const actif = document.getElementById("actif").checked;
+const message = document.getElementById("message");
 
+if (!nom || prix === "") {
+message.style.color = "red";
+message.textContent = "Veuillez entrer le nom et le prix.";
+return;
+}
 
-    if (!nom) {
-        message.style.color = "red";
-        message.textContent = "Veuillez entrer le nom du produit.";
-        return;
-    }
+const produit = {
+nom,
+prix:Number(prix),
+description:description || null,
+categorie:categorie || null,
+image_url:image_url || null,
+lien_achat:lien_achat || null,
+actif
+};
 
-    if (prix === "") {
-        message.style.color = "red";
-        message.textContent = "Veuillez entrer le prix.";
-        return;
-    }
+let resultat;
 
+if (produitEnModification) {
 
-    const produit = {
-        nom,
-        prix: Number(prix),
-        description: description || null,
-        categorie: categorie || null,
-        image_url: image_url || null,
-        lien_achat: lien_achat || null,
-        actif
-    };
+resultat = await supabaseClient
+.from("produits")
+.update(produit)
+.eq("id", produitEnModification);
 
+} else {
 
-    let resultat;
+resultat = await supabaseClient
+.from("produits")
+.insert(produit);
 
+}
 
-    if (produitEnModification) {
+if (resultat.error) {
+message.style.color = "red";
+message.textContent = resultat.error.message;
+return;
+}
 
-        resultat = await supabaseClient
-            .from("produits")
-            .update(produit)
-            .eq("id", produitEnModification);
+message.style.color = "green";
+message.textContent =
+produitEnModification
+? "✅ Produit modifié."
+: "✅ Produit ajouté.";
 
-    } else {
+reinitialiserFormulaire();
+chargerProduits();
 
-        resultat = await supabaseClient
-            .from("produits")
-            .insert(produit);
-
-    }
-
-
-    if (resultat.error) {
-
-        message.style.color = "red";
-        message.textContent =
-            resultat.error.message;
-
-        return;
-    }
-
-
-    message.style.color = "green";
-
-    message.textContent =
-        produitEnModification
-        ? "✅ Produit modifié."
-        : "✅ Produit ajouté.";
-
-
-    reinitialiserFormulaire();
-
-    await chargerProduits();
 }
 
 
-/* Modifier */
 async function modifierProduit(id) {
 
-    const { data, error } = await supabaseClient
-        .from("produits")
-        .select("*")
-        .eq("id", id)
-        .single();
+const { data, error } = await supabaseClient
+.from("produits")
+.select("*")
+.eq("id", id)
+.single();
 
+if (error) {
+alert(error.message);
+return;
+}
 
-    if (error) {
-        alert(error.message);
-        return;
-    }
+produitEnModification = data.id;
 
+document.getElementById("nom").value = data.nom || "";
+document.getElementById("prix").value = data.prix ?? "";
+document.getElementById("description").value = data.description || "";
+document.getElementById("categorie").value = data.categorie || "";
+document.getElementById("image_url").value = data.image_url || "";
+document.getElementById("lien_achat").value = data.lien_achat || "";
+document.getElementById("actif").checked = data.actif;
 
-    produitEnModification = data.id;
+document.getElementById("titreFormulaire").textContent =
+"✏️ Modifier le produit";
 
-    document.getElementById("nom").value = data.nom || "";
-    document.getElementById("prix").value = data.prix ?? "";
-    document.getElementById("description").value = data.description || "";
-    document.getElementById("categorie").value = data.categorie || "";
-    document.getElementById("image_url").value = data.image_url || "";
-    document.getElementById("lien_achat").value = data.lien_achat || "";
-    document.getElementById("actif").checked = data.actif;
+document.getElementById("boutonEnregistrer").textContent =
+"Enregistrer les modifications";
 
+document.getElementById("boutonAnnuler").style.display =
+"inline-block";
 
-    document.getElementById("titreFormulaire").textContent =
-        "✏️ Modifier le produit";
+window.scrollTo({top:0,behavior:"smooth"});
 
-    document.getElementById("boutonEnregistrer").textContent =
-        "Enregistrer les modifications";
-
-    document.getElementById("boutonAnnuler").style.display =
-        "inline-block";
-
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
 }
 
 
-/* Activer / désactiver */
 async function changerStatut(id, nouveauStatut) {
 
-    const { error } = await supabaseClient
-        .from("produits")
-        .update({ actif: nouveauStatut })
-        .eq("id", id);
+const resultat = await supabaseClient
+.from("produits")
+.update({ actif:nouveauStatut })
+.eq("id",id)
+.select("id,nom,actif");
 
+console.log("UPDATE :", resultat);
 
-    if (error) {
-        alert(error.message);
-        return;
-    }
+if (resultat.error) {
+alert("❌ Erreur UPDATE :\n\n" + resultat.error.message);
+return;
+}
 
+if (!resultat.data || resultat.data.length === 0) {
+alert("⚠️ Aucun produit modifié.\n\nID : " + id);
+return;
+}
 
-    await chargerProduits();
+alert(
+"✅ Statut modifié : " +
+(resultat.data[0].actif ? "ACTIF" : "INACTIF")
+);
+
+chargerProduits();
+
 }
 
 
-/* Supprimer */
 async function supprimerProduit(id) {
 
-    if (!confirm("Voulez-vous vraiment supprimer ce produit ?")) {
-        return;
-    }
+if (!confirm("Voulez-vous vraiment supprimer ce produit ?")) {
+return;
+}
 
+const { error } = await supabaseClient
+.from("produits")
+.delete()
+.eq("id",id);
 
-    const { error } = await supabaseClient
-        .from("produits")
-        .delete()
-        .eq("id", id);
+if (error) {
+alert(
+"❌ Impossible de supprimer ce produit.\n\n" +
+error.message
+);
+return;
+}
 
+chargerProduits();
 
-    if (error) {
-        alert(error.message);
-        return;
-    }
-
-
-    await chargerProduits();
 }
 
 
-/* Annuler */
 function annulerModification() {
-    reinitialiserFormulaire();
+reinitialiserFormulaire();
 }
 
 
-/* Réinitialiser */
 function reinitialiserFormulaire() {
 
-    produitEnModification = null;
+produitEnModification = null;
 
-    document.getElementById("nom").value = "";
-    document.getElementById("prix").value = "";
-    document.getElementById("description").value = "";
-    document.getElementById("categorie").value = "";
-    document.getElementById("image_url").value = "";
-    document.getElementById("lien_achat").value = "";
-    document.getElementById("actif").checked = true;
+document.getElementById("nom").value = "";
+document.getElementById("prix").value = "";
+document.getElementById("description").value = "";
+document.getElementById("categorie").value = "";
+document.getElementById("image_url").value = "";
+document.getElementById("lien_achat").value = "";
+document.getElementById("actif").checked = true;
 
-    document.getElementById("titreFormulaire").textContent =
-        "➕ Ajouter un produit";
+document.getElementById("titreFormulaire").textContent =
+"➕ Ajouter un produit";
 
-    document.getElementById("boutonEnregistrer").textContent =
-        "Ajouter le produit";
+document.getElementById("boutonEnregistrer").textContent =
+"Ajouter le produit";
 
-    document.getElementById("boutonAnnuler").style.display =
-        "none";
+document.getElementById("boutonAnnuler").style.display =
+"none";
+
 }
 
 
-/* Protection du HTML */
 function echapperHTML(texte) {
 
-    return String(texte)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+return String(texte)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
 }
 
 
-/* Chargement initial */
-document.addEventListener("DOMContentLoaded", () => {
-    chargerProduits();
-});
+document.addEventListener(
+"DOMContentLoaded",
+chargerProduits
+);
 
 </script>
 
