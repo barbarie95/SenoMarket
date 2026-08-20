@@ -1266,18 +1266,12 @@ document.addEventListener(
 
 </script>
 
+
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-
-    const etoiles = document.querySelectorAll(".etoile");
-    const bouton = document.getElementById("btnEnvoyerAvis");
-
-    alert(
-        "Étoiles trouvées : " + etoiles.length +
-        "\nBouton trouvé : " + (bouton ? "OUI" : "NON")
-    );
-
-});
+alert(
+    "Supabase disponible : " +
+    (typeof supabase !== "undefined" ? "OUI" : "NON")
+);
 </script>
 </body>
 
