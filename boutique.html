@@ -2,6 +2,7 @@
 <html lang="fr">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -10,31 +11,124 @@
 <link rel="stylesheet" href="css/style.css">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+/* =========================
+   ÉTOILES AVIS
+========================= */
+
+.etoile {
+    font-size: 34px;
+    color: #999;
+    cursor: pointer;
+    user-select: none;
+    transition: 0.2s;
+    display: inline-block;
+}
+
+.etoile:hover {
+    transform: scale(1.15);
+}
+
+.etoile.selectionnee {
+    color: #FFD700;
+}
+
+
+/* =========================
+   FORMULAIRE AVIS
+========================= */
+
+.form-avis {
+    max-width: 600px;
+    margin: 25px auto;
+    padding: 18px;
+}
+
+.form-avis input,
+.form-avis select,
+.form-avis textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+}
+
+.form-avis textarea {
+    resize: vertical;
+}
+
+.form-avis button {
+    width: 100%;
+    padding: 12px;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+</style>
+
 </head>
 
+
 <body>
+
 
 <header>
 
 <div class="logo">
-<img src="images/logo-seno.png" alt="Logo SenoMarket">
+
+<img
+src="images/logo-seno.png"
+alt="Logo SenoMarket">
+
 </div>
 
+
 <nav>
-<a href="index.html">Accueil</a>
-<a href="boutique.html">Boutique</a>
-<a href="affiliation.html">Affiliation</a>
-<a href="espace-affilie.html">Espace Affilié</a>
+
+<a href="index.html">
+Accueil
+</a>
+
+<a href="boutique.html">
+Boutique
+</a>
+
+<a href="affiliation.html">
+Affiliation
+</a>
+
+<a href="espace-affilie.html">
+Espace Affilié
+</a>
+
 </nav>
 
-<a href="boutique.html" class="btn">Commencer</a>
+
+<a
+href="boutique.html"
+class="btn">
+
+Commencer
+
+</a>
 
 </header>
 
 
+
 <section class="products">
 
-<h2>🛒 Boutique SenoMarket</h2>
+
+<h2>
+🛒 Boutique SenoMarket
+</h2>
+
 
 <div class="search-box">
 
@@ -47,18 +141,23 @@ onkeyup="searchProduct()">
 </div>
 
 
-<!-- =========================
+
+<!-- =========================================
      ANCIENS PRODUITS
-========================= -->
+========================================= -->
 
 <div class="product-grid">
 
 
 <div class="product">
 
-<img src="images/produits/guide-ia.png" alt="Guide IA">
+<img
+src="images/produits/guide-ia.png"
+alt="Guide IA">
 
-<h3>🤖 Guide IA</h3>
+<h3>
+🤖 Guide IA
+</h3>
 
 <p>
 Comprendre le fonctionnement et gagner plus de visibilité sur TikTok
@@ -67,17 +166,24 @@ Comprendre le fonctionnement et gagner plus de visibilité sur TikTok
 <a
 href="https://orterhcl.mychariow.shop/prd_v2oig8jm"
 class="gold-btn">
+
 Acheter maintenant
+
 </a>
 
 </div>
 
 
+
 <div class="product">
 
-<img src="images/produits/tiktok-pro.png" alt="Seno TikTok Pro">
+<img
+src="images/produits/tiktok-pro.png"
+alt="Seno TikTok Pro">
 
-<h3>🔥 Seno TikTok Pro</h3>
+<h3>
+🔥 Seno TikTok Pro
+</h3>
 
 <p>
 Découvrez des stratégies pour retirer votre argent sur TikTok
@@ -86,17 +192,24 @@ Découvrez des stratégies pour retirer votre argent sur TikTok
 <a
 href="https://orterhcl.mychariow.shop/prd_t4lydw7i"
 class="gold-btn">
+
 Acheter maintenant
+
 </a>
 
 </div>
 
 
+
 <div class="product">
 
-<img src="images/produits/pack-ia.png" alt="Pack IA Création">
+<img
+src="images/produits/pack-ia.png"
+alt="Pack IA Création">
 
-<h3>🚀 Pack IA Création</h3>
+<h3>
+🚀 Pack IA Création
+</h3>
 
 <p>
 Plus de 100 ressources pour créer du contenu rapidement et devenir viral sur les réseaux sociaux
@@ -105,17 +218,24 @@ Plus de 100 ressources pour créer du contenu rapidement et devenir viral sur le
 <a
 href="https://orterhcl.mychariow.shop/prd_0l54qczo"
 class="gold-btn">
+
 Acheter maintenant
+
 </a>
 
 </div>
 
 
+
 <div class="product">
 
-<img src="images/produits/ecommerce.png" alt="Seno E-commerce Pro">
+<img
+src="images/produits/ecommerce.png"
+alt="Seno E-commerce Pro">
 
-<h3>🛒 Seno E-commerce Pro</h3>
+<h3>
+🛒 Seno E-commerce Pro
+</h3>
 
 <p>
 Apprenez à créer et développer votre boutique en ligne et vendre vos produits sur Internet.
@@ -124,17 +244,24 @@ Apprenez à créer et développer votre boutique en ligne et vendre vos produits
 <a
 href="https://orterhcl.mychariow.shop/prd_05pfbdr1"
 class="gold-btn">
+
 Acheter maintenant
+
 </a>
 
 </div>
 
 
+
 <div class="product">
 
-<img src="images/produits/createurs.png" alt="Seno Créateurs">
+<img
+src="images/produits/createurs.png"
+alt="Seno Créateurs">
 
-<h3>🎨 Seno Créateurs</h3>
+<h3>
+🎨 Seno Créateurs
+</h3>
 
 <p>
 Apprenez à créer des designs professionnels, logos et contenus visuels.
@@ -143,17 +270,24 @@ Apprenez à créer des designs professionnels, logos et contenus visuels.
 <a
 href="https://orterhcl.mychariow.shop/prd_gccmgpdb"
 class="gold-btn">
+
 Acheter maintenant
+
 </a>
 
 </div>
 
 
+
 <div class="product">
 
-<img src="images/produits/finance.png" alt="Seno Finance Pro">
+<img
+src="images/produits/finance.png"
+alt="Seno Finance Pro">
 
-<h3>💰 Seno Finance Pro</h3>
+<h3>
+💰 Seno Finance Pro
+</h3>
 
 <p>
 Apprenez à mieux gérer votre argent et à comment l'investir
@@ -162,17 +296,24 @@ Apprenez à mieux gérer votre argent et à comment l'investir
 <a
 href="https://orterhcl.mychariow.shop/prd_y6psfwmg"
 class="gold-btn">
+
 Acheter maintenant
+
 </a>
 
 </div>
 
 
+
 <div class="product">
 
-<img src="images/produits/digital-business.png" alt="Seno Digital Business Pro">
+<img
+src="images/produits/digital-business.png"
+alt="Seno Digital Business Pro">
 
-<h3>🌐 Seno Digital Business Pro</h3>
+<h3>
+🌐 Seno Digital Business Pro
+</h3>
 
 <p>
 Découvrez comment créer et développer une activité en ligne et générer votre premier million
@@ -181,17 +322,24 @@ Découvrez comment créer et développer une activité en ligne et générer vot
 <a
 href="https://orterhcl.mychariow.shop/prd_86nx8292"
 class="gold-btn">
+
 Acheter maintenant
+
 </a>
 
 </div>
 
 
+
 <div class="product">
 
-<img src="images/produits/tiktok-viral-pro.png" alt="TikTok Viral Pro">
+<img
+src="images/produits/tiktok-viral-pro.png"
+alt="TikTok Viral Pro">
 
-<h3>🚀 TikTok Viral Pro</h3>
+<h3>
+🚀 TikTok Viral Pro
+</h3>
 
 <p>
 500 idées de vidéos prêtes à l'emploi pour percer et devenir viral sur TikTok
@@ -200,17 +348,24 @@ Acheter maintenant
 <a
 href="https://orterhcl.mychariow.shop/prd_7klqvqwq"
 class="gold-btn">
+
 Acheter maintenant
+
 </a>
 
 </div>
 
 
+
 <div class="product">
 
-<img src="images/produits/site-web-pro.png" alt="Site Web Pro">
+<img
+src="images/produits/site-web-pro.png"
+alt="Site Web Pro">
 
-<h3>💻 Site Web Pro</h3>
+<h3>
+💻 Site Web Pro
+</h3>
 
 <p>
 Apprenez à créer un site web professionnel sans base de données grâce à l'IA, HTML, CSS et JavaScript
@@ -219,82 +374,112 @@ Apprenez à créer un site web professionnel sans base de données grâce à l'I
 <a
 href="https://orterhcl.mychariow.shop/prd_gwxtxiw5"
 class="gold-btn">
+
 Acheter maintenant
+
 </a>
 
 </div>
 
+
 </div>
 
 
-<!-- =========================
-     NOUVEAUX PRODUITS
-========================= -->
+
+<!-- =========================================
+     NOUVEAUX PRODUITS SUPABASE
+========================================= -->
 
 <br><br>
 
-<h2>✨ Nouveaux produits</h2>
+<h2>
+✨ Nouveaux produits
+</h2>
+
 
 <div
 class="product-grid"
 id="nouveaux-produits">
 
-<p>Chargement des nouveaux produits...</p>
+<p>
+Chargement des nouveaux produits...
+</p>
 
 </div>
 
 
-<!-- =========================
-     AVIS CLIENT
-========================= -->
+
+<!-- =========================================
+     AVIS CLIENTS
+========================================= -->
 
 <br><br>
 
+
 <div
-class="card"
-style="
-max-width:650px;
-margin:25px auto;
-padding:20px;
-">
+class="card form-avis"
+id="zone-avis">
+
 
 <h2 style="margin-top:0;">
 ⭐ Votre avis
 </h2>
 
-<p style="margin-bottom:18px;">
+
+<p>
 Vous avez acheté un produit ?
 Dites-nous ce que vous en pensez.
 </p>
 
 
+
 <!-- PRODUIT -->
 
 <select
-id="avisProduit"
-style="
-width:100%;
-padding:10px;
-margin-bottom:10px;
-border-radius:8px;
-box-sizing:border-box;
-">
+id="avisProduit">
 
 <option value="">
 Choisir le produit
 </option>
 
-<option>🤖 Guide IA</option>
-<option>🔥 Seno TikTok Pro</option>
-<option>🚀 Pack IA Création</option>
-<option>🛒 Seno E-commerce Pro</option>
-<option>🎨 Seno Créateurs</option>
-<option>💰 Seno Finance Pro</option>
-<option>🌐 Seno Digital Business Pro</option>
-<option>🚀 TikTok Viral Pro</option>
-<option>💻 Site Web Pro</option>
+<option>
+🤖 Guide IA
+</option>
+
+<option>
+🔥 Seno TikTok Pro
+</option>
+
+<option>
+🚀 Pack IA Création
+</option>
+
+<option>
+🛒 Seno E-commerce Pro
+</option>
+
+<option>
+🎨 Seno Créateurs
+</option>
+
+<option>
+💰 Seno Finance Pro
+</option>
+
+<option>
+🌐 Seno Digital Business Pro
+</option>
+
+<option>
+🚀 TikTok Viral Pro
+</option>
+
+<option>
+💻 Site Web Pro
+</option>
 
 </select>
+
 
 
 <!-- NOM -->
@@ -302,14 +487,8 @@ Choisir le produit
 <input
 type="text"
 id="avisNom"
-placeholder="Votre nom"
-style="
-width:100%;
-padding:10px;
-margin-bottom:10px;
-border-radius:8px;
-box-sizing:border-box;
-">
+placeholder="Votre nom">
+
 
 
 <!-- EMAIL FACULTATIF -->
@@ -317,17 +496,13 @@ box-sizing:border-box;
 <input
 type="email"
 id="avisEmail"
-placeholder="Email (facultatif)"
-style="
-width:100%;
-padding:10px;
-margin-bottom:12px;
-border-radius:8px;
-box-sizing:border-box;
-">
+placeholder="Email (facultatif)">
 
 
-<!-- ÉTOILES -->
+
+<!-- =========================================
+     ÉTOILES
+========================================= -->
 
 <div
 style="
@@ -340,52 +515,41 @@ id="etoiles"
 style="
 display:flex;
 justify-content:center;
-gap:5px;
-font-size:34px;
-line-height:1;
+gap:6px;
 ">
 
-<button
-type="button"
+<span
 class="etoile"
 data-note="1"
-onclick="choisirNote(1)"
-aria-label="1 étoile">
-☆</button>
+onclick="choisirNote(1)">
+☆</span>
 
-<button
-type="button"
+<span
 class="etoile"
 data-note="2"
-onclick="choisirNote(2)"
-aria-label="2 étoiles">
-☆</button>
+onclick="choisirNote(2)">
+☆</span>
 
-<button
-type="button"
+<span
 class="etoile"
 data-note="3"
-onclick="choisirNote(3)"
-aria-label="3 étoiles">
-☆</button>
+onclick="choisirNote(3)">
+☆</span>
 
-<button
-type="button"
+<span
 class="etoile"
 data-note="4"
-onclick="choisirNote(4)"
-aria-label="4 étoiles">
-☆</button>
+onclick="choisirNote(4)">
+☆</span>
 
-<button
-type="button"
+<span
 class="etoile"
 data-note="5"
-onclick="choisirNote(5)"
-aria-label="5 étoiles">
-☆</button>
+onclick="choisirNote(5)">
+☆</span>
 
 </div>
+
 
 <p
 id="noteTexte"
@@ -393,10 +557,13 @@ style="
 margin:7px 0 0;
 font-size:14px;
 ">
-Choisissez une note
+
+Choisissez votre note
+
 </p>
 
 </div>
+
 
 
 <!-- COMMENTAIRE -->
@@ -404,53 +571,52 @@ Choisissez une note
 <textarea
 id="avisCommentaire"
 rows="3"
-placeholder="Votre commentaire..."
-style="
-width:100%;
-padding:10px;
-margin-bottom:12px;
-border-radius:8px;
-box-sizing:border-box;
-resize:vertical;
-"></textarea>
+placeholder="Votre commentaire...">
+</textarea>
 
 
-<!-- ENVOYER -->
+
+<!-- BOUTON -->
 
 <button
 type="button"
-class="gold-btn"
 onclick="envoyerAvis()"
-style="
-border:0;
-cursor:pointer;
-width:100%;
-">
+class="gold-btn">
 
 ⭐ Envoyer mon avis
 
 </button>
 
 
+
+<!-- MESSAGE -->
+
 <p
 id="messageAvis"
 style="
 text-align:center;
 font-weight:bold;
-margin-bottom:0;
+margin:12px 0 0;
 ">
 </p>
+
 
 </div>
 
 </section>
 
 
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
 <footer>
 
 <p>
 © 2026 SenoMarket - Transformez vos idées en réussite
 </p>
+
 
 <a href="politique-confidentialite.html">
 Politique de confidentialité
@@ -459,412 +625,594 @@ Politique de confidentialité
 </footer>
 
 
+
 <script src="js/script.js"></script>
+
 
 
 <script>
 
-/* =========================
+/* =========================================
    SUPABASE
-========================= */
+========================================= */
 
 const SUPABASE_URL =
 "https://vfnqwdwgkocpkkaofrum.supabase.co";
 
+
 const SUPABASE_PUBLISHABLE_KEY =
 "sb_publishable_BOFyx3zpbcwtN6h-3N0wLw_L1QOJWR-";
 
+
 const supabaseClient =
 supabase.createClient(
-SUPABASE_URL,
-SUPABASE_PUBLISHABLE_KEY
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
 );
 
 
-/* =========================
+
+/* =========================================
    AFFILIATION
-========================= */
+========================================= */
 
 const parametre =
 new URLSearchParams(
-window.location.search
+    window.location.search
 );
+
 
 const code =
 parametre.get("ref");
 
+
 if (code) {
 
-localStorage.setItem(
-"affilie",
-code
-);
+    localStorage.setItem(
+        "affilie",
+        code
+    );
 
 }
 
+
 const codeAffilie =
-localStorage.getItem("affilie");
+localStorage.getItem(
+    "affilie"
+);
+
 
 
 if (codeAffilie) {
 
-document.body.insertAdjacentHTML(
-"afterbegin",
+    document.body.insertAdjacentHTML(
 
-`<div style="
-background:#FFD700;
-color:#000;
-padding:15px;
-text-align:center;
-font-weight:bold;
-">
-Vous êtes arrivé grâce au partenaire SenoMarket
-</div>`
+        "afterbegin",
 
-);
+        `<div style="
+        background:#FFD700;
+        color:#000;
+        padding:15px;
+        text-align:center;
+        font-weight:bold;
+        ">
+        Vous êtes arrivé grâce au partenaire SenoMarket
+        </div>`
+
+    );
 
 }
 
 
-/* =========================
-   LIEN AFFILIÉ
-========================= */
+
+/* =========================================
+   PRÉPARER LIEN AFFILIÉ
+========================================= */
 
 function preparerLien(lien) {
 
-if (!lien) return "#";
+    if (!lien) {
 
-if (!codeAffilie) return lien;
+        return "#";
 
-try {
+    }
 
-const url = new URL(lien);
 
-url.searchParams.set(
-"custom_fields[code_affilie]",
-codeAffilie
-);
+    if (!codeAffilie) {
 
-return url.toString();
+        return lien;
+
+    }
+
+
+    try {
+
+        const url =
+        new URL(lien);
+
+
+        url.searchParams.set(
+            "custom_fields[code_affilie]",
+            codeAffilie
+        );
+
+
+        return url.toString();
+
+    }
+
+
+    catch (erreur) {
+
+        return lien;
+
+    }
 
 }
 
-catch (erreur) {
-
-return lien;
-
-}
-
-}
 
 
-/* =========================
-   NOUVEAUX PRODUITS
-========================= */
+/* =========================================
+   CHARGER NOUVEAUX PRODUITS
+========================================= */
 
 async function chargerNouveauxProduits() {
 
-const zone =
-document.getElementById(
-"nouveaux-produits"
-);
+    const zone =
+    document.getElementById(
+        "nouveaux-produits"
+    );
 
 
-const { data, error } =
-await supabaseClient
-.from("produits")
-.select("*")
-.eq("actif",true)
-.order(
-"created_at",
-{ascending:false}
-);
+    try {
+
+        const { data, error } =
+        await supabaseClient
+
+        .from("produits")
+
+        .select("*")
+
+        .eq("actif", true)
+
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
 
 
-if (error) {
+        if (error) {
 
-console.error(error);
+            throw error;
 
-zone.innerHTML =
-"<p>Impossible de charger les nouveaux produits.</p>";
+        }
 
-return;
+
+        if (!data || data.length === 0) {
+
+            zone.innerHTML = `
+                <p>
+                Aucun nouveau produit pour le moment.
+                </p>
+            `;
+
+            return;
+
+        }
+
+
+        zone.innerHTML = "";
+
+
+        data.forEach(
+            function(produit) {
+
+                const image =
+                produit.image_url
+                ?
+                `
+                <img
+                src="${produit.image_url}"
+                alt="${produit.nom || "Produit"}">
+                `
+                :
+                "";
+
+
+                const lien =
+                preparerLien(
+                    produit.lien_achat
+                );
+
+
+                zone.innerHTML += `
+
+                <div class="product">
+
+                    ${image}
+
+                    <h3>
+                    ${produit.nom || ""}
+                    </h3>
+
+                    <p>
+                    ${produit.description || ""}
+                    </p>
+
+                    <p>
+                    <strong>
+                    ${produit.prix || 0} FCFA
+                    </strong>
+                    </p>
+
+                    <a
+                    href="${lien}"
+                    class="gold-btn">
+
+                    Acheter maintenant
+
+                    </a>
+
+                </div>
+
+                `;
+
+            }
+        );
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "Erreur produits :",
+            error
+        );
+
+
+        zone.innerHTML = `
+            <p>
+            Impossible de charger les nouveaux produits.
+            </p>
+        `;
+
+    }
 
 }
 
 
-if (!data || data.length === 0) {
 
-zone.innerHTML =
-"<p>Aucun nouveau produit pour le moment.</p>";
-
-return;
-
-}
-
-
-zone.innerHTML = "";
-
-
-data.forEach(function(produit) {
-
-const image =
-produit.image_url
-?
-`<img
-src="${produit.image_url}"
-alt="${produit.nom || "Produit"}">`
-:
-"";
-
-
-const lien =
-preparerLien(
-produit.lien_achat
-);
-
-
-zone.innerHTML += `
-
-<div class="product">
-
-${image}
-
-<h3>
-${produit.nom || ""}
-</h3>
-
-<p>
-${produit.description || ""}
-</p>
-
-<p>
-<strong>
-${produit.prix || 0} FCFA
-</strong>
-</p>
-
-<a
-href="${lien}"
-class="gold-btn">
-Acheter maintenant
-</a>
-
-</div>
-
-`;
-
-});
-
-}
-
-
-/* =========================
-   ÉTOILES
-========================= */
+/* =========================================
+   SYSTÈME D'ÉTOILES
+========================================= */
 
 let noteChoisie = 0;
 
 
+
 function choisirNote(note) {
 
-noteChoisie = note;
+    noteChoisie = note;
 
 
-const etoiles =
-document.querySelectorAll(
-".etoile"
-);
+    const etoiles =
+    document.querySelectorAll(
+        ".etoile"
+    );
 
 
-etoiles.forEach(
-function(etoile) {
+    etoiles.forEach(
+        function(etoile) {
 
-const valeur =
-Number(
-etoile.dataset.note
-);
+            const valeur =
+            Number(
+                etoile.dataset.note
+            );
 
-etoile.textContent =
-valeur <= note
-? "★"
-: "☆";
+
+            if (valeur <= note) {
+
+                etoile.textContent = "★";
+
+                etoile.classList.add(
+                    "selectionnee"
+                );
+
+            }
+
+            else {
+
+                etoile.textContent = "☆";
+
+                etoile.classList.remove(
+                    "selectionnee"
+                );
+
+            }
+
+        }
+    );
+
+
+    const noteTexte =
+    document.getElementById(
+        "noteTexte"
+    );
+
+
+    if (note === 0) {
+
+        noteTexte.textContent =
+        "Choisissez votre note";
+
+    }
+
+    else {
+
+        noteTexte.textContent =
+        note + " / 5 étoiles";
+
+    }
 
 }
-);
 
 
-document.getElementById(
-"noteTexte"
-).textContent =
-note + " / 5 étoiles";
 
-}
-
-
-/* =========================
+/* =========================================
    ENVOYER AVIS
-========================= */
+========================================= */
 
 async function envoyerAvis() {
 
-const produit =
-document.getElementById(
-"avisProduit"
-).value;
-
-const nom =
-document.getElementById(
-"avisNom"
-).value.trim();
-
-const email =
-document.getElementById(
-"avisEmail"
-).value.trim();
-
-const commentaire =
-document.getElementById(
-"avisCommentaire"
-).value.trim();
-
-const message =
-document.getElementById(
-"messageAvis"
-);
+    const produit =
+    document.getElementById(
+        "avisProduit"
+    ).value;
 
 
-if (!produit) {
+    const nom =
+    document.getElementById(
+        "avisNom"
+    ).value.trim();
 
-message.style.color = "red";
 
-message.textContent =
-"Choisissez un produit.";
+    const email =
+    document.getElementById(
+        "avisEmail"
+    ).value.trim();
 
-return;
+
+    const commentaire =
+    document.getElementById(
+        "avisCommentaire"
+    ).value.trim();
+
+
+    const message =
+    document.getElementById(
+        "messageAvis"
+    );
+
+
+
+    /* =========================
+       VALIDATION
+    ========================= */
+
+
+    if (!produit) {
+
+        message.style.color =
+        "red";
+
+        message.textContent =
+        "Veuillez choisir un produit.";
+
+        return;
+
+    }
+
+
+
+    if (!nom) {
+
+        message.style.color =
+        "red";
+
+        message.textContent =
+        "Veuillez entrer votre nom.";
+
+        return;
+
+    }
+
+
+
+    if (noteChoisie === 0) {
+
+        message.style.color =
+        "red";
+
+        message.textContent =
+        "Veuillez choisir une note.";
+
+        return;
+
+    }
+
+
+
+    if (!commentaire) {
+
+        message.style.color =
+        "red";
+
+        message.textContent =
+        "Veuillez écrire votre commentaire.";
+
+        return;
+
+    }
+
+
+
+    /* =========================
+       ENVOI
+    ========================= */
+
+
+    message.style.color =
+    "#555";
+
+    message.textContent =
+    "Envoi de votre avis...";
+
+
+
+    try {
+
+        const { error } =
+        await supabaseClient
+
+        .from("avis")
+
+        .insert({
+
+            nom_client:
+            nom,
+
+            email:
+            email || null,
+
+            produit_nom:
+            produit,
+
+            note:
+            noteChoisie,
+
+            commentaire:
+            commentaire,
+
+            statut:
+            "pending"
+
+        });
+
+
+
+        /* =========================
+           ERREUR SUPABASE
+        ========================= */
+
+
+        if (error) {
+
+            console.error(
+                "Erreur Supabase avis :",
+                error
+            );
+
+
+            message.style.color =
+            "red";
+
+
+            message.textContent =
+            "Erreur : " +
+            error.message;
+
+
+            return;
+
+        }
+
+
+
+        /* =========================
+           SUCCÈS
+        ========================= */
+
+
+        message.style.color =
+        "green";
+
+
+        message.textContent =
+        "⭐ Merci d'avoir donné votre avis ! Votre avis sera vérifié avant publication.";
+
+
+
+        /* =========================
+           NETTOYAGE
+        ========================= */
+
+
+        document.getElementById(
+            "avisProduit"
+        ).value = "";
+
+
+        document.getElementById(
+            "avisNom"
+        ).value = "";
+
+
+        document.getElementById(
+            "avisEmail"
+        ).value = "";
+
+
+        document.getElementById(
+            "avisCommentaire"
+        ).value = "";
+
+
+        choisirNote(0);
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "Erreur inattendue :",
+            error
+        );
+
+
+        message.style.color =
+        "red";
+
+
+        message.textContent =
+        "Une erreur est survenue. Veuillez réessayer.";
+
+    }
 
 }
 
 
-if (!nom) {
 
-message.style.color = "red";
-
-message.textContent =
-"Veuillez entrer votre nom.";
-
-return;
-
-}
-
-
-if (!noteChoisie) {
-
-message.style.color = "red";
-
-message.textContent =
-"Choisissez une note.";
-
-return;
-
-}
-
-
-if (!commentaire) {
-
-message.style.color = "red";
-
-message.textContent =
-"Écrivez votre commentaire.";
-
-return;
-
-}
-
-
-message.style.color = "#555";
-
-message.textContent =
-"Envoi de votre avis...";
-
-
-const { error } =
-await supabaseClient
-.from("avis")
-.insert({
-
-nom_client: nom,
-
-email: email || null,
-
-produit_nom: produit,
-
-note: noteChoisie,
-
-commentaire: commentaire,
-
-statut: "pending"
-
-});
-
-
-if (error) {
-
-console.error(error);
-
-message.style.color = "red";
-
-message.textContent =
-"Impossible d'envoyer l'avis. Réessayez.";
-
-return;
-
-}
-
-
-message.style.color = "green";
-
-message.textContent =
-"⭐ Merci ! Votre avis sera vérifié avant publication.";
-
-
-/* Réinitialisation */
-
-document.getElementById(
-"avisProduit"
-).value = "";
-
-document.getElementById(
-"avisNom"
-).value = "";
-
-document.getElementById(
-"avisEmail"
-).value = "";
-
-document.getElementById(
-"avisCommentaire"
-).value = "";
-
-choisirNote(0);
-
-}
-
-
-/* =========================
+/* =========================================
    LANCEMENT
-========================= */
+========================================= */
 
 document.addEventListener(
-"DOMContentLoaded",
-function() {
+    "DOMContentLoaded",
+    function() {
 
-chargerNouveauxProduits();
+        chargerNouveauxProduits();
 
-}
+    }
 );
 
 </script>
 
+
+
 </body>
+
 </html>
