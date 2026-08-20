@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -132,8 +133,25 @@ content="https://barbarie95.github.io/SenoMarket/images/logo-seno.png"
 
 
 /* =========================================
-   AVIS CLIENTS DYNAMIQUES
+   AVIS CLIENTS
 ========================================= */
+
+/*
+   MODIFICATION :
+
+   On utilise maintenant des classes spécifiques
+   "dynamic-review-card" au lieu de "review-card".
+
+   Pourquoi ?
+
+   Ton style.css contient déjà une classe
+   ".review-card" avec une animation CSS.
+   Cette animation pouvait entrer en conflit
+   avec notre JavaScript.
+
+   On isole donc complètement les avis
+   dynamiques du style.css.
+*/
 
 .testimonials{
     overflow:hidden;
@@ -153,21 +171,14 @@ content="https://barbarie95.github.io/SenoMarket/images/logo-seno.png"
     position:relative;
 }
 
+.dynamic-reviews-message{
+    text-align:center;
+    padding:25px;
+    color:#aaa;
+    width:100%;
+}
 
-/*
-=================================================
-IMPORTANT
-
-Le style.css possède déjà une ancienne animation
-pour .review-card.
-
-Pour les avis venant de Supabase, on désactive
-cette ancienne animation afin qu'elle ne puisse
-pas entrer en conflit avec notre nouveau système.
-=================================================
-*/
-
-.testimonials .review-card{
+.dynamic-review-card{
 
     width:90%;
     max-width:650px;
@@ -180,30 +191,13 @@ pas entrer en conflit avec notre nouveau système.
 
     text-align:center;
 
-    background:rgba(255,255,255,0.04);
+    background:#151515;
 
-    border:1px solid rgba(255,215,0,0.25);
+    border:1px solid #FFD700;
 
     box-shadow:0 8px 30px rgba(0,0,0,0.25);
 
-    /*
-       IMPORTANT :
-       on annule l'ancienne animation CSS.
-    */
-
-    animation:none !important;
-
-    /*
-       On utilise maintenant le système
-       visible / leaving en JavaScript.
-    */
-
     opacity:0;
-
-    position:relative;
-
-    top:auto;
-    left:auto;
 
     transform:translateY(15px);
 
@@ -212,32 +206,19 @@ pas entrer en conflit avec notre nouveau système.
         transform 0.7s ease;
 }
 
-
-.testimonials .review-card.visible{
+.dynamic-review-card.visible{
 
     opacity:1;
 
     transform:translateY(0);
 }
 
-
-.testimonials .review-card.leaving{
+.dynamic-review-card.leaving{
 
     opacity:0;
 
     transform:translateY(-15px);
 }
-
-
-.dynamic-reviews-message{
-
-    text-align:center;
-
-    padding:25px;
-
-    color:#aaa;
-}
-
 
 .dynamic-review-stars{
 
@@ -250,7 +231,6 @@ pas entrer en conflit avec notre nouveau système.
     margin-bottom:15px;
 }
 
-
 .dynamic-review-comment{
 
     font-size:17px;
@@ -258,8 +238,9 @@ pas entrer en conflit avec notre nouveau système.
     line-height:1.7;
 
     margin:15px 0;
-}
 
+    color:#ddd;
+}
 
 .dynamic-review-name{
 
@@ -272,7 +253,6 @@ pas entrer en conflit avec notre nouveau système.
     margin-top:18px;
 }
 
-
 .dynamic-review-product{
 
     color:#aaa;
@@ -280,6 +260,36 @@ pas entrer en conflit avec notre nouveau système.
     font-size:14px;
 
     margin-top:10px;
+}
+
+
+/*
+   MODIFICATION :
+
+   Style spécial pour les erreurs de connexion.
+*/
+
+.dynamic-review-error{
+
+    width:90%;
+
+    max-width:650px;
+
+    padding:25px;
+
+    margin:auto;
+
+    border:1px solid #b00020;
+
+    border-radius:15px;
+
+    background:#180b0b;
+
+    color:#ff8080;
+
+    text-align:center;
+
+    line-height:1.6;
 }
 
 </style>
@@ -960,10 +970,6 @@ Politique de confidentialité
 
 
 
-<!-- =========================================
-     JAVASCRIPT PRINCIPAL
-========================================= -->
-
 <script src="js/script.js"></script>
 
 
@@ -976,17 +982,23 @@ Politique de confidentialité
 
 /*
 =================================================
-CORRECTION IMPORTANTE
-
-La connexion Supabase est créée ICI.
-
-Elle n'est PAS recréée dans js/script.js.
-
-Avant cette correction, les deux fichiers
-déclaraient "const supabaseClient", ce qui pouvait
-bloquer l'exécution de ce script.
+MODIFICATION IMPORTANTE
 =================================================
+
+Nous ne faisons PLUS :
+
+supabaseClient.rpc("obtenir_avis_publics")
+
+Nous allons directement interroger :
+
+TABLE : avis
+STATUT : approved
+
+Cela permet de savoir immédiatement si le problème
+vient de la fonction PostgreSQL ou de la lecture
+directe de la table.
 */
+
 
 const SUPABASE_URL =
 "https://vfnqwdwgkocpkkaofrum.supabase.co";
@@ -995,16 +1007,11 @@ const SUPABASE_PUBLISHABLE_KEY =
 "sb_publishable_BOFyx3zpbcwtN6h-3N0wLw_L1QOJWR-";
 
 
-const supabaseClient =
-supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-);
-
-
-/* =========================================
-   PROTECTION HTML
-========================================= */
+/*
+=================================================
+PROTECTION HTML
+=================================================
+*/
 
 function echapperHTML(texte){
 
@@ -1018,9 +1025,11 @@ function echapperHTML(texte){
 }
 
 
-/* =========================================
-   VARIABLES AVIS
-========================================= */
+/*
+=================================================
+VARIABLES AVIS
+=================================================
+*/
 
 let avisListe = [];
 
@@ -1028,10 +1037,14 @@ let avisIndex = 0;
 
 let avisTimer = null;
 
+let avisTransitionTimer = null;
 
-/* =========================================
-   AFFICHER UN AVIS
-========================================= */
+
+/*
+=================================================
+AFFICHER UN AVIS
+=================================================
+*/
 
 function afficherAvis(index){
 
@@ -1041,7 +1054,17 @@ function afficherAvis(index){
         );
 
 
-    if(!zone || !avisListe.length){
+    if(!zone){
+
+        return;
+
+    }
+
+
+    if(
+        !avisListe ||
+        avisListe.length === 0
+    ){
 
         return;
 
@@ -1050,6 +1073,13 @@ function afficherAvis(index){
 
     const avis =
         avisListe[index];
+
+
+    if(!avis){
+
+        return;
+
+    }
 
 
     const note =
@@ -1081,46 +1111,61 @@ function afficherAvis(index){
         );
 
 
+    const produit =
+        echapperHTML(
+            avis.produit_nom ||
+            avis.nom_produit ||
+            ""
+        );
+
+
+    /*
+       MODIFICATION :
+
+       On utilise dynamic-review-card
+       et non review-card.
+
+       Cela évite le conflit avec style.css.
+    */
+
     zone.innerHTML = `
 
         <div
-            class="review-card"
+            class="dynamic-review-card"
             id="avisActuel"
         >
 
             <div class="dynamic-review-stars">
-
                 ${etoiles}
-
             </div>
 
 
             <div class="dynamic-review-comment">
-
                 "${commentaire}"
-
             </div>
 
 
             <div class="dynamic-review-name">
-
                 — ${nom}
-
             </div>
+
+
+            ${
+                produit
+                ?
+                `
+                <div class="dynamic-review-product">
+                    ${produit}
+                </div>
+                `
+                :
+                ""
+            }
 
         </div>
 
     `;
 
-
-    /*
-    =========================================
-    ANIMATION
-
-    On attend que la carte soit créée dans le DOM,
-    puis on ajoute "visible".
-    =========================================
-    */
 
     requestAnimationFrame(function(){
 
@@ -1143,11 +1188,23 @@ function afficherAvis(index){
 }
 
 
-/* =========================================
-   PASSER AU PROCHAIN AVIS
-========================================= */
+/*
+=================================================
+AVIS SUIVANT
+=================================================
+*/
 
 function prochainAvis(){
+
+    if(
+        !avisListe ||
+        avisListe.length <= 1
+    ){
+
+        return;
+
+    }
+
 
     const carte =
         document.getElementById(
@@ -1168,34 +1225,44 @@ function prochainAvis(){
     }
 
 
-    setTimeout(function(){
+    if(avisTransitionTimer){
 
-        avisIndex++;
-
-
-        if(
-            avisIndex >=
-            avisListe.length
-        ){
-
-            avisIndex = 0;
-
-        }
-
-
-        afficherAvis(
-            avisIndex
+        clearTimeout(
+            avisTransitionTimer
         );
 
+    }
 
-    }, 700);
+
+    avisTransitionTimer =
+        setTimeout(function(){
+
+            avisIndex++;
+
+            if(
+                avisIndex >=
+                avisListe.length
+            ){
+
+                avisIndex = 0;
+
+            }
+
+
+            afficherAvis(
+                avisIndex
+            );
+
+        },700);
 
 }
 
 
-/* =========================================
-   DÉMARRER LE DÉFILEMENT
-========================================= */
+/*
+=================================================
+DÉMARRER LE DÉFILEMENT
+=================================================
+*/
 
 function demarrerDefilementAvis(){
 
@@ -1208,6 +1275,10 @@ function demarrerDefilementAvis(){
     }
 
 
+    /*
+       Un avis reste environ 3 secondes.
+    */
+
     avisTimer =
         setInterval(
             prochainAvis,
@@ -1217,54 +1288,7 @@ function demarrerDefilementAvis(){
 }
 
 
-/* =========================================
-   CHARGER LES AVIS
-========================================= */
-
-async function chargerAvisAccueil(){
-
-    const zone =
-        document.getElementById(
-            "avisAccueil"
-        );
-
-
-    if(!zone){
-
-        return;
-
-    }
-
-
-    zone.innerHTML = `
-
-        <div class="dynamic-reviews-message">
-
-            Chargement des avis...
-
-        </div>
-
-    `;
-
-
-    try{
-
-        console.log(
-            "AVIS : début du chargement"
-        );
-
-
-        /*
-        =========================================
-        APPEL SUPABASE
-
-        On conserve la fonction RPC que nous avons
-        vérifiée ensemble dans Supabase.
-
-        Elle retourne les avis publics approuvés.
-        =========================================
-        */
-
-        const resultat =
-            await supabaseClient.rpc(
-                "obtenir_avis_
+/*
+=================================================
+AFFICHER ERREUR
+==================
