@@ -15,7 +15,7 @@
 <style>
 
 /* =========================
-   AVIS CLIENTS
+   AVIS
 ========================= */
 
 .form-avis {
@@ -62,7 +62,7 @@
     line-height: 1;
     color: #aaa;
     cursor: pointer;
-    transition: transform 0.15s ease, color 0.15s ease;
+    transition: transform 0.15s ease;
 }
 
 .etoile:hover {
@@ -172,7 +172,7 @@ onkeyup="searchProduct()">
 
 
 <!-- =========================================
-     TES 9 PRODUITS
+     9 PRODUITS EXISTANTS
 ========================================= -->
 
 <div class="product-grid">
@@ -408,7 +408,7 @@ Acheter maintenant
 
 
 <!-- =========================================
-     NOUVEAUX PRODUITS
+     NOUVEAUX PRODUITS SUPABASE
 ========================================= -->
 
 <br><br>
@@ -546,7 +546,10 @@ data-note="5">
 
 <p
 id="noteTexte"
-style="text-align:center;font-size:14px;">
+style="
+text-align:center;
+font-size:14px;
+">
 
 Choisissez votre note
 
@@ -570,7 +573,6 @@ class="gold-btn">
 ⭐ Envoyer mon avis
 
 </button>
-
 
 
 <p id="messageAvis"></p>
@@ -597,15 +599,9 @@ Politique de confidentialité
 
 
 
-<!-- JS PRINCIPAL -->
-
 <script src="js/script.js"></script>
 
 
-
-<!-- =========================================
-     JAVASCRIPT BOUTIQUE
-========================================= -->
 
 <script>
 
@@ -624,6 +620,7 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_BOFyx3zpbcwtN6h-3N0wLw_L1QOJWR-";
 
+
 const supabaseClient =
 supabase.createClient(
 SUPABASE_URL,
@@ -640,6 +637,7 @@ const parametre =
 new URLSearchParams(
 window.location.search
 );
+
 
 const code =
 parametre.get("ref");
@@ -708,10 +706,12 @@ try {
 const url =
 new URL(lien);
 
+
 url.searchParams.set(
 "custom_fields[code_affilie]",
 codeAffilie
 );
+
 
 return url.toString();
 
@@ -743,9 +743,13 @@ try {
 
 const resultat =
 await supabaseClient
+
 .from("produits")
+
 .select("*")
+
 .eq("actif", true)
+
 .order(
 "created_at",
 {
@@ -757,6 +761,7 @@ ascending:false
 if (resultat.error) {
 
 console.error(
+"Erreur produits :",
 resultat.error
 );
 
@@ -845,6 +850,7 @@ Acheter maintenant
 catch (erreur) {
 
 console.error(
+"Erreur produits :",
 erreur
 );
 
@@ -925,7 +931,6 @@ element.classList.remove(
 });
 
 
-
 noteTexte.textContent =
 noteChoisie +
 " / 5 étoiles";
@@ -938,7 +943,7 @@ noteChoisie +
 
 
 /* =========================================
-   ENVOI AVIS
+   ENVOYER AVIS
 ========================================= */
 
 const bouton =
@@ -983,7 +988,9 @@ document.getElementById(
 
 
 
-/* VALIDATION */
+/* =========================
+   VALIDATION
+========================= */
 
 if (!produit) {
 
@@ -1038,7 +1045,9 @@ return;
 
 
 
-/* ENVOI */
+/* =========================
+   ENVOI
+========================= */
 
 bouton.disabled =
 true;
@@ -1059,8 +1068,15 @@ try {
 
 const resultat =
 await supabaseClient
+
 .from("avis")
+
 .insert({
+
+/*
+   IMPORTANT :
+   noms exacts des colonnes
+*/
 
 nom_client:
 nom,
@@ -1068,7 +1084,10 @@ nom,
 email:
 email || null,
 
-produit:
+produit_id:
+null,
+
+produit_nom:
 produit,
 
 note:
@@ -1084,10 +1103,14 @@ statut:
 
 
 
+/* =========================
+   ERREUR
+========================= */
+
 if (resultat.error) {
 
 console.error(
-"Erreur Supabase :",
+"Erreur Supabase avis :",
 resultat.error
 );
 
@@ -1095,16 +1118,19 @@ resultat.error
 message.style.color =
 "red";
 
+
 message.textContent =
-"Erreur : " +
+"Erreur lors de l'envoi : " +
 resultat.error.message;
 
 
 bouton.disabled =
 false;
 
+
 bouton.textContent =
 "⭐ Envoyer mon avis";
+
 
 return;
 
@@ -1112,17 +1138,22 @@ return;
 
 
 
-/* SUCCÈS */
+/* =========================
+   SUCCÈS
+========================= */
 
 message.style.color =
 "green";
+
 
 message.textContent =
 "⭐ Merci d'avoir donné votre avis ! Votre avis sera vérifié avant publication.";
 
 
 
-/* RESET */
+/* =========================
+   NETTOYAGE
+========================= */
 
 document.getElementById(
 "avisProduit"
@@ -1167,6 +1198,7 @@ noteTexte.textContent =
 bouton.disabled =
 false;
 
+
 bouton.textContent =
 "⭐ Envoyer mon avis";
 
@@ -1176,13 +1208,14 @@ bouton.textContent =
 catch (erreur) {
 
 console.error(
-"Erreur :",
+"Erreur inattendue :",
 erreur
 );
 
 
 message.style.color =
 "red";
+
 
 message.textContent =
 "Une erreur est survenue : " +
@@ -1191,6 +1224,7 @@ erreur.message;
 
 bouton.disabled =
 false;
+
 
 bouton.textContent =
 "⭐ Envoyer mon avis";
