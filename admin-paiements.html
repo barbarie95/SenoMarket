@@ -8,10 +8,8 @@
 <title>Gestion Paiements - SenoMarket</title>
 
 <link rel="stylesheet" href="css/style.css">
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-
 
 <body>
 
@@ -21,7 +19,6 @@
 </div>
 </header>
 
-
 <section class="affiliate">
 
 <h2>💰 Gestion des paiements</h2>
@@ -29,7 +26,6 @@
 <p>
 Consultez et gérez les demandes de retrait des affiliés.
 </p>
-
 
 <div class="card">
 
@@ -41,9 +37,7 @@ Consultez et gérez les demandes de retrait des affiliés.
 
 </div>
 
-
 <br>
-
 
 <a href="dashboard.html" class="gold-btn">
 ⬅ Retour au tableau de bord
@@ -51,13 +45,10 @@ Consultez et gérez les demandes de retrait des affiliés.
 
 </section>
 
-
 <footer>
-
 <p>
 © 2026 SenoMarket - Transformez vos idées en réussite
 </p>
-
 </footer>
 
 
@@ -99,15 +90,13 @@ async function chargerPaiements() {
         .select("*")
         .order(
             "date_demande",
-            { ascending: false }
+            { ascending:false }
         );
 
 
-    console.log("RETRAITS :", data);
-    console.log("ERREUR :", error);
-
-
     if (error) {
+
+        console.error(error);
 
         zone.innerHTML = `
             <p style="color:red;">
@@ -122,11 +111,8 @@ async function chargerPaiements() {
 
     if (!data || data.length === 0) {
 
-        zone.innerHTML = `
-            <p>
-                Aucune demande de retrait.
-            </p>
-        `;
+        zone.innerHTML =
+            "<p>Aucune demande de retrait.</p>";
 
         return;
     }
@@ -136,9 +122,6 @@ async function chargerPaiements() {
 
 
     for (const retrait of data) {
-
-
-        /* AFFILIÉ */
 
         let affilie = null;
 
@@ -157,9 +140,7 @@ async function chargerPaiements() {
                 )
                 .maybeSingle();
 
-
-            affilie =
-                resultat.data;
+            affilie = resultat.data;
         }
 
 
@@ -167,26 +148,34 @@ async function chargerPaiements() {
             affilie?.nom ||
             "Affilié inconnu";
 
-
         const email =
             affilie?.email ||
             "Non renseigné";
 
-
         const code =
             affilie?.code_affilie ||
             "Non renseigné";
-
 
         const montant =
             Number(
                 retrait.montant_demande || 0
             ).toLocaleString("fr-FR");
 
-
         const statut =
             retrait.statut ||
-            "pending";
+            "en attente";
+
+        const statutNormalise =
+            statut
+            .toString()
+            .toLowerCase()
+            .trim();
+
+
+        const peutTraiter =
+            statutNormalise === "pending" ||
+            statutNormalise === "en attente" ||
+            statutNormalise === "pending text";
 
 
         const dateDemande =
@@ -269,7 +258,7 @@ async function chargerPaiements() {
 
 
             ${
-                statut === "pending"
+                peutTraiter
 
                 ?
 
@@ -288,7 +277,10 @@ async function chargerPaiements() {
                                 '${retrait.id}'
                             )
                         "
-                        style="cursor:pointer;"
+                        style="
+                            cursor:pointer;
+                            border:0;
+                        "
                     >
                         ✅ Marquer comme payé
                     </button>
@@ -302,9 +294,10 @@ async function chargerPaiements() {
                             )
                         "
                         style="
+                            cursor:pointer;
+                            border:0;
                             background:#b00020;
                             color:white;
-                            cursor:pointer;
                         "
                     >
                         ❌ Refuser
@@ -326,14 +319,14 @@ async function chargerPaiements() {
 
 
 /* ================================
-   MARQUER PAYÉ
+   MARQUER COMME PAYÉ
 ================================ */
 
 async function marquerPaye(id) {
 
     if (
         !confirm(
-            "Confirmer le paiement de ce retrait ?"
+            "Confirmer que ce retrait a été payé ?"
         )
     ) return;
 
@@ -362,12 +355,14 @@ async function marquerPaye(id) {
             error.message
         );
 
+        console.error(error);
+
         return;
     }
 
 
     alert(
-        "Retrait marqué comme payé."
+        "Retrait marqué comme payé !"
     );
 
 
@@ -383,7 +378,7 @@ async function refuserRetrait(id) {
 
     if (
         !confirm(
-            "Refuser cette demande de retrait ?"
+            "Voulez-vous refuser cette demande ?"
         )
     ) return;
 
@@ -409,12 +404,14 @@ async function refuserRetrait(id) {
             error.message
         );
 
+        console.error(error);
+
         return;
     }
 
 
     alert(
-        "Demande refusée."
+        "Demande de retrait refusée."
     );
 
 
