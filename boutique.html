@@ -1267,7 +1267,17 @@ document.addEventListener(
 </script>
 
 <script>
-alert("TEST JAVASCRIPT OK");
+document.addEventListener("DOMContentLoaded", function () {
+
+    const etoiles = document.querySelectorAll(".etoile");
+    const bouton = document.getElementById("btnEnvoyerAvis");
+
+    alert(
+        "Étoiles trouvées : " + etoiles.length +
+        "\nBouton trouvé : " + (bouton ? "OUI" : "NON")
+    );
+
+});
 </script>
 </body>
 
