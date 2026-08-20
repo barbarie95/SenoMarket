@@ -15,29 +15,7 @@
 <style>
 
 /* =========================
-   ÉTOILES AVIS
-========================= */
-
-.etoile {
-    font-size: 34px;
-    color: #999;
-    cursor: pointer;
-    user-select: none;
-    transition: 0.2s;
-    display: inline-block;
-}
-
-.etoile:hover {
-    transform: scale(1.15);
-}
-
-.etoile.selectionnee {
-    color: #FFD700;
-}
-
-
-/* =========================
-   FORMULAIRE AVIS
+   AVIS CLIENT
 ========================= */
 
 .form-avis {
@@ -61,13 +39,68 @@
     resize: vertical;
 }
 
-.form-avis button {
+
+/* =========================
+   ÉTOILES
+========================= */
+
+.etoiles {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin: 10px 0 5px;
+}
+
+.etoile {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: 36px;
+    line-height: 1;
+    color: #aaa;
+    cursor: pointer;
+    transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.etoile:hover {
+    transform: scale(1.12);
+}
+
+.etoile.active {
+    color: #FFD700;
+}
+
+
+/* =========================
+   BOUTON AVIS
+========================= */
+
+.btn-avis {
     width: 100%;
     padding: 12px;
     border: 0;
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
+    background: #d4af37;
+    color: #111;
+}
+
+.btn-avis:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+
+/* =========================
+   MESSAGE AVIS
+========================= */
+
+.message-avis {
+    text-align: center;
+    font-weight: bold;
+    margin: 12px 0 0;
 }
 
 </style>
@@ -174,7 +207,6 @@ Acheter maintenant
 </div>
 
 
-
 <div class="product">
 
 <img
@@ -198,7 +230,6 @@ Acheter maintenant
 </a>
 
 </div>
-
 
 
 <div class="product">
@@ -226,7 +257,6 @@ Acheter maintenant
 </div>
 
 
-
 <div class="product">
 
 <img
@@ -250,7 +280,6 @@ Acheter maintenant
 </a>
 
 </div>
-
 
 
 <div class="product">
@@ -278,7 +307,6 @@ Acheter maintenant
 </div>
 
 
-
 <div class="product">
 
 <img
@@ -302,7 +330,6 @@ Acheter maintenant
 </a>
 
 </div>
-
 
 
 <div class="product">
@@ -330,7 +357,6 @@ Acheter maintenant
 </div>
 
 
-
 <div class="product">
 
 <img
@@ -354,7 +380,6 @@ Acheter maintenant
 </a>
 
 </div>
-
 
 
 <div class="product">
@@ -381,7 +406,6 @@ Acheter maintenant
 
 </div>
 
-
 </div>
 
 
@@ -401,24 +425,21 @@ Acheter maintenant
 class="product-grid"
 id="nouveaux-produits">
 
-<p>
-Chargement des nouveaux produits...
-</p>
+<p id="message-produits"></p>
 
 </div>
 
 
 
 <!-- =========================================
-     AVIS CLIENTS
+     AVIS CLIENT
 ========================================= -->
 
 <br><br>
 
 
 <div
-class="card form-avis"
-id="zone-avis">
+class="card form-avis">
 
 
 <h2 style="margin-top:0;">
@@ -433,56 +454,25 @@ Dites-nous ce que vous en pensez.
 
 
 
-<!-- PRODUIT -->
-
-<select
-id="avisProduit">
+<select id="avisProduit">
 
 <option value="">
 Choisir le produit
 </option>
 
-<option>
-🤖 Guide IA
-</option>
-
-<option>
-🔥 Seno TikTok Pro
-</option>
-
-<option>
-🚀 Pack IA Création
-</option>
-
-<option>
-🛒 Seno E-commerce Pro
-</option>
-
-<option>
-🎨 Seno Créateurs
-</option>
-
-<option>
-💰 Seno Finance Pro
-</option>
-
-<option>
-🌐 Seno Digital Business Pro
-</option>
-
-<option>
-🚀 TikTok Viral Pro
-</option>
-
-<option>
-💻 Site Web Pro
-</option>
+<option>🤖 Guide IA</option>
+<option>🔥 Seno TikTok Pro</option>
+<option>🚀 Pack IA Création</option>
+<option>🛒 Seno E-commerce Pro</option>
+<option>🎨 Seno Créateurs</option>
+<option>💰 Seno Finance Pro</option>
+<option>🌐 Seno Digital Business Pro</option>
+<option>🚀 TikTok Viral Pro</option>
+<option>💻 Site Web Pro</option>
 
 </select>
 
 
-
-<!-- NOM -->
 
 <input
 type="text"
@@ -491,8 +481,6 @@ placeholder="Votre nom">
 
 
 
-<!-- EMAIL FACULTATIF -->
-
 <input
 type="email"
 id="avisEmail"
@@ -500,53 +488,44 @@ placeholder="Email (facultatif)">
 
 
 
-<!-- =========================================
-     ÉTOILES
-========================================= -->
+<!-- ÉTOILES -->
 
-<div
-style="
-text-align:center;
-margin:8px 0 14px;
-">
+<div class="etoiles">
 
-<div
-id="etoiles"
-style="
-display:flex;
-justify-content:center;
-gap:6px;
-">
-
-<span
+<button
+type="button"
 class="etoile"
 data-note="1"
-onclick="choisirNote(1)">
-☆</span>
+aria-label="1 étoile">
+☆</button>
 
-<span
+<button
+type="button"
 class="etoile"
 data-note="2"
-onclick="choisirNote(2)">
-☆</span>
+aria-label="2 étoiles">
+☆</button>
 
-<span
+<button
+type="button"
 class="etoile"
 data-note="3"
-onclick="choisirNote(3)">
-☆</span>
+aria-label="3 étoiles">
+☆</button>
 
-<span
+<button
+type="button"
 class="etoile"
 data-note="4"
-onclick="choisirNote(4)">
-☆</span>
+aria-label="4 étoiles">
+☆</button>
 
-<span
+<button
+type="button"
 class="etoile"
 data-note="5"
-onclick="choisirNote(5)">
-☆</span>
+aria-label="5 étoiles">
+☆</button>
 
 </div>
 
@@ -554,19 +533,16 @@ onclick="choisirNote(5)">
 <p
 id="noteTexte"
 style="
-margin:7px 0 0;
+text-align:center;
 font-size:14px;
+margin:5px 0 12px;
 ">
 
 Choisissez votre note
 
 </p>
 
-</div>
 
-
-
-<!-- COMMENTAIRE -->
 
 <textarea
 id="avisCommentaire"
@@ -576,12 +552,10 @@ placeholder="Votre commentaire...">
 
 
 
-<!-- BOUTON -->
-
 <button
 type="button"
-onclick="envoyerAvis()"
-class="gold-btn">
+id="btnEnvoyerAvis"
+class="btn-avis">
 
 ⭐ Envoyer mon avis
 
@@ -589,15 +563,9 @@ class="gold-btn">
 
 
 
-<!-- MESSAGE -->
-
 <p
 id="messageAvis"
-style="
-text-align:center;
-font-weight:bold;
-margin:12px 0 0;
-">
+class="message-avis">
 </p>
 
 
@@ -646,8 +614,8 @@ const SUPABASE_PUBLISHABLE_KEY =
 
 const supabaseClient =
 supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
+SUPABASE_URL,
+SUPABASE_PUBLISHABLE_KEY
 );
 
 
@@ -658,7 +626,7 @@ supabase.createClient(
 
 const parametre =
 new URLSearchParams(
-    window.location.search
+window.location.search
 );
 
 
@@ -680,7 +648,6 @@ const codeAffilie =
 localStorage.getItem(
     "affilie"
 );
-
 
 
 if (codeAffilie) {
@@ -706,7 +673,7 @@ if (codeAffilie) {
 
 
 /* =========================================
-   PRÉPARER LIEN AFFILIÉ
+   LIEN AFFILIÉ
 ========================================= */
 
 function preparerLien(lien) {
@@ -741,7 +708,6 @@ function preparerLien(lien) {
 
     }
 
-
     catch (erreur) {
 
         return lien;
@@ -753,7 +719,7 @@ function preparerLien(lien) {
 
 
 /* =========================================
-   CHARGER NOUVEAUX PRODUITS
+   NOUVEAUX PRODUITS
 ========================================= */
 
 async function chargerNouveauxProduits() {
@@ -766,7 +732,7 @@ async function chargerNouveauxProduits() {
 
     try {
 
-        const { data, error } =
+        const resultat =
         await supabaseClient
 
         .from("produits")
@@ -778,14 +744,32 @@ async function chargerNouveauxProduits() {
         .order(
             "created_at",
             {
-                ascending:false
+                ascending: false
             }
         );
 
 
+        const data =
+        resultat.data;
+
+        const error =
+        resultat.error;
+
+
         if (error) {
 
-            throw error;
+            console.error(
+                "Erreur produits :",
+                error
+            );
+
+            zone.innerHTML = `
+                <p>
+                Impossible de charger les nouveaux produits.
+                </p>
+            `;
+
+            return;
 
         }
 
@@ -864,12 +848,11 @@ async function chargerNouveauxProduits() {
 
     }
 
-
-    catch (error) {
+    catch (erreur) {
 
         console.error(
             "Erreur produits :",
-            error
+            erreur
         );
 
 
@@ -892,72 +875,74 @@ async function chargerNouveauxProduits() {
 let noteChoisie = 0;
 
 
-
-function choisirNote(note) {
-
-    noteChoisie = note;
-
-
-    const etoiles =
-    document.querySelectorAll(
-        ".etoile"
-    );
+const etoiles =
+document.querySelectorAll(
+    ".etoile"
+);
 
 
-    etoiles.forEach(
-        function(etoile) {
+etoiles.forEach(
+    function(etoile) {
 
-            const valeur =
-            Number(
-                etoile.dataset.note
-            );
+        etoile.addEventListener(
+            "click",
+            function() {
 
-
-            if (valeur <= note) {
-
-                etoile.textContent = "★";
-
-                etoile.classList.add(
-                    "selectionnee"
+                noteChoisie =
+                Number(
+                    this.dataset.note
                 );
 
-            }
 
-            else {
+                etoiles.forEach(
+                    function(element) {
 
-                etoile.textContent = "☆";
+                        const valeur =
+                        Number(
+                            element.dataset.note
+                        );
 
-                etoile.classList.remove(
-                    "selectionnee"
+
+                        if (
+                            valeur <=
+                            noteChoisie
+                        ) {
+
+                            element.textContent =
+                            "★";
+
+                            element.classList.add(
+                                "active"
+                            );
+
+                        }
+
+                        else {
+
+                            element.textContent =
+                            "☆";
+
+                            element.classList.remove(
+                                "active"
+                            );
+
+                        }
+
+                    }
                 );
 
+
+                document.getElementById(
+                    "noteTexte"
+                ).textContent =
+                noteChoisie +
+                " / 5 étoiles";
+
             }
-
-        }
-    );
-
-
-    const noteTexte =
-    document.getElementById(
-        "noteTexte"
-    );
-
-
-    if (note === 0) {
-
-        noteTexte.textContent =
-        "Choisissez votre note";
+        );
 
     }
-
-    else {
-
-        noteTexte.textContent =
-        note + " / 5 étoiles";
-
-    }
-
-}
+);
 
 
 
@@ -965,12 +950,31 @@ function choisirNote(note) {
    ENVOYER AVIS
 ========================================= */
 
+const boutonAvis =
+document.getElementById(
+    "btnEnvoyerAvis"
+);
+
+
+boutonAvis.addEventListener(
+    "click",
+    envoyerAvis
+);
+
+
+
 async function envoyerAvis() {
+
+    const message =
+    document.getElementById(
+        "messageAvis"
+    );
+
 
     const produit =
     document.getElementById(
         "avisProduit"
-    ).value;
+    ).value.trim();
 
 
     const nom =
@@ -991,17 +995,10 @@ async function envoyerAvis() {
     ).value.trim();
 
 
-    const message =
-    document.getElementById(
-        "messageAvis"
-    );
-
-
 
     /* =========================
-       VALIDATION
+       VALIDATIONS
     ========================= */
-
 
     if (!produit) {
 
@@ -1014,7 +1011,6 @@ async function envoyerAvis() {
         return;
 
     }
-
 
 
     if (!nom) {
@@ -1030,7 +1026,6 @@ async function envoyerAvis() {
     }
 
 
-
     if (noteChoisie === 0) {
 
         message.style.color =
@@ -1042,7 +1037,6 @@ async function envoyerAvis() {
         return;
 
     }
-
 
 
     if (!commentaire) {
@@ -1063,18 +1057,40 @@ async function envoyerAvis() {
        ENVOI
     ========================= */
 
+    boutonAvis.disabled = true;
+
+    boutonAvis.textContent =
+    "Envoi en cours...";
+
 
     message.style.color =
     "#555";
 
     message.textContent =
-    "Envoi de votre avis...";
-
+    "Votre avis est en cours d'envoi...";
 
 
     try {
 
-        const { error } =
+        /*
+         IMPORTANT :
+
+         On utilise les vrais noms
+         de ta table avis :
+
+         nom_client
+         email
+         produit
+         note
+         commentaire
+         statut
+
+         produit_id est volontairement
+         laissé vide car il est nullable.
+        */
+
+
+        const resultat =
         await supabaseClient
 
         .from("avis")
@@ -1087,7 +1103,7 @@ async function envoyerAvis() {
             email:
             email || null,
 
-            produit_nom:
+            produit:
             produit,
 
             note:
@@ -1102,16 +1118,14 @@ async function envoyerAvis() {
         });
 
 
-
-        /* =========================
-           ERREUR SUPABASE
-        ========================= */
+        const error =
+        resultat.error;
 
 
         if (error) {
 
             console.error(
-                "Erreur Supabase avis :",
+                "Erreur Supabase :",
                 error
             );
 
@@ -1121,8 +1135,16 @@ async function envoyerAvis() {
 
 
             message.textContent =
-            "Erreur : " +
+            "Erreur lors de l'envoi : " +
             error.message;
+
+
+            boutonAvis.disabled =
+            false;
+
+
+            boutonAvis.textContent =
+            "⭐ Envoyer mon avis";
 
 
             return;
@@ -1135,7 +1157,6 @@ async function envoyerAvis() {
            SUCCÈS
         ========================= */
 
-
         message.style.color =
         "green";
 
@@ -1144,11 +1165,9 @@ async function envoyerAvis() {
         "⭐ Merci d'avoir donné votre avis ! Votre avis sera vérifié avant publication.";
 
 
-
         /* =========================
-           NETTOYAGE
+           RÉINITIALISATION
         ========================= */
-
 
         document.getElementById(
             "avisProduit"
@@ -1170,16 +1189,44 @@ async function envoyerAvis() {
         ).value = "";
 
 
-        choisirNote(0);
+        noteChoisie = 0;
+
+
+        etoiles.forEach(
+            function(element) {
+
+                element.textContent =
+                "☆";
+
+                element.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+        document.getElementById(
+            "noteTexte"
+        ).textContent =
+        "Choisissez votre note";
+
+
+        boutonAvis.disabled =
+        false;
+
+
+        boutonAvis.textContent =
+        "⭐ Envoyer mon avis";
 
     }
 
 
-    catch (error) {
+    catch (erreur) {
 
         console.error(
             "Erreur inattendue :",
-            error
+            erreur
         );
 
 
@@ -1189,6 +1236,14 @@ async function envoyerAvis() {
 
         message.textContent =
         "Une erreur est survenue. Veuillez réessayer.";
+
+
+        boutonAvis.disabled =
+        false;
+
+
+        boutonAvis.textContent =
+        "⭐ Envoyer mon avis";
 
     }
 
@@ -1210,7 +1265,6 @@ document.addEventListener(
 );
 
 </script>
-
 
 
 </body>
