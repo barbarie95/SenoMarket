@@ -1,12 +1,9 @@
-index.html corrigé — SenoMarket
-
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title
@@ -25,10 +22,7 @@ name="keywords"
 content="SenoMarket, formation IA, intelligence artificielle, business en ligne, guides numériques, templates IA, ressources digitales"
 >
 
-<meta
-name="author"
-content="SenoMarket"
->
+<meta name="author" content="SenoMarket">
 
 <link
 rel="canonical"
@@ -36,46 +30,37 @@ href="https://barbarie95.github.io/SenoMarket/"
 >
 
 <meta property="og:type" content="website">
-
 <meta
 property="og:title"
 content="SenoMarket - Formations IA, guides et ressources numériques"
 >
-
 <meta
 property="og:description"
-content="Découvrez les formations, guides, templates et ressources numériques de SenoMarket pour développer vos compétences et vos projets en ligne."
+content="Découvrez les formations, guides, templates et ressources numériques de SenoMarket."
 >
-
 <meta
 property="og:url"
 content="https://barbarie95.github.io/SenoMarket/"
 >
-
 <meta property="og:site_name" content="SenoMarket">
-
 <meta
 property="og:image"
 content="https://barbarie95.github.io/SenoMarket/images/logo-seno.png"
 >
 
 <meta name="twitter:card" content="summary">
-
 <meta
 name="twitter:title"
 content="SenoMarket - Formations IA, guides et ressources numériques"
 >
-
 <meta
 name="twitter:description"
 content="Formations, guides, templates et ressources numériques pour développer vos projets en ligne."
 >
-
 <meta
 name="twitter:image"
 content="https://barbarie95.github.io/SenoMarket/images/logo-seno.png"
 >
-
 
 <script type="application/ld+json">
 {
@@ -86,7 +71,6 @@ content="https://barbarie95.github.io/SenoMarket/images/logo-seno.png"
   "url": "https://barbarie95.github.io/SenoMarket/"
 }
 </script>
-
 
 <script type="application/ld+json">
 {
@@ -100,21 +84,11 @@ content="https://barbarie95.github.io/SenoMarket/images/logo-seno.png"
 }
 </script>
 
-
-<!-- =========================================
-     SUPABASE
-========================================= -->
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <link rel="stylesheet" href="css/style.css">
 
-
 <style>
-
-/* =========================================
-   LANGUE
-========================================= */
 
 .lang-btn{
     background:transparent;
@@ -131,28 +105,6 @@ content="https://barbarie95.github.io/SenoMarket/images/logo-seno.png"
     background:#FFD700;
     color:#000;
 }
-
-
-/* =========================================
-   AVIS CLIENTS
-========================================= */
-
-/*
-   MODIFICATION :
-
-   On utilise maintenant des classes spécifiques
-   "dynamic-review-card" au lieu de "review-card".
-
-   Pourquoi ?
-
-   Ton style.css contient déjà une classe
-   ".review-card" avec une animation CSS.
-   Cette animation pouvait entrer en conflit
-   avec notre JavaScript.
-
-   On isole donc complètement les avis
-   dynamiques du style.css.
-*/
 
 .testimonials{
     overflow:hidden;
@@ -172,125 +124,64 @@ content="https://barbarie95.github.io/SenoMarket/images/logo-seno.png"
     position:relative;
 }
 
-.dynamic-reviews-message{
-    text-align:center;
-    padding:25px;
-    color:#aaa;
-    width:100%;
-}
-
-.dynamic-review-card{
-
+.review-card{
     width:90%;
     max-width:650px;
-
     box-sizing:border-box;
-
     padding:30px;
-
     border-radius:18px;
-
     text-align:center;
-
-    background:#151515;
-
-    border:1px solid #FFD700;
-
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,215,0,0.25);
     box-shadow:0 8px 30px rgba(0,0,0,0.25);
-
     opacity:0;
-
     transform:translateY(15px);
-
     transition:
         opacity 0.7s ease,
         transform 0.7s ease;
 }
 
-.dynamic-review-card.visible{
-
+.review-card.visible{
     opacity:1;
-
     transform:translateY(0);
 }
 
-.dynamic-review-card.leaving{
-
-    opacity:0;
-
-    transform:translateY(-15px);
+.dynamic-reviews-message{
+    text-align:center;
+    padding:25px;
+    color:#aaa;
 }
 
 .dynamic-review-stars{
-
     color:#FFD700;
-
     font-size:24px;
-
     letter-spacing:3px;
-
     margin-bottom:15px;
 }
 
 .dynamic-review-comment{
-
     font-size:17px;
-
     line-height:1.7;
-
     margin:15px 0;
-
-    color:#ddd;
 }
 
 .dynamic-review-name{
-
     color:#FFD700;
-
     font-size:18px;
-
     font-weight:bold;
-
     margin-top:18px;
 }
 
 .dynamic-review-product{
-
     color:#aaa;
-
     font-size:14px;
-
     margin-top:10px;
 }
 
-
-/*
-   MODIFICATION :
-
-   Style spécial pour les erreurs de connexion.
-*/
-
-.dynamic-review-error{
-
-    width:90%;
-
-    max-width:650px;
-
-    padding:25px;
-
-    margin:auto;
-
-    border:1px solid #b00020;
-
-    border-radius:15px;
-
-    background:#180b0b;
-
-    color:#ff8080;
-
+.dynamic-reviews-error{
     text-align:center;
-
-    line-height:1.6;
+    padding:25px;
+    color:#ff7777;
 }
 
 </style>
@@ -299,11 +190,6 @@ content="https://barbarie95.github.io/SenoMarket/images/logo-seno.png"
 
 
 <body>
-
-
-<!-- =========================================
-     HEADER
-========================================= -->
 
 <header>
 
@@ -315,7 +201,6 @@ alt="Logo SenoMarket"
 >
 
 </div>
-
 
 <nav>
 
@@ -349,7 +234,6 @@ Espace Affilié
 
 </nav>
 
-
 <div>
 
 <a
@@ -372,11 +256,6 @@ EN
 </header>
 
 
-
-<!-- =========================================
-     HERO
-========================================= -->
-
 <section class="hero">
 
 <div class="hero-text">
@@ -384,248 +263,172 @@ EN
 <h1
 data-fr="Transformez vos idées en réussite avec SenoMarket"
 data-en="Turn your ideas into success with SenoMarket">
-
 Transformez vos idées en réussite avec SenoMarket
-
 </h1>
-
 
 <p
 data-fr="Découvrez des formations, guides et ressources numériques pour développer vos compétences, utiliser l'intelligence artificielle et construire vos projets en ligne."
 data-en="Discover training, guides and digital resources to develop your skills, use artificial intelligence and build your online projects.">
-
 Découvrez des formations, guides et ressources numériques pour développer vos compétences, utiliser l'intelligence artificielle et construire vos projets en ligne.
-
 </p>
-
 
 <a
 href="boutique.html"
 class="gold-btn"
 data-fr="Découvrir la boutique"
 data-en="Discover the shop">
-
 Découvrir la boutique
-
 </a>
 
 </div>
 
-
 <div class="hero-box">
 
-<h2>
-🚀 SenoMarket
-</h2>
+<h2>🚀 SenoMarket</h2>
 
 <p
 data-fr="Des outils numériques pour construire votre avenir."
 data-en="Digital tools to build your future.">
-
 Des outils numériques pour construire votre avenir.
-
 </p>
 
 </div>
 
 </section>
 
-
-
-<!-- =========================================
-     POURQUOI SENOMARKET
-========================================= -->
 
 <section class="why">
 
 <h2
 data-fr="Pourquoi choisir SenoMarket ?"
 data-en="Why choose SenoMarket?">
-
 Pourquoi choisir SenoMarket ?
-
 </h2>
 
-
 <div class="cards">
-
 
 <div class="card">
 
 <h3
 data-fr="Produits Premium"
 data-en="Premium Products">
-
 Produits Premium
-
 </h3>
 
 <p
 data-fr="Des ressources numériques conçues pour vous aider à apprendre et progresser."
 data-en="Digital resources designed to help you learn and grow.">
-
 Des ressources numériques conçues pour vous aider à apprendre et progresser.
-
 </p>
 
 </div>
-
 
 <div class="card">
 
 <h3
 data-fr="Paiement sécurisé"
 data-en="Secure Payment">
-
 Paiement sécurisé
-
 </h3>
 
 <p
 data-fr="Achetez facilement vos produits numériques via nos solutions de paiement."
 data-en="Easily buy your digital products through our payment solutions.">
-
 Achetez facilement vos produits numériques via nos solutions de paiement.
-
 </p>
 
 </div>
-
 
 <div class="card">
 
 <h3
 data-fr="Accès rapide"
 data-en="Fast Access">
-
 Accès rapide
-
 </h3>
 
 <p
 data-fr="Recevez rapidement vos ressources après votre achat."
 data-en="Receive your digital resources quickly after your purchase.">
-
 Recevez rapidement vos ressources après votre achat.
-
 </p>
 
 </div>
-
 
 <div class="card">
 
 <h3
 data-fr="Support"
 data-en="Support">
-
 Support
-
 </h3>
 
 <p
 data-fr="Une assistance disponible pour vous accompagner dans vos projets."
 data-en="Assistance available to support you in your projects.">
-
 Une assistance disponible pour vous accompagner dans vos projets.
-
 </p>
 
 </div>
-
 
 </div>
 
 </section>
 
-
-
-<!-- =========================================
-     APERÇU BOUTIQUE
-========================================= -->
 
 <section class="shop-preview">
 
 <h2
 data-fr="Découvrez nos produits numériques"
 data-en="Discover our digital products">
-
 Découvrez nos produits numériques
-
 </h2>
-
 
 <p
 data-fr="Formations, guides, templates et ressources en intelligence artificielle pour développer vos compétences et vos projets en ligne."
 data-en="Training, guides, templates and AI resources to develop your skills and online projects.">
-
 Formations, guides, templates et ressources en intelligence artificielle pour développer vos compétences et vos projets en ligne.
-
 </p>
-
 
 <a
 href="boutique.html"
 class="gold-btn"
 data-fr="Voir toute la boutique"
 data-en="See the whole shop">
-
 Voir toute la boutique
-
 </a>
 
 </section>
 
-
-
-<!-- =========================================
-     AFFILIATION
-========================================= -->
 
 <section class="affiliate">
 
 <h2
 data-fr="Programme Affiliation SenoMarket"
 data-en="SenoMarket Affiliate Program">
-
 Programme Affiliation SenoMarket
-
 </h2>
-
 
 <p
 data-fr="Recommandez nos produits et gagnez des commissions sur chaque vente réalisée grâce à vous."
 data-en="Recommend our products and earn commissions on every sale made through you.">
-
 Recommandez nos produits et gagnez des commissions sur chaque vente réalisée grâce à vous.
-
 </p>
-
 
 <a
 href="affiliation.html"
 class="gold-btn"
 data-fr="Devenir affilié"
 data-en="Become an affiliate">
-
 Devenir affilié
-
 </a>
 
 </section>
 
 
-
-<!-- =========================================
-     AVIS CLIENTS
-========================================= -->
-
 <section class="testimonials">
 
-<h2>
-⭐ Ce que disent nos clients
-</h2>
-
+<h2>⭐ Ce que disent nos clients</h2>
 
 <div class="slider">
 
@@ -644,26 +447,13 @@ Chargement des avis...
 </section>
 
 
+<section class="affiliate" id="apropos">
 
-<!-- =========================================
-     À PROPOS
-========================================= -->
-
-<section
-class="affiliate"
-id="apropos">
-
-<h2>
-À propos de SenoMarket
-</h2>
-
+<h2>À propos de SenoMarket</h2>
 
 <div class="card">
 
-<h3>
-Notre mission
-</h3>
-
+<h3>Notre mission</h3>
 
 <p>
 SenoMarket est une plateforme dédiée aux ressources numériques,
@@ -671,11 +461,7 @@ formations et outils qui aident les créateurs, entrepreneurs et
 passionnés du digital à développer leurs projets.
 </p>
 
-
-<h3>
-Notre vision
-</h3>
-
+<h3>Notre vision</h3>
 
 <p>
 Notre objectif est de rendre l'accès aux connaissances numériques
@@ -683,11 +469,7 @@ plus simple et accessible, afin d'aider chacun à transformer ses
 idées en réussite.
 </p>
 
-
-<h3>
-Pourquoi choisir SenoMarket ?
-</h3>
-
+<h3>Pourquoi choisir SenoMarket ?</h3>
 
 <p>
 ✓ Des ressources numériques pratiques<br>
@@ -701,24 +483,13 @@ Pourquoi choisir SenoMarket ?
 </section>
 
 
+<section class="affiliate" id="blog">
 
-<!-- =========================================
-     BLOG
-========================================= -->
-
-<section
-class="affiliate"
-id="blog">
-
-<h2>
-📝 Le Blog SenoMarket
-</h2>
-
+<h2>📝 Le Blog SenoMarket</h2>
 
 <p>
 Conseils, guides et actualités sur l'IA et le business en ligne.
 </p>
-
 
 <div class="card">
 
@@ -726,12 +497,9 @@ Conseils, guides et actualités sur l'IA et le business en ligne.
 5 outils IA gratuits pour démarrer votre business en ligne en 2026
 </h3>
 
-
-<p
-style="color:#888;font-size:14px;">
+<p style="color:#888;font-size:14px;">
 30 juillet 2026
 </p>
-
 
 <p>
 Lancer un projet en ligne demande du temps, des compétences variées,
@@ -739,7 +507,6 @@ et souvent un budget qu'on n'a pas encore. Bonne nouvelle :
 plusieurs outils d'intelligence artificielle gratuits permettent
 aujourd'hui de combler ces manques dès le premier jour.
 </p>
-
 
 <p>
 
@@ -755,7 +522,6 @@ réseaux sociaux en quelques minutes.
 
 </p>
 
-
 <p>
 
 <strong style="color:#FFD700;">
@@ -768,7 +534,6 @@ Des outils de génération d'images permettent de produire des visuels
 pour vos publications ou votre boutique, même sans compétence en design.
 
 </p>
-
 
 <p>
 
@@ -783,7 +548,6 @@ entre eux et de gagner du temps sur les tâches répétitives.
 
 </p>
 
-
 <p>
 
 <strong style="color:#FFD700;">
@@ -797,7 +561,6 @@ emails et pages de vente.
 
 </p>
 
-
 <p>
 
 <strong style="color:#FFD700;">
@@ -808,27 +571,20 @@ emails et pages de vente.
 
 Des outils simples permettent de suivre ses ventes et ses visiteurs
 afin de mieux comprendre ce qui fonctionne.
-
 </p>
-
 
 <p>
 Ces outils ne remplacent pas une vraie stratégie, mais ils font gagner
 un temps précieux quand on démarre.
 </p>
 
-
 <a
 href="boutique.html"
 class="gold-btn">
-
 Découvrir la boutique
-
 </a>
 
 </div>
-
-
 
 <div class="card">
 
@@ -836,12 +592,9 @@ Découvrir la boutique
 Comment l'intelligence artificielle peut vous faire gagner du temps au quotidien
 </h3>
 
-
-<p
-style="color:#888;font-size:14px;">
+<p style="color:#888;font-size:14px;">
 À venir
 </p>
-
 
 <p>
 Des cas d'usage concrets et accessibles pour intégrer l'IA dans votre routine,
@@ -850,20 +603,15 @@ sans compétence technique.
 
 </div>
 
-
-
 <div class="card">
 
 <h3>
 Guide : par où commencer quand on veut apprendre l'IA sans expérience technique
 </h3>
 
-
-<p
-style="color:#888;font-size:14px;">
+<p style="color:#888;font-size:14px;">
 À venir
 </p>
-
 
 <p>
 Un parcours pas à pas pour les débutants qui veulent monter en compétence sur l'IA.
@@ -874,19 +622,9 @@ Un parcours pas à pas pour les débutants qui veulent monter en compétence sur
 </section>
 
 
+<section class="contact" id="contact">
 
-<!-- =========================================
-     CONTACT
-========================================= -->
-
-<section
-class="contact"
-id="contact">
-
-<h2>
-📞 Contactez SenoMarket
-</h2>
-
+<h2>📞 Contactez SenoMarket</h2>
 
 <p>
 Une question concernant nos produits, nos formations ou notre programme
@@ -895,29 +633,21 @@ d'affiliation ou une demande de retrait ?
 Notre équipe est disponible pour vous répondre rapidement.
 </p>
 
-
 <div class="buttons">
-
 
 <a
 class="btn"
 href="mailto:gansonrea534@gmail.com">
-
 📧 Nous écrire
-
 </a>
-
 
 <a
 class="btn"
 href="https://wa.me/22604148416">
-
 💬 WhatsApp
-
 </a>
 
 </div>
-
 
 <div class="info">
 
@@ -936,70 +666,35 @@ href="https://wa.me/22604148416">
 </section>
 
 
-
-<!-- =========================================
-     FOOTER
-========================================= -->
-
 <footer>
 
 <p>
-
 © 2026 SenoMarket -
-
 <span
 data-fr="Transformez vos idées en réussite"
 data-en="Turn your ideas into success">
-
 Transformez vos idées en réussite
-
 </span>
-
 </p>
-
 
 <a
 href="politique-confidentialite.html"
 data-fr="Politique de confidentialité"
 data-en="Privacy Policy">
-
 Politique de confidentialité
-
 </a>
 
 </footer>
 
 
-
 <script src="js/script.js"></script>
 
 
-
-<!-- =========================================
-     SUPABASE + AVIS CLIENTS
-========================================= -->
-
 <script>
 
-/*
-=================================================
-MODIFICATION IMPORTANTE
-=================================================
-
-Nous ne faisons PLUS :
-
-supabaseClient.rpc("obtenir_avis_publics")
-
-Nous allons directement interroger :
-
-TABLE : avis
-STATUT : approved
-
-Cela permet de savoir immédiatement si le problème
-vient de la fonction PostgreSQL ou de la lecture
-directe de la table.
-*/
-
+/* =========================================
+   SUPABASE
+========================================= */
 
 const SUPABASE_URL =
 "https://vfnqwdwgkocpkkaofrum.supabase.co";
@@ -1007,12 +702,16 @@ const SUPABASE_URL =
 const SUPABASE_PUBLISHABLE_KEY =
 "sb_publishable_BOFyx3zpbcwtN6h-3N0wLw_L1QOJWR-";
 
+const supabaseClient =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
 
-/*
-=================================================
-PROTECTION HTML
-=================================================
-*/
+
+/* =========================================
+   PROTECTION HTML
+========================================= */
 
 function echapperHTML(texte){
 
@@ -1026,62 +725,25 @@ function echapperHTML(texte){
 }
 
 
-/*
-=================================================
-VARIABLES AVIS
-=================================================
-*/
+/* =========================================
+   AVIS CLIENTS
+========================================= */
 
 let avisListe = [];
-
 let avisIndex = 0;
-
 let avisTimer = null;
 
-let avisTransitionTimer = null;
-
-
-/*
-=================================================
-AFFICHER UN AVIS
-=================================================
-*/
 
 function afficherAvis(index){
 
     const zone =
-        document.getElementById(
-            "avisAccueil"
-        );
+        document.getElementById("avisAccueil");
 
-
-    if(!zone){
-
+    if(!zone || !avisListe.length){
         return;
-
     }
 
-
-    if(
-        !avisListe ||
-        avisListe.length === 0
-    ){
-
-        return;
-
-    }
-
-
-    const avis =
-        avisListe[index];
-
-
-    if(!avis){
-
-        return;
-
-    }
-
+    const avis = avisListe[index];
 
     const note =
         Math.max(
@@ -1092,47 +754,41 @@ function afficherAvis(index){
             )
         );
 
-
     const etoiles =
         "★".repeat(note) +
         "☆".repeat(5 - note);
 
-
     const nom =
         echapperHTML(
-            avis.nom_client ||
-            "Client"
+            avis.nom_client || "Client"
         );
-
 
     const commentaire =
         echapperHTML(
-            avis.commentaire ||
-            ""
+            avis.commentaire || ""
         );
-
 
     const produit =
-        echapperHTML(
-            avis.produit_nom ||
-            avis.nom_produit ||
-            ""
-        );
+        avis.produit_nom ||
+        avis.produit ||
+        avis.nom_produit ||
+        "";
 
-
-    /*
-       MODIFICATION :
-
-       On utilise dynamic-review-card
-       et non review-card.
-
-       Cela évite le conflit avec style.css.
-    */
+    const produitHTML =
+        produit
+        ?
+        `
+        <div class="dynamic-review-product">
+            🛍️ ${echapperHTML(produit)}
+        </div>
+        `
+        :
+        "";
 
     zone.innerHTML = `
 
         <div
-            class="dynamic-review-card"
+            class="review-card"
             id="avisActuel"
         >
 
@@ -1140,48 +796,27 @@ function afficherAvis(index){
                 ${etoiles}
             </div>
 
-
             <div class="dynamic-review-comment">
                 "${commentaire}"
             </div>
 
+            ${produitHTML}
 
             <div class="dynamic-review-name">
                 — ${nom}
             </div>
 
-
-            ${
-                produit
-                ?
-                `
-                <div class="dynamic-review-product">
-                    ${produit}
-                </div>
-                `
-                :
-                ""
-            }
-
         </div>
 
     `;
 
-
     requestAnimationFrame(function(){
 
         const carte =
-            document.getElementById(
-                "avisActuel"
-            );
-
+            document.getElementById("avisActuel");
 
         if(carte){
-
-            carte.classList.add(
-                "visible"
-            );
-
+            carte.classList.add("visible");
         }
 
     });
@@ -1189,107 +824,184 @@ function afficherAvis(index){
 }
 
 
-/*
-=================================================
-AVIS SUIVANT
-=================================================
-*/
-
 function prochainAvis(){
 
-    if(
-        !avisListe ||
-        avisListe.length <= 1
-    ){
-
-        return;
-
-    }
-
-
     const carte =
-        document.getElementById(
-            "avisActuel"
-        );
-
+        document.getElementById("avisActuel");
 
     if(carte){
-
-        carte.classList.remove(
-            "visible"
-        );
-
-        carte.classList.add(
-            "leaving"
-        );
-
+        carte.classList.remove("visible");
     }
 
+    setTimeout(function(){
 
-    if(avisTransitionTimer){
+        avisIndex =
+            (avisIndex + 1) %
+            avisListe.length;
 
-        clearTimeout(
-            avisTransitionTimer
-        );
+        afficherAvis(avisIndex);
 
-    }
-
-
-    avisTransitionTimer =
-        setTimeout(function(){
-
-            avisIndex++;
-
-            if(
-                avisIndex >=
-                avisListe.length
-            ){
-
-                avisIndex = 0;
-
-            }
-
-
-            afficherAvis(
-                avisIndex
-            );
-
-        },700);
+    },700);
 
 }
 
 
-/*
-=================================================
-DÉMARRER LE DÉFILEMENT
-=================================================
-*/
+async function chargerAvis(){
 
-function demarrerDefilementAvis(){
+    const zone =
+        document.getElementById("avisAccueil");
 
-    if(avisTimer){
-
-        clearInterval(
-            avisTimer
-        );
-
+    if(!zone){
+        return;
     }
 
+    try{
 
-    /*
-       Un avis reste environ 3 secondes.
-    */
+        const { data, error } =
+            await supabaseClient
+                .from("avis")
+                .select("*")
+                .order("created_at", {
+                    ascending:false
+                });
 
-    avisTimer =
-        setInterval(
-            prochainAvis,
-            3000
+        if(error){
+            throw error;
+        }
+
+        if(!data || !data.length){
+
+            zone.innerHTML = `
+                <div class="dynamic-reviews-message">
+                    Aucun avis disponible pour le moment.
+                </div>
+            `;
+
+            return;
+        }
+
+        avisListe = data;
+        avisIndex = 0;
+
+        afficherAvis(avisIndex);
+
+        if(avisTimer){
+            clearInterval(avisTimer);
+        }
+
+        if(avisListe.length > 1){
+
+            avisTimer =
+                setInterval(
+                    prochainAvis,
+                    5000
+                );
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Erreur chargement avis:",
+            error
         );
+
+        zone.innerHTML = `
+            <div class="dynamic-reviews-error">
+                Impossible de charger les avis pour le moment.
+            </div>
+        `;
+
+    }
 
 }
 
 
-/*
-=================================================
-AFFICHER ERREUR
-==================
+/* =========================================
+   LANGUE
+========================================= */
+
+function changerLangue(){
+
+    const langueActuelle =
+        localStorage.getItem("langue") || "fr";
+
+    const nouvelleLangue =
+        langueActuelle === "fr"
+        ? "en"
+        : "fr";
+
+    appliquerLangue(nouvelleLangue);
+
+    localStorage.setItem(
+        "langue",
+        nouvelleLangue
+    );
+
+}
+
+
+function appliquerLangue(langue){
+
+    document
+        .querySelectorAll("[data-fr]")
+        .forEach(function(el){
+
+            el.textContent =
+                langue === "fr"
+                ? el.getAttribute("data-fr")
+                : el.getAttribute("data-en");
+
+        });
+
+    const bouton =
+        document.getElementById(
+            "lang-toggle"
+        );
+
+    if(bouton){
+        bouton.textContent =
+            langue === "fr"
+            ? "EN"
+            : "FR";
+    }
+
+    document.documentElement.lang =
+        langue;
+
+}
+
+
+window.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        const langueSauvegardee =
+            localStorage.getItem("langue") || "fr";
+
+        appliquerLangue(
+            langueSauvegardee
+        );
+
+        chargerAvis();
+
+    }
+);
+
+</script>
+
+
+<!-- =========================================
+     TIDIO — CONSERVÉ EXACTEMENT
+========================================= -->
+
+<script
+src="//code.tidio.co/9gipww4pgbdyi4mhk9cgkz28g5gb2xoa.js"
+async>
+</script>
+
+
+</body>
+
+</html>
