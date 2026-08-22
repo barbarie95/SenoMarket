@@ -861,7 +861,8 @@ async function chargerAvis(){
             await supabaseClient
                 .from("avis")
                 .select("*")
-                .order("created_at", {
+                .eq("statut", "approved")
+                .order("date_creation", {
                     ascending:false
                 });
 
@@ -1004,4 +1005,4 @@ async>
 
 </body>
 
-</html>
+  </html>
