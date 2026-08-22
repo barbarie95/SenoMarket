@@ -83,6 +83,28 @@ supabase.createClient(
 
 
 /* =========================
+   VERIFICATION SESSION
+========================= */
+
+async function verifierSession(){
+
+    const { data:{ session } } =
+        await supabaseClient.auth.getSession();
+
+    if(!session){
+
+        window.location.href =
+            "administrateur.html";
+
+        return false;
+    }
+
+    return true;
+
+}
+
+
+/* =========================
    CHARGER LES AVIS
 ========================= */
 
@@ -357,7 +379,15 @@ async function supprimerAvis(id) {
 
 document.addEventListener(
     "DOMContentLoaded",
-    chargerAvis
+    async function(){
+
+        const ok = await verifierSession();
+
+        if(ok){
+            chargerAvis();
+        }
+
+    }
 );
 
 </script>
