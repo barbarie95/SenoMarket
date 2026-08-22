@@ -10,6 +10,8 @@
 
 <link rel="stylesheet" href="css/style.css">
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 
 
@@ -162,25 +164,62 @@ Voir les statistiques
 
 <script>
 
+/* =========================================
+   SUPABASE
+========================================= */
 
-// Vérification de connexion
+const SUPABASE_URL =
+"https://vfnqwdwgkocpkkaofrum.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_BOFyx3zpbcwtN6h-3N0wLw_L1QOJWR-";
+
+const supabaseClient =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
 
 
-const admin = localStorage.getItem("adminConnecte");
+/* =========================================
+   VERIFICATION SESSION
+========================================= */
 
-if(admin !== "oui"){
-    window.location.href = "administrateur.html";
+async function verifierSession(){
+
+    const { data:{ session } } =
+        await supabaseClient.auth.getSession();
+
+    if(!session){
+
+        window.location.href =
+            "administrateur.html";
+
+        return false;
+    }
+
+    return true;
+
 }
 
 
+async function deconnexion(){
 
-function deconnexion(){
+    await supabaseClient.auth.signOut();
 
-localStorage.removeItem("adminConnecte");
-
-window.location.href="administrateur.html";
+    window.location.href="administrateur.html";
 
 }
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function(){
+
+        await verifierSession();
+
+    }
+);
 
 
 </script>
