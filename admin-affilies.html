@@ -139,6 +139,29 @@ let tousLesAffilies = [];
 
 
 /* =========================================
+   VERIFICATION SESSION
+========================================= */
+
+async function verifierSession(){
+
+    const { data:{ session } } =
+        await supabaseClient.auth.getSession();
+
+    if(!session){
+
+        window.location.href =
+            "administrateur.html";
+
+        return false;
+    }
+
+    return true;
+
+}
+
+
+
+/* =========================================
    CHARGER LES AFFILIÉS
 ========================================= */
 
@@ -924,9 +947,13 @@ async function modifierStatut(
 
 document.addEventListener(
     "DOMContentLoaded",
-    function() {
+    async function() {
 
-        chargerAffilies();
+        const ok = await verifierSession();
+
+        if(ok){
+            chargerAffilies();
+        }
 
     }
 );
