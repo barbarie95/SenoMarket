@@ -70,6 +70,24 @@ supabase.createClient(
 );
 
 
+async function verifierSession(){
+
+    const { data:{ session } } =
+        await supabaseClient.auth.getSession();
+
+    if(!session){
+
+        window.location.href =
+            "administrateur.html";
+
+        return false;
+    }
+
+    return true;
+
+}
+
+
 async function chargerPaiements() {
 
     const zone =
@@ -321,7 +339,15 @@ async function refuserRetrait(id) {
 
 document.addEventListener(
     "DOMContentLoaded",
-    chargerPaiements
+    async function() {
+
+        const ok = await verifierSession();
+
+        if(ok){
+            chargerPaiements();
+        }
+
+    }
 );
 
 </script>
