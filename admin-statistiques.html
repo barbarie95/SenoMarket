@@ -160,6 +160,28 @@ supabase.createClient(
 
 
 /* =========================
+   VERIFICATION SESSION
+========================= */
+
+async function verifierSession(){
+
+    const { data:{ session } } =
+        await supabaseClient.auth.getSession();
+
+    if(!session){
+
+        window.location.href =
+            "administrateur.html";
+
+        return false;
+    }
+
+    return true;
+
+}
+
+
+/* =========================
    STATISTIQUES
 ========================= */
 
@@ -707,10 +729,14 @@ function fermerDetail() {
 
 document.addEventListener(
     "DOMContentLoaded",
-    () => {
+    async () => {
 
-        chargerStatistiques();
-        chargerNotifications();
+        const ok = await verifierSession();
+
+        if(ok){
+            chargerStatistiques();
+            chargerNotifications();
+        }
 
     }
 );
@@ -718,4 +744,4 @@ document.addEventListener(
 </script>
 
 </body>
-     </html>
+   </html>
