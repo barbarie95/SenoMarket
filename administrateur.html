@@ -10,6 +10,8 @@
 
 <link rel="stylesheet" href="css/style.css">
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 
 
@@ -42,6 +44,16 @@ Connectez-vous pour gérer votre boutique.
 <h3>
 Accès administrateur
 </h3>
+
+
+<input
+type="email"
+id="admin-email"
+placeholder="Email administrateur"
+style="padding:12px;width:80%;border-radius:10px;margin-bottom:10px;">
+
+
+<br>
 
 
 <input 
@@ -81,39 +93,65 @@ Se connecter
 
 <script>
 
+/* =========================
+   SUPABASE
+========================= */
 
-function connexionAdmin(){
+const SUPABASE_URL =
+"https://vfnqwdwgkocpkkaofrum.supabase.co";
 
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_BOFyx3zpbcwtN6h-3N0wLw_L1QOJWR-";
 
-const password =
-document.getElementById("admin-password").value;
-
-
-const error =
-document.getElementById("admin-error");
-
-
-// Mot de passe temporaire pour test
-
-if(password === "SenoAdmin2026"){
-
-
-localStorage.setItem("adminConnecte","oui");
+const supabaseClient =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
 
 
-window.location.href="dashboard.html";
+/* =========================
+   CONNEXION ADMIN
+========================= */
 
+async function connexionAdmin(){
 
-}
+    const email =
+        document.getElementById("admin-email").value.trim();
 
-else{
+    const password =
+        document.getElementById("admin-password").value;
 
+    const error =
+        document.getElementById("admin-error");
 
-error.textContent =
-"Mot de passe incorrect.";
+    error.textContent = "";
 
-}
+    if(!email || !password){
 
+        error.textContent =
+            "Merci de remplir l'email et le mot de passe.";
+
+        return;
+    }
+
+    const { data, error: authError } =
+        await supabaseClient.auth.signInWithPassword({
+            email:email,
+            password:password
+        });
+
+    if(authError){
+
+        error.textContent =
+            "Email ou mot de passe incorrect.";
+
+        return;
+    }
+
+    localStorage.setItem("adminConnecte","oui");
+
+    window.location.href="dashboard.html";
 
 }
 
