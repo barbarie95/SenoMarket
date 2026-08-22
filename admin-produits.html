@@ -189,11 +189,24 @@ const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_
 
 
 /* =========================================
-   PROTECTION ADMIN
+   VERIFICATION SESSION
 ========================================= */
 
-if (localStorage.getItem("adminConnecte") !== "oui") {
-    window.location.href = "administrateur.html";
+async function verifierSession(){
+
+    const { data:{ session } } =
+        await supabaseClient.auth.getSession();
+
+    if(!session){
+
+        window.location.href =
+            "administrateur.html";
+
+        return false;
+    }
+
+    return true;
+
 }
 
 
@@ -581,8 +594,14 @@ function echapperHTML(texte) {
    DEMARRAGE
 ========================================= */
 
-document.addEventListener("DOMContentLoaded", function() {
-    chargerProduits();
+document.addEventListener("DOMContentLoaded", async function() {
+
+    const ok = await verifierSession();
+
+    if(ok){
+        chargerProduits();
+    }
+
 });
 
 </script>
