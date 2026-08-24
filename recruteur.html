@@ -18,8 +18,8 @@
 
     body {
       font-family: Arial, sans-serif;
-      background: #0b0b0b;
-      color: #fff;
+      background: #20242b;
+      color: #ffffff;
       min-height: 100vh;
       padding: 30px 15px;
     }
@@ -33,17 +33,17 @@
     .logo {
       text-align: center;
       color: #FFD700;
-      font-size: 28px;
+      font-size: 29px;
       font-weight: bold;
       margin-bottom: 30px;
     }
 
     .card {
-      background: #151515;
-      border: 1px solid #333;
-      border-radius: 16px;
-      padding: 25px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      background: #2b3038;
+      border: 1px solid #444b55;
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     }
 
     h1 {
@@ -55,18 +55,18 @@
 
     .intro {
       text-align: center;
-      color: #ccc;
+      color: #d9dde3;
       line-height: 1.6;
       margin-bottom: 25px;
     }
 
     .mission {
-      background: #0f0f0f;
-      border: 1px solid #3a3a3a;
+      background: #252a31;
+      border: 1px solid #4a515b;
       border-left: 4px solid #FFD700;
-      border-radius: 10px;
-      padding: 18px;
-      margin-bottom: 25px;
+      border-radius: 12px;
+      padding: 19px;
+      margin-bottom: 26px;
     }
 
     .mission h2 {
@@ -76,72 +76,83 @@
     }
 
     .mission p {
-      color: #ddd;
+      color: #e0e3e7;
       line-height: 1.6;
-      margin-bottom: 8px;
+      margin-bottom: 9px;
     }
 
     .prime {
-      color: #FFD700;
-      font-size: 21px;
+      color: #FFD700 !important;
+      font-size: 22px;
       font-weight: bold;
       margin-top: 12px;
     }
 
     .field {
-      margin-bottom: 18px;
+      margin-bottom: 19px;
     }
 
     label {
       display: block;
-      margin-bottom: 7px;
+      margin-bottom: 8px;
       font-weight: bold;
-      color: #eee;
+      color: #f2f3f5;
     }
 
     input,
     select,
     textarea {
       width: 100%;
-      padding: 13px;
-      border-radius: 8px;
-      border: 1px solid #444;
-      background: #0b0b0b;
-      color: #fff;
+      padding: 14px;
+      border-radius: 9px;
+      border: 1px solid #555d68;
+      background: #363c45;
+      color: #ffffff;
       font-size: 15px;
       outline: none;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #aeb4bd;
     }
 
     input:focus,
     select:focus,
     textarea:focus {
       border-color: #FFD700;
+      box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.12);
+    }
+
+    select {
+      cursor: pointer;
     }
 
     textarea {
-      min-height: 110px;
+      min-height: 115px;
       resize: vertical;
     }
 
     .payment-info {
       font-size: 13px;
-      color: #aaa;
-      margin-top: 7px;
+      color: #b9bec6;
+      margin-top: 8px;
+      line-height: 1.5;
     }
 
     .conditions {
-      background: #101010;
-      border: 1px solid #333;
-      border-radius: 10px;
-      padding: 15px;
-      margin: 22px 0;
+      background: #252a31;
+      border: 1px solid #4a515b;
+      border-radius: 12px;
+      padding: 17px;
+      margin: 23px 0;
     }
 
     .conditions p {
-      color: #ccc;
+      color: #d6dae0;
       line-height: 1.6;
       font-size: 14px;
-      margin-bottom: 12px;
+      margin-bottom: 13px;
     }
 
     .checkbox {
@@ -154,6 +165,7 @@
       width: auto;
       margin-top: 4px;
       accent-color: #FFD700;
+      cursor: pointer;
     }
 
     .checkbox label {
@@ -161,6 +173,7 @@
       font-size: 14px;
       line-height: 1.5;
       margin: 0;
+      cursor: pointer;
     }
 
     button {
@@ -169,19 +182,21 @@
       border: none;
       border-radius: 9px;
       background: #FFD700;
-      color: #0b0b0b;
+      color: #1d2025;
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
+      transition: 0.2s;
     }
 
     button:hover {
-      background: #e6c200;
+      background: #e8c400;
+      transform: translateY(-1px);
     }
 
     .footer {
       text-align: center;
-      color: #777;
+      color: #9aa1aa;
       font-size: 12px;
       margin-top: 20px;
     }
@@ -192,7 +207,7 @@
       }
 
       .card {
-        padding: 20px 16px;
+        padding: 21px 17px;
       }
 
       h1 {
@@ -200,7 +215,7 @@
       }
 
       .logo {
-        font-size: 24px;
+        font-size: 25px;
       }
     }
   </style>
@@ -223,6 +238,7 @@
         Remplissez le formulaire ci-dessous pour soumettre votre candidature.
       </p>
 
+      <!-- MISSION -->
       <div class="mission">
 
         <h2>Mission et rémunération</h2>
@@ -252,6 +268,7 @@
 
       </div>
 
+      <!-- FORMULAIRE -->
       <form
         action="https://formspree.io/f/xvzedkvw"
         method="POST"
@@ -263,8 +280,10 @@
           value="Nouvelle candidature - Recruteur d'affiliés SenoMarket"
         >
 
+        <!-- NOM -->
         <div class="field">
           <label for="nom">Nom et prénom *</label>
+
           <input
             type="text"
             id="nom"
@@ -274,8 +293,10 @@
           >
         </div>
 
+        <!-- PAYS -->
         <div class="field">
           <label for="pays">Pays *</label>
+
           <input
             type="text"
             id="pays"
@@ -285,8 +306,10 @@
           >
         </div>
 
+        <!-- WHATSAPP -->
         <div class="field">
           <label for="whatsapp">Numéro WhatsApp *</label>
+
           <input
             type="tel"
             id="whatsapp"
@@ -296,8 +319,10 @@
           >
         </div>
 
+        <!-- EMAIL -->
         <div class="field">
           <label for="email">Adresse e-mail *</label>
+
           <input
             type="email"
             id="email"
@@ -307,6 +332,7 @@
           >
         </div>
 
+        <!-- PROFESSION -->
         <div class="field">
           <label for="profession">
             Profession / activité actuelle *
@@ -321,6 +347,7 @@
           >
         </div>
 
+        <!-- MÉTHODE DE RECRUTEMENT -->
         <div class="field">
           <label for="recrutement">
             Comment comptez-vous recruter les affiliés ? *
@@ -334,6 +361,7 @@
           ></textarea>
         </div>
 
+        <!-- MÉTHODE DE PAIEMENT -->
         <div class="field">
 
           <label for="paiement">
@@ -362,6 +390,14 @@
               Wave
             </option>
 
+            <option value="Virement bancaire">
+              Virement bancaire
+            </option>
+
+            <option value="PayPal">
+              PayPal
+            </option>
+
             <option value="Autre">
               Autre
             </option>
@@ -375,6 +411,7 @@
 
         </div>
 
+        <!-- CONDITIONS -->
         <div class="conditions">
 
           <p>
@@ -409,6 +446,7 @@
 
         </div>
 
+        <!-- BOUTON -->
         <button type="submit">
           Envoyer ma candidature
         </button>
@@ -424,4 +462,4 @@
   </div>
 
 </body>
-  </html>
+</html>
