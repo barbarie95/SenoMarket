@@ -298,6 +298,7 @@ function preparerLien(lien) {
     try {
 
         const url = new URL(lien);
+        url.searchParams.set("custom_metadata[code_affilie]", codeAffilie);
         url.searchParams.set("custom_fields[code_affilie]", codeAffilie);
         return url.toString();
 
@@ -307,6 +308,31 @@ function preparerLien(lien) {
     }
 
 }
+
+
+/* =========================================
+   APPLIQUER LE CODE AFFILIÉ AUX 9 PRODUITS
+   STATIQUES (codés en dur dans le HTML)
+========================================= */
+
+function appliquerLiensAffiliesProduitsStatiques() {
+
+    if (!codeAffilie) {
+        return;
+    }
+
+    const boutons = document.querySelectorAll(".product-grid .gold-btn[href*='mychariow.shop']");
+
+    boutons.forEach(function(bouton) {
+
+        const lienOriginal = bouton.getAttribute("href");
+        bouton.setAttribute("href", preparerLien(lienOriginal));
+
+    });
+
+}
+
+appliquerLiensAffiliesProduitsStatiques();
 
 
 /* =========================================
@@ -551,4 +577,4 @@ chargerNouveauxProduits();
 
 </body>
 
-                            </html>
+</html>
