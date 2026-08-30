@@ -15,82 +15,12 @@
 <style>
 
 .section-market {
-    padding: 15px 0 30px;
+    padding: 15px 0 25px;
 }
 
 .section-title {
     text-align: center;
     margin-bottom: 8px;
-}
-
-.section-description {
-    text-align: center;
-    max-width: 650px;
-    margin: 0 auto 18px;
-    padding: 0 15px;
-    line-height: 1.5;
-}
-
-.voir-plus-container {
-    text-align: center;
-    margin: 20px 0 5px;
-}
-
-.btn-voir-plus {
-    display: inline-block;
-    padding: 11px 22px;
-    background: #111;
-    color: #FFD700;
-    border: 1px solid #FFD700;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.2s ease;
-}
-
-.btn-voir-plus:hover {
-    background: #FFD700;
-    color: #111;
-}
-
-.retour-boutique {
-    display: none;
-    text-align: center;
-    margin: 10px 0 25px;
-}
-
-.retour-boutique.active {
-    display: block;
-}
-
-.btn-retour {
-    display: inline-block;
-    padding: 10px 20px;
-    background: #111;
-    color: white;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.mode-categorie .section-market {
-    display: none;
-}
-
-.mode-categorie .section-market.section-active {
-    display: block;
-}
-
-.mode-categorie .bloc-demande,
-.mode-categorie .form-avis {
-    display: none;
-}
-
-.message-produit {
-    text-align: center;
-    padding: 20px;
-    font-weight: bold;
 }
 
 .form-avis {
@@ -161,7 +91,44 @@
 
 
 /* =========================================
-   BLOCS DEMANDE / PROPOSER
+   PRODUITS SUPPLÉMENTAIRES / VOIR PLUS
+   (nouveau)
+========================================= */
+
+.produits-supplementaires {
+    display: none;
+    margin-top: 20px;
+}
+
+.produits-supplementaires.active {
+    display: grid;
+}
+
+.voir-plus-container {
+    text-align: center;
+    margin: 20px 0 10px;
+}
+
+.voir-plus-btn {
+    display: inline-block;
+    padding: 12px 22px;
+    border-radius: 8px;
+    background: #111;
+    color: #FFD700;
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid #FFD700;
+    cursor: pointer;
+}
+
+.voir-plus-btn:hover {
+    background: #FFD700;
+    color: #111;
+}
+
+
+/* =========================================
+   BLOCS "DEMANDE" / "PROPOSER"
 ========================================= */
 
 .bloc-demande {
@@ -294,28 +261,13 @@
 
 
 
-<section class="products" id="conteneur-boutique">
+<section class="products">
 
 <h2>🛒 Boutique SenoMarket</h2>
 
 <div class="search-box">
-<input
-    type="text"
-    id="search"
-    placeholder="🔍 Rechercher un produit..."
-    onkeyup="searchProduct()"
->
+<input type="text" id="search" placeholder="🔍 Rechercher un produit..." onkeyup="searchProduct()">
 </div>
-
-
-<div id="retourBoutique" class="retour-boutique">
-
-<a href="boutique.html" class="btn-retour">
-← Retour à la boutique
-</a>
-
-</div>
-
 
 
 <!-- =========================================
@@ -324,62 +276,111 @@
 
 <section id="formations" class="section-market">
 
-<h2 class="section-title">📚 Guides & Formations</h2>
-
-<p class="section-description">
-Découvrez nos guides et formations pratiques pour apprendre,
-progresser et développer vos projets.
-</p>
+<h2 class="section-title">📚 Guide et formation</h2>
 
 <div class="product-grid" id="grille-formations">
 
-<p class="message-produit">Chargement des produits...</p>
+<div class="product">
+<img src="images/produits/tiktok-viral-pro.png" alt="TikTok Viral Pro">
+<h3>🚀 TikTok Viral Pro</h3>
+<p>500 idées de vidéos prêtes à l'emploi pour percer et devenir viral sur TikTok</p>
+<a href="https://orterhcl.mychariow.shop/prd_7klqvqwq" class="gold-btn">Acheter maintenant</a>
+</div>
+
+<div class="product">
+<img src="images/produits/site-web-pro.png" alt="Site Web Pro">
+<h3>💻 Site Web Pro</h3>
+<p>Apprenez à créer un site web professionnel sans base de données grâce à l'IA, HTML, CSS et JavaScript</p>
+<a href="https://orterhcl.mychariow.shop/prd_gwxtxiw5" class="gold-btn">Acheter maintenant</a>
+</div>
+
+<!-- le 3e produit visible (guide arrêter la masturbation) est injecté ici par le script, depuis Supabase -->
+
+</div>
+
+
+<div class="product-grid produits-supplementaires" id="grille-formations-plus">
+
+<div class="product">
+<img src="images/produits/guide-ia.png" alt="Guide IA">
+<h3>🤖 Guide IA</h3>
+<p>Comprendre le fonctionnement et gagner plus de visibilité sur TikTok</p>
+<a href="https://orterhcl.mychariow.shop/prd_v2oig8jm" class="gold-btn">Acheter maintenant</a>
+</div>
+
+<div class="product">
+<img src="images/produits/tiktok-pro.png" alt="Seno TikTok Pro">
+<h3>🔥 Seno TikTok Pro</h3>
+<p>Découvrez des stratégies pour retirer votre argent sur TikTok</p>
+<a href="https://orterhcl.mychariow.shop/prd_t4lydw7i" class="gold-btn">Acheter maintenant</a>
+</div>
+
+<div class="product">
+<img src="images/produits/pack-ia.png" alt="Pack IA Création">
+<h3>🚀 Pack IA Création</h3>
+<p>Plus de 100 ressources pour créer du contenu rapidement et devenir viral sur les réseaux sociaux</p>
+<a href="https://orterhcl.mychariow.shop/prd_0l54qczo" class="gold-btn">Acheter maintenant</a>
+</div>
+
+<div class="product">
+<img src="images/produits/ecommerce.png" alt="Seno E-commerce Pro">
+<h3>🛒 Seno E-commerce Pro</h3>
+<p>Apprenez à créer et développer votre boutique en ligne et vendre vos produits sur Internet.</p>
+<a href="https://orterhcl.mychariow.shop/prd_05pfbdr1" class="gold-btn">Acheter maintenant</a>
+</div>
+
+<div class="product">
+<img src="images/produits/createurs.png" alt="Seno Créateurs">
+<h3>🎨 Seno Créateurs</h3>
+<p>Apprenez à créer des designs professionnels, logos et contenus visuels.</p>
+<a href="https://orterhcl.mychariow.shop/prd_gccmgpdb" class="gold-btn">Acheter maintenant</a>
+</div>
+
+<div class="product">
+<img src="images/produits/finance.png" alt="Seno Finance Pro">
+<h3>💰 Seno Finance Pro</h3>
+<p>Apprenez à mieux gérer votre argent et à comment l'investir</p>
+<a href="https://orterhcl.mychariow.shop/prd_y6psfwmg" class="gold-btn">Acheter maintenant</a>
+</div>
+
+<div class="product">
+<img src="images/produits/digital-business.png" alt="Seno Digital Business Pro">
+<h3>🌐 Seno Digital Business Pro</h3>
+<p>Découvrez comment créer et développer une activité en ligne et générer votre premier million</p>
+<a href="https://orterhcl.mychariow.shop/prd_86nx8292" class="gold-btn">Acheter maintenant</a>
+</div>
 
 </div>
 
 <div class="voir-plus-container">
-
-<a href="boutique.html?categorie=formations" class="btn-voir-plus">
-Voir plus de guides & formations →
-</a>
-
+<button type="button" class="voir-plus-btn" id="btn-voir-plus-formations" onclick="afficherPlus('formations')">
+Voir plus
+</button>
 </div>
 
 </section>
 
 
-
 <!-- =========================================
-     SECTION PLANS ET MAISONS
+     SECTION PLAN ET BÂTIMENT
 ========================================= -->
 
 <section id="plans" class="section-market">
 
-<h2 class="section-title">🏠 Plans & Maisons</h2>
-
-<p class="section-description">
-Découvrez nos différents projets de maisons et plans de construction
-pour vous aider à imaginer et préparer votre futur bâtiment.
-</p>
+<h2 class="section-title">🏠 Plan et bâtiment</h2>
 
 <div class="product-grid" id="grille-plans">
-
-<p class="message-produit">Chargement des plans...</p>
-
+<p id="vide-plans">Aucun plan disponible pour le moment.</p>
 </div>
 
-<div class="voir-plus-container">
+<div class="product-grid produits-supplementaires" id="grille-plans-plus"></div>
 
-<a href="boutique.html?categorie=plans" class="btn-voir-plus">
-Voir plus de plans & maisons →
-</a>
-
+<div class="voir-plus-container" id="voir-plus-container-plans" style="display:none;">
+<button type="button" class="voir-plus-btn" id="btn-voir-plus-plans" onclick="afficherPlus('plans')">
+Voir plus
+</button>
 </div>
 
-
-<!-- =========================================
-     DEMANDE DE PLAN
-========================================= -->
 
 <div class="bloc-demande">
 
@@ -391,11 +392,7 @@ Si nous pouvons réaliser votre demande, nous vous contacterons pour
 discuter de votre projet.
 </p>
 
-<button
-    type="button"
-    class="btn-bloc-demande"
-    onclick="ouvrirDemandePlan()"
->
+<button type="button" class="btn-bloc-demande" onclick="ouvrirDemandePlan()">
 Je n'ai pas trouvé ce que je recherchais
 </button>
 
@@ -404,67 +401,34 @@ Je n'ai pas trouvé ce que je recherchais
 
 <h3 style="color:#111;">📐 Demander un plan</h3>
 
-<input
-    type="text"
-    id="planNom"
-    placeholder="Votre nom"
->
-
-<input
-    type="text"
-    id="planContact"
-    placeholder="Votre numéro WhatsApp ou téléphone"
->
-
-<input
-    type="email"
-    id="planEmail"
-    placeholder="Votre email (facultatif)"
->
+<input type="text" id="planNom" placeholder="Votre nom">
+<input type="text" id="planContact" placeholder="Votre numéro WhatsApp ou téléphone">
+<input type="email" id="planEmail" placeholder="Votre email (facultatif)">
 
 <select id="planType">
-
-<option value="">
-Quel type de bâtiment recherchez-vous ?
-</option>
-
+<option value="">Quel type de bâtiment recherchez-vous ?</option>
 <option value="Maison">Maison</option>
 <option value="Villa">Villa</option>
 <option value="Immeuble">Immeuble</option>
 <option value="Commerce">Commerce</option>
 <option value="Autre">Autre</option>
-
 </select>
 
-<input
-    type="text"
-    id="planChambres"
-    placeholder="Nombre de chambres souhaité"
->
+<input type="text" id="planChambres" placeholder="Nombre de chambres souhaité">
 
-<textarea
-    id="planDetails"
-    placeholder="Décrivez le plan que vous recherchez : dimensions, nombre de pièces, étage, style souhaité, etc."
-></textarea>
+<textarea id="planDetails" placeholder="Décrivez le plan que vous recherchez : dimensions, nombre de pièces, étage, style souhaité, etc."></textarea>
 
-<button
-    type="button"
-    onclick="envoyerDemandePlan()"
->
+<button type="button" onclick="envoyerDemandePlan()">
 Envoyer ma demande
 </button>
 
-<p
-    id="messagePlan"
-    class="message-demande"
-></p>
+<p id="messagePlan" class="message-demande"></p>
 
 </div>
 
 </div>
 
 </section>
-
 
 
 <!-- =========================================
@@ -473,159 +437,76 @@ Envoyer ma demande
 
 <section id="cuisine" class="section-market">
 
-<h2 class="section-title">🍳 Cuisine & Recettes</h2>
-
-<p class="section-description">
-Des recettes accessibles et expliquées étape par étape pour vous aider
-à préparer de délicieux plats chez vous.
-</p>
+<h2 class="section-title">🍳 Cuisine et recettes</h2>
 
 <div class="product-grid" id="grille-cuisine">
-
-<p class="message-produit">Chargement des recettes...</p>
-
+<p id="vide-cuisine">Aucune recette disponible pour le moment.</p>
 </div>
 
-<div class="voir-plus-container">
+<div class="product-grid produits-supplementaires" id="grille-cuisine-plus"></div>
 
-<a href="boutique.html?categorie=cuisine" class="btn-voir-plus">
-Voir plus de recettes →
-</a>
-
+<div class="voir-plus-container" id="voir-plus-container-cuisine" style="display:none;">
+<button type="button" class="voir-plus-btn" id="btn-voir-plus-cuisine" onclick="afficherPlus('cuisine')">
+Voir plus
+</button>
 </div>
 
-
-<!-- =========================================
-     VENDRE SUR LE SITE
-========================================= -->
 
 <div class="bloc-demande">
 
 <h3>👩‍🍳 Vous êtes chef ou cuisinier ?</h3>
 
 <p>
-Proposez votre propre recette à la vente sur SenoMarket.
-Une fois votre demande validée, votre recette sera mise en ligne
-dans cette section.
+Proposez votre propre recette à la vente sur SenoMarket. Une fois votre
+demande validée, votre recette sera mise en ligne dans cette section.
 </p>
 
 <ul>
-
-<li>
-Vous fournissez votre lien d'achat / de paiement pour votre recette
-</li>
-
-<li>
-Une participation financière est demandée pour la mise en ligne
-sur SenoMarket
-</li>
-
-<li>
-Votre demande est vérifiée manuellement avant publication
-</li>
-
+<li>Vous fournissez votre lien d'achat / de paiement pour votre recette</li>
+<li>Une participation financière est demandée pour la mise en ligne sur SenoMarket</li>
+<li>Votre demande est vérifiée manuellement avant publication</li>
 </ul>
 
-<button
-    type="button"
-    class="btn-bloc-demande"
-    onclick="ouvrirPropositionRecette()"
->
+<button type="button" class="btn-bloc-demande" onclick="ouvrirPropositionRecette()">
 Vendre sur le site
 </button>
 
 
 <div id="formulaire-recette" class="formulaire-demande">
 
-<h3 style="color:#111;">
-🍽️ Proposer une recette
-</h3>
+<h3 style="color:#111;">🍽️ Proposer une recette</h3>
 
-<input
-    type="text"
-    id="recetteNomChef"
-    placeholder="Votre nom"
->
-
-<input
-    type="text"
-    id="recetteContact"
-    placeholder="Votre numéro WhatsApp ou téléphone"
->
-
-<input
-    type="email"
-    id="recetteEmail"
-    placeholder="Votre email"
->
-
-<input
-    type="text"
-    id="recetteNom"
-    placeholder="Nom de la recette"
->
+<input type="text" id="recetteNomChef" placeholder="Votre nom">
+<input type="text" id="recetteContact" placeholder="Votre numéro WhatsApp ou téléphone">
+<input type="email" id="recetteEmail" placeholder="Votre email">
+<input type="text" id="recetteNom" placeholder="Nom de la recette">
 
 <select id="recetteType">
-
-<option value="">
-Type de plat
-</option>
-
+<option value="">Type de plat</option>
 <option value="Entrée">Entrée</option>
 <option value="Plat principal">Plat principal</option>
-<option value="Dessert / Pâtisserie">
-Dessert / Pâtisserie
-</option>
+<option value="Dessert / Pâtisserie">Dessert / Pâtisserie</option>
 <option value="Boisson">Boisson</option>
-<option value="Sauce / Accompagnement">
-Sauce / Accompagnement
-</option>
-<option value="Snack / Street food">
-Snack / Street food
-</option>
-
+<option value="Sauce / Accompagnement">Sauce / Accompagnement</option>
+<option value="Snack / Street food">Snack / Street food</option>
 </select>
 
-<input
-    type="text"
-    id="recetteLienAchat"
-    placeholder="Lien d'achat / de paiement de votre recette"
->
+<input type="text" id="recetteLienAchat" placeholder="Lien d'achat / de paiement de votre recette">
+<input type="text" id="recettePrix" placeholder="Prix de vente prévu (FCFA)">
 
-<input
-    type="text"
-    id="recettePrix"
-    placeholder="Prix de vente prévu (FCFA)"
->
-
-<textarea
-    id="recetteDescription"
-    placeholder="Décrivez votre recette : ingrédients, style, ce qui la rend unique..."
-></textarea>
+<textarea id="recetteDescription" placeholder="Décrivez votre recette : ingrédients, style, ce qui la rend unique..."></textarea>
 
 <label class="condition">
-
-<input
-    type="checkbox"
-    id="recetteConditions"
->
-
-J'accepte de payer les frais de publication demandés par
-SenoMarket pour mettre ma recette en vente sur le site.
-
+<input type="checkbox" id="recetteConditions">
+J'accepte de payer les frais de publication demandés par SenoMarket pour
+mettre ma recette en vente sur le site.
 </label>
 
-<button
-    type="button"
-    onclick="envoyerPropositionRecette()"
->
+<button type="button" onclick="envoyerPropositionRecette()">
 Envoyer ma proposition
 </button>
 
-<p
-    id="messageRecette"
-    class="message-demande"
-></p>
+<p id="messageRecette" class="message-demande"></p>
 
 </div>
 
@@ -634,117 +515,45 @@ Envoyer ma proposition
 </section>
 
 
+<br><br>
 
-<!-- =========================================
-     AVIS CLIENTS
-========================================= -->
 
 <div class="card form-avis">
 
-<h2 style="margin-top:0;">
-⭐ Votre avis
-</h2>
+<h2 style="margin-top:0;">⭐ Votre avis</h2>
 
-<p>
-Vous avez acheté un produit ? Dites-nous ce que vous en pensez.
-</p>
+<p>Vous avez acheté un produit ? Dites-nous ce que vous en pensez.</p>
 
 <select id="avisProduit">
-
-<option value="">
-Choisir le produit
-</option>
-
-<option value="Kit pratique pour arrêter la masturbation">
-🛑 Kit pratique pour arrêter la masturbation
-</option>
-
-<option value="500 idées de vidéos pour devenir viral sur TikTok">
-🚀 500 idées de vidéos pour devenir viral sur TikTok
-</option>
-
-<option value="Comment créer un site web professionnel">
-💻 Comment créer un site web professionnel
-</option>
-
+<option value="">Choisir le produit</option>
+<option value="Guide IA">🤖 Guide IA</option>
+<option value="Seno TikTok Pro">🔥 Seno TikTok Pro</option>
+<option value="Pack IA Création">🚀 Pack IA Création</option>
+<option value="Seno E-commerce Pro">🛒 Seno E-commerce Pro</option>
+<option value="Seno Créateurs">🎨 Seno Créateurs</option>
+<option value="Seno Finance Pro">💰 Seno Finance Pro</option>
+<option value="Seno Digital Business Pro">🌐 Seno Digital Business Pro</option>
+<option value="TikTok Viral Pro">🚀 TikTok Viral Pro</option>
+<option value="Site Web Pro">💻 Site Web Pro</option>
 </select>
 
-<input
-    type="text"
-    id="avisNom"
-    placeholder="Votre nom"
->
+<input type="text" id="avisNom" placeholder="Votre nom">
 
-<input
-    type="email"
-    id="avisEmail"
-    placeholder="Email (facultatif)"
->
+<input type="email" id="avisEmail" placeholder="Email (facultatif)">
 
 <div class="etoiles">
-
-<button
-    type="button"
-    class="etoile"
-    data-note="1"
->
-☆
-</button>
-
-<button
-    type="button"
-    class="etoile"
-    data-note="2"
->
-☆
-</button>
-
-<button
-    type="button"
-    class="etoile"
-    data-note="3"
->
-☆
-</button>
-
-<button
-    type="button"
-    class="etoile"
-    data-note="4"
->
-☆
-</button>
-
-<button
-    type="button"
-    class="etoile"
-    data-note="5"
->
-☆
-</button>
-
+<button type="button" class="etoile" data-note="1">☆</button>
+<button type="button" class="etoile" data-note="2">☆</button>
+<button type="button" class="etoile" data-note="3">☆</button>
+<button type="button" class="etoile" data-note="4">☆</button>
+<button type="button" class="etoile" data-note="5">☆</button>
 </div>
 
-<p
-    id="noteTexte"
-    style="text-align:center;font-size:14px;"
->
-Choisissez votre note
-</p>
+<p id="noteTexte" style="text-align:center;font-size:14px;">Choisissez votre note</p>
 
-<textarea
-    id="avisCommentaire"
-    rows="3"
-    placeholder="Votre commentaire..."
-></textarea>
+<textarea id="avisCommentaire" rows="3" placeholder="Votre commentaire..."></textarea>
 
-<button
-    type="button"
-    id="btnEnvoyerAvis"
-    class="gold-btn"
->
-⭐ Envoyer mon avis
-</button>
+<button type="button" id="btnEnvoyerAvis" class="gold-btn">⭐ Envoyer mon avis</button>
 
 <p id="messageAvis"></p>
 
@@ -756,13 +565,9 @@ Choisissez votre note
 
 <footer>
 
-<p>
-© 2026 SenoMarket - Transformez vos idées en réussite
-</p>
+<p>© 2026 SenoMarket - Transformez vos idées en réussite</p>
 
-<a href="politique-confidentialite.html">
-Politique de confidentialité
-</a>
+<a href="politique-confidentialite.html">Politique de confidentialité</a>
 
 </footer>
 
@@ -770,72 +575,36 @@ Politique de confidentialité
 
 <script src="js/script.js"></script>
 
-
-
-<script>
+    <script>
 
 document.addEventListener("DOMContentLoaded", function() {
 
 
-/* =========================================
-   CONNEXION SUPABASE
-========================================= */
+const SUPABASE_URL = "https://vfnqwdwgkocpkkaofrum.supabase.co";
+const SUPABASE_KEY = "sb_publishable_BOFyx3zpbcwtN6h-3N0wLw_L1QOJWR-";
 
-const SUPABASE_URL =
-"https://vfnqwdwgkocpkkaofrum.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_BOFyx3zpbcwtN6h-3N0wLw_L1QOJWR-";
-
-const supabaseClient =
-supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 
-
-/* =========================================
-   AFFILIATION
-========================================= */
-
-const parametre =
-new URLSearchParams(window.location.search);
-
-const code =
-parametre.get("ref");
+const parametre = new URLSearchParams(window.location.search);
+const code = parametre.get("ref");
 
 if (code) {
-
-    localStorage.setItem(
-        "affilie",
-        code
-    );
-
+    localStorage.setItem("affilie", code);
 }
 
-const codeAffilie =
-localStorage.getItem("affilie");
-
+const codeAffilie = localStorage.getItem("affilie");
 
 if (codeAffilie) {
 
     document.body.insertAdjacentHTML(
         "afterbegin",
-
-        `<div style="
-            background:#FFD700;
-            color:#000;
-            padding:15px;
-            text-align:center;
-            font-weight:bold;
-        ">
+        `<div style="background:#FFD700;color:#000;padding:15px;text-align:center;font-weight:bold;">
         Vous êtes arrivé grâce au partenaire SenoMarket
         </div>`
     );
 
 }
-
 
 
 function preparerLien(lien) {
@@ -850,142 +619,46 @@ function preparerLien(lien) {
 
     try {
 
-        const url =
-        new URL(lien);
-
-        url.searchParams.set(
-            "custom_metadata[code_affilie]",
-            codeAffilie
-        );
-
-        url.searchParams.set(
-            "custom_fields[code_affilie]",
-            codeAffilie
-        );
-
+        const url = new URL(lien);
+        url.searchParams.set("custom_metadata[code_affilie]", codeAffilie);
+        url.searchParams.set("custom_fields[code_affilie]", codeAffilie);
         return url.toString();
 
     }
-
     catch (erreur) {
-
         return lien;
-
     }
 
 }
 
 
-
 /* =========================================
-   PRODUITS
+   APPLIQUER LE CODE AFFILIÉ AUX PRODUITS
+   STATIQUES (codés en dur dans le HTML)
 ========================================= */
 
-const grillesParCategorie = {
+function appliquerLiensAffiliesProduitsStatiques() {
 
-    formations:
-    document.getElementById("grille-formations"),
+    if (!codeAffilie) {
+        return;
+    }
 
-    plans:
-    document.getElementById("grille-plans"),
+    const boutons = document.querySelectorAll(".product-grid .gold-btn[href*='mychariow.shop']");
 
-    cuisine:
-    document.getElementById("grille-cuisine")
+    boutons.forEach(function(bouton) {
 
-};
-
-
-
-/* =========================================
-   PRODUITS PRIORITAIRES
-   POUR GUIDES & FORMATIONS
-========================================= */
-
-const produitsPrioritairesFormations = [
-
-    "Kit pratique pour arrêter la masturbation",
-
-    "500 idées de vidéos pour devenir viral sur TikTok",
-
-    "Comment créer un site web professionnel"
-
-];
-
-
-
-function trouverProduitPrioritaire(produits, nomRecherche) {
-
-    return produits.find(function(produit) {
-
-        if (!produit.nom) {
-            return false;
-        }
-
-        return produit.nom
-            .toLowerCase()
-            .trim()
-            .includes(
-                nomRecherche.toLowerCase().trim()
-            );
+        const lienOriginal = bouton.getAttribute("href");
+        bouton.setAttribute("href", preparerLien(lienOriginal));
 
     });
 
 }
 
-
-
-function creerCarteProduit(produit) {
-
-    const image = produit.image_url
-
-        ? `<img
-            src="${produit.image_url}"
-            alt="${produit.nom || "Produit"}"
-        >`
-
-        : "";
-
-    const lien =
-    preparerLien(produit.lien_achat);
-
-
-    return `
-
-        <div class="product">
-
-            ${image}
-
-            <h3>
-                ${produit.nom || ""}
-            </h3>
-
-            <p>
-                ${produit.description || ""}
-            </p>
-
-            <p>
-                <strong>
-                    ${produit.prix || 0} FCFA
-                </strong>
-            </p>
-
-            <a
-                href="${lien}"
-                class="gold-btn"
-            >
-                Acheter maintenant
-            </a>
-
-        </div>
-
-    `;
-
-}
-
+appliquerLiensAffiliesProduitsStatiques();
 
 
 /* =========================================
-   AJOUTER PRODUIT DANS LES AVIS
+   AJOUTER UN PRODUIT AU MENU AVIS
 ========================================= */
 
 function ajouterOptionAvis(nom) {
@@ -994,15 +667,11 @@ function ajouterOptionAvis(nom) {
         return;
     }
 
-    const select =
-    document.getElementById("avisProduit");
+    const select = document.getElementById("avisProduit");
 
-    const dejaPresent =
-    Array.from(select.options).some(
+    const dejaPresent = Array.from(select.options).some(
         function(option) {
-
             return option.value === nom;
-
         }
     );
 
@@ -1010,11 +679,8 @@ function ajouterOptionAvis(nom) {
         return;
     }
 
-    const option =
-    document.createElement("option");
-
+    const option = document.createElement("option");
     option.value = nom;
-
     option.textContent = nom;
 
     select.appendChild(option);
@@ -1022,1018 +688,373 @@ function ajouterOptionAvis(nom) {
 }
 
 
+/* =========================================
+   VOIR PLUS / VOIR MOINS PAR SECTION
+   (nouveau)
+========================================= */
+
+window.afficherPlus = function(categorie) {
+
+    const grillePlus = document.getElementById("grille-" + categorie + "-plus");
+    const bouton = document.getElementById("btn-voir-plus-" + categorie);
+
+    grillePlus.classList.toggle("active");
+
+    bouton.textContent = grillePlus.classList.contains("active")
+        ? "Voir moins"
+        : "Voir plus";
+
+};
+
 
 /* =========================================
-   AFFICHAGE DES PRODUITS
+   CHARGER LES PRODUITS SUPABASE, TRIÉS
+   PAR CATÉGORIE : 3 VISIBLES + LE RESTE
+   DANS "VOIR PLUS" (nouveau)
 ========================================= */
+
+const grillesPrincipales = {
+    formations: document.getElementById("grille-formations"),
+    plans: document.getElementById("grille-plans"),
+    cuisine: document.getElementById("grille-cuisine")
+};
+
+const grillesPlus = {
+    formations: document.getElementById("grille-formations-plus"),
+    plans: document.getElementById("grille-plans-plus"),
+    cuisine: document.getElementById("grille-cuisine-plus")
+};
+
+const conteneursVoirPlus = {
+    plans: document.getElementById("voir-plus-container-plans"),
+    cuisine: document.getElementById("voir-plus-container-cuisine")
+};
+
+const messagesVides = {
+    plans: document.getElementById("vide-plans"),
+    cuisine: document.getElementById("vide-cuisine")
+};
+
+// La section formations a déjà 2 produits statiques visibles,
+// donc il reste seulement 1 place avant de basculer dans "Voir plus"
+const compteursVisibles = {
+    formations: 2,
+    plans: 0,
+    cuisine: 0
+};
+
+const LIMITE_VISIBLE = 3;
+
 
 async function chargerNouveauxProduits() {
 
     try {
 
-        const resultat =
-        await supabaseClient
-
+        const resultat = await supabaseClient
             .from("produits")
-
             .select("*")
-
             .eq("actif", true)
-
-            .order(
-                "created_at",
-                {
-                    ascending: false
-                }
-            );
-
+            .order("created_at", { ascending:false });
 
         if (resultat.error) {
-
-            console.error(
-                "Erreur produits :",
-                resultat.error
-            );
-
-            afficherErreurProduits();
-
+            console.error("Erreur produits :", resultat.error);
             return;
-
         }
 
+        const produits = resultat.data;
 
-        const produits =
-        resultat.data || [];
-
-
-        afficherProduitsCategorie(
-            produits,
-            "formations"
-        );
-
-
-        afficherProduitsCategorie(
-            produits,
-            "plans"
-        );
-
-
-        afficherProduitsCategorie(
-            produits,
-            "cuisine"
-        );
-
+        if (!produits || produits.length === 0) {
+            return;
+        }
 
         produits.forEach(function(produit) {
 
-            ajouterOptionAvis(
-                produit.nom
-            );
+            const categorie = produit.categorie;
+
+            if (!grillesPrincipales[categorie]) {
+                return;
+            }
+
+            if (messagesVides[categorie]) {
+                messagesVides[categorie].remove();
+                delete messagesVides[categorie];
+            }
+
+            const image = produit.image_url
+                ? `<img src="${produit.image_url}" alt="${produit.nom || "Produit"}">`
+                : "";
+
+            const lien = preparerLien(produit.lien_achat);
+
+            const carteHTML = `
+                <div class="product">
+                    ${image}
+                    <h3>${produit.nom || ""}</h3>
+                    <p>${produit.description || ""}</p>
+                    <p><strong>${produit.prix || 0} FCFA</strong></p>
+                    <a href="${lien}" class="gold-btn">Acheter maintenant</a>
+                </div>
+            `;
+
+            if (compteursVisibles[categorie] < LIMITE_VISIBLE) {
+
+                grillesPrincipales[categorie].insertAdjacentHTML("beforeend", carteHTML);
+                compteursVisibles[categorie]++;
+
+            } else {
+
+                grillesPlus[categorie].insertAdjacentHTML("beforeend", carteHTML);
+
+                if (conteneursVoirPlus[categorie]) {
+                    conteneursVoirPlus[categorie].style.display = "block";
+                }
+
+            }
+
+            ajouterOptionAvis(produit.nom);
 
         });
 
-
-        gererVueCategorie(
-            produits
-        );
-
     }
-
     catch (erreur) {
-
-        console.error(
-            "Erreur produits :",
-            erreur
-        );
-
-        afficherErreurProduits();
-
+        console.error("Erreur produits :", erreur);
     }
 
 }
 
 
-
 /* =========================================
-   AFFICHER LES PRODUITS D'UNE CATÉGORIE
+   VOUS N'AVEZ PAS TROUVÉ CE QUE VOUS
+   RECHERCHIEZ — DEMANDE DE PLAN
 ========================================= */
 
-function afficherProduitsCategorie(
-    produits,
-    categorie
-) {
-
-    const grille =
-    grillesParCategorie[categorie];
-
-    if (!grille) {
-        return;
-    }
-
-
-    const produitsCategorie =
-    produits.filter(function(produit) {
-
-        return produit.categorie === categorie;
-
-    });
-
-
-    if (
-        produitsCategorie.length === 0
-    ) {
-
-        grille.innerHTML = `
-
-            <p class="message-produit">
-                Aucun produit disponible
-                pour le moment.
-            </p>
-
-        `;
-
-        return;
-
-    }
-
-
-    let produitsAAfficher;
-
-
-    /* =====================================
-       GUIDES : PRODUITS PRIORITAIRES
-    ===================================== */
-
-    if (categorie === "formations") {
-
-        produitsAAfficher = [];
-
-
-        produitsPrioritairesFormations
-        .forEach(function(nomRecherche) {
-
-            const produit =
-            trouverProduitPrioritaire(
-                produitsCategorie,
-                nomRecherche
-            );
-
-            if (produit) {
-
-                produitsAAfficher.push(
-                    produit
-                );
-
-            }
-
-        });
-
-
-        /*
-         * Si l'un des 3 produits n'existe
-         * pas encore dans Supabase,
-         * on complète avec les produits
-         * les plus récents.
-         */
-
-        produitsCategorie.forEach(
-            function(produit) {
-
-                if (
-                    produitsAAfficher.length >= 3
-              /* =========================================
-   GESTION DE LA VUE PAR CATÉGORIE
-========================================= */
-
-function gererVueCategorie(produits) {
-
-    const parametres =
-    new URLSearchParams(
-        window.location.search
-    );
-
-    const categorie =
-    parametres.get("categorie");
-
-    const conteneur =
-    document.getElementById(
-        "conteneur-boutique"
-    );
-
-    const retour =
-    document.getElementById(
-        "retourBoutique"
-    );
-
-
-    if (
-        categorie &&
-        grillesParCategorie[categorie]
-    ) {
-
-        conteneur.classList.add(
-            "mode-categorie"
-        );
-
-
-        document.querySelectorAll(
-            ".section-market"
-        ).forEach(function(section) {
-
-            section.classList.remove(
-                "section-active"
-            );
-
-        });
-
-
-        const section =
-        document.getElementById(
-            categorie
-        );
-
-        if (section) {
-
-            section.classList.add(
-                "section-active"
-            );
-
-        }
-
-
-        retour.classList.add(
-            "active"
-        );
-
-
-        const titres = {
-
-            formations:
-            "📚 Tous les Guides & Formations",
-
-            cuisine:
-            "🍳 Toutes les Recettes",
-
-            plans:
-            "🏠 Tous les Plans & Maisons"
-
-        };
-
-
-        if (section) {
-
-            const titre =
-            section.querySelector(
-                ".section-title"
-            );
-
-            if (titre) {
-
-                titre.textContent =
-                titres[categorie];
-
-            }
-
-        }
-
-
-        /*
-         * Dans la vue complète, on affiche
-         * TOUS les produits de la catégorie.
-         */
-
-        afficherTousLesProduitsCategorie(
-            produits,
-            categorie
-        );
-
-    }
-
-}
-
-
-
-/* =========================================
-   AFFICHER TOUS LES PRODUITS
-   D'UNE CATÉGORIE
-========================================= */
-
-function afficherTousLesProduitsCategorie(
-    produits,
-    categorie
-) {
-
-    const grille =
-    grillesParCategorie[categorie];
-
-    if (!grille) {
-        return;
-    }
-
-
-    const produitsCategorie =
-    produits.filter(function(produit) {
-
-        return produit.categorie === categorie;
-
-    });
-
-
-    grille.innerHTML = "";
-
-
-    if (
-        produitsCategorie.length === 0
-    ) {
-
-        grille.innerHTML = `
-
-            <p class="message-produit">
-                Aucun produit disponible
-                dans cette catégorie pour le moment.
-            </p>
-
-        `;
-
-        return;
-
-    }
-
-
-    produitsCategorie.forEach(
-        function(produit) {
-
-            grille.insertAdjacentHTML(
-                "beforeend",
-
-                creerCarteProduit(
-                    produit
-                )
-
-            );
-
-        }
-    );
-
-}
-
-
-
-/* =========================================
-   DEMANDE DE PLAN
-========================================= */
-
-window.ouvrirDemandePlan =
-function() {
-
-    const formulaire =
-    document.getElementById(
-        "formulaire-plan"
-    );
-
-    if (formulaire) {
-
-        formulaire.classList.toggle(
-            "active"
-        );
-
-    }
-
+window.ouvrirDemandePlan = function() {
+    document.getElementById("formulaire-plan").classList.toggle("active");
 };
 
+window.envoyerDemandePlan = async function() {
 
+    const nom = document.getElementById("planNom").value.trim();
+    const contact = document.getElementById("planContact").value.trim();
+    const email = document.getElementById("planEmail").value.trim();
+    const type = document.getElementById("planType").value;
+    const chambres = document.getElementById("planChambres").value.trim();
+    const details = document.getElementById("planDetails").value.trim();
 
-window.envoyerDemandePlan =
-async function() {
+    const messageEl = document.getElementById("messagePlan");
 
-    const nom =
-    document.getElementById(
-        "planNom"
-    ).value.trim();
-
-    const contact =
-    document.getElementById(
-        "planContact"
-    ).value.trim();
-
-    const email =
-    document.getElementById(
-        "planEmail"
-    ).value.trim();
-
-    const type =
-    document.getElementById(
-        "planType"
-    ).value;
-
-    const chambres =
-    document.getElementById(
-        "planChambres"
-    ).value.trim();
-
-    const details =
-    document.getElementById(
-        "planDetails"
-    ).value.trim();
-
-    const messageEl =
-    document.getElementById(
-        "messagePlan"
-    );
-
-
-    if (
-        !nom ||
-        !contact ||
-        !type ||
-        !details
-    ) {
-
+    if (!nom || !contact || !type || !details) {
         messageEl.style.color = "red";
-
-        messageEl.textContent =
-        "Merci de remplir tous les champs obligatoires.";
-
+        messageEl.textContent = "Merci de remplir tous les champs obligatoires.";
         return;
-
     }
 
-
-    /*
-     * Pour le moment, le formulaire
-     * affiche simplement la confirmation.
-     *
-     * La connexion à une table Supabase
-     * pourra être ajoutée plus tard.
-     */
+    // TODO : créer la table Supabase "demandes_plan" puis insérer ici,
+    // et brancher la notification admin (Edge Function type notify-affiliation)
+    // await supabaseClient.from('demandes_plan').insert([{ nom, contact, email, type, chambres, details }]);
 
     messageEl.style.color = "green";
+    messageEl.textContent = "Votre demande a bien été envoyée ! Nous vous contacterons rapidement.";
 
-    messageEl.textContent =
-    "Votre demande a bien été envoyée ! Nous vous contacterons rapidement.";
-
-
-    document.getElementById(
-        "planNom"
-    ).value = "";
-
-    document.getElementById(
-        "planContact"
-    ).value = "";
-
-    document.getElementById(
-        "planEmail"
-    ).value = "";
-
-    document.getElementById(
-        "planType"
-    ).value = "";
-
-    document.getElementById(
-        "planChambres"
-    ).value = "";
-
-    document.getElementById(
-        "planDetails"
-    ).value = "";
+    document.getElementById("planNom").value = "";
+    document.getElementById("planContact").value = "";
+    document.getElementById("planEmail").value = "";
+    document.getElementById("planType").value = "";
+    document.getElementById("planChambres").value = "";
+    document.getElementById("planDetails").value = "";
 
 };
-
 
 
 /* =========================================
-   PROPOSITION DE RECETTE
+   VENDRE SUR LE SITE — PROPOSER UNE
+   RECETTE
 ========================================= */
 
-window.ouvrirPropositionRecette =
-function() {
-
-    const formulaire =
-    document.getElementById(
-        "formulaire-recette"
-    );
-
-    if (formulaire) {
-
-        formulaire.classList.toggle(
-            "active"
-        );
-
-    }
-
+window.ouvrirPropositionRecette = function() {
+    document.getElementById("formulaire-recette").classList.toggle("active");
 };
 
+window.envoyerPropositionRecette = async function() {
 
+    const nom = document.getElementById("recetteNomChef").value.trim();
+    const contact = document.getElementById("recetteContact").value.trim();
+    const nomRecette = document.getElementById("recetteNom").value.trim();
+    const type = document.getElementById("recetteType").value;
+    const lienAchat = document.getElementById("recetteLienAchat").value.trim();
+    const description = document.getElementById("recetteDescription").value.trim();
+    const conditions = document.getElementById("recetteConditions").checked;
 
-window.envoyerPropositionRecette =
-async function() {
+    const messageEl = document.getElementById("messageRecette");
 
-
-    const nom =
-    document.getElementById(
-        "recetteNomChef"
-    ).value.trim();
-
-
-    const contact =
-    document.getElementById(
-        "recetteContact"
-    ).value.trim();
-
-
-    const email =
-    document.getElementById(
-        "recetteEmail"
-    ).value.trim();
-
-
-    const nomRecette =
-    document.getElementById(
-        "recetteNom"
-    ).value.trim();
-
-
-    const type =
-    document.getElementById(
-        "recetteType"
-    ).value;
-
-
-    const lienAchat =
-    document.getElementById(
-        "recetteLienAchat"
-    ).value.trim();
-
-
-    const prix =
-    document.getElementById(
-        "recettePrix"
-    ).value.trim();
-
-
-    const description =
-    document.getElementById(
-        "recetteDescription"
-    ).value.trim();
-
-
-    const conditions =
-    document.getElementById(
-        "recetteConditions"
-    ).checked;
-
-
-    const messageEl =
-    document.getElementById(
-        "messageRecette"
-    );
-
-
-    if (
-        !nom ||
-        !contact ||
-        !nomRecette ||
-        !type ||
-        !lienAchat ||
-        !description
-    ) {
-
+    if (!nom || !contact || !nomRecette || !type || !lienAchat || !description) {
         messageEl.style.color = "red";
-
-        messageEl.textContent =
-        "Merci de remplir tous les champs obligatoires.";
-
+        messageEl.textContent = "Merci de remplir tous les champs obligatoires.";
         return;
-
     }
-
 
     if (!conditions) {
-
         messageEl.style.color = "red";
-
-        messageEl.textContent =
-        "Merci d'accepter les conditions de publication.";
-
+        messageEl.textContent = "Merci d'accepter les conditions de publication.";
         return;
-
     }
 
-
-    /*
-     * Le prix est récupéré correctement
-     * même s'il n'est pas obligatoire.
-     */
-
-    console.log(
-        "Proposition recette :",
-        {
-            nom,
-            contact,
-            email,
-            nomRecette,
-            type,
-            lienAchat,
-            prix,
-            description
-        }
-    );
-
+    // TODO : créer la table Supabase "propositions_recettes" puis insérer ici,
+    // et brancher la notification admin (Edge Function type notify-affiliation)
+    // await supabaseClient.from('propositions_recettes').insert([{ ... }]);
 
     messageEl.style.color = "green";
+    messageEl.textContent = "Votre proposition a bien été envoyée ! Nous vous contacterons pour valider votre recette et les frais de publication.";
 
-    messageEl.textContent =
-    "Votre proposition a bien été envoyée ! Nous vous contacterons pour valider votre recette et les frais de publication.";
-
-
-    document.getElementById(
-        "recetteNomChef"
-    ).value = "";
-
-    document.getElementById(
-        "recetteContact"
-    ).value = "";
-
-    document.getElementById(
-        "recetteEmail"
-    ).value = "";
-
-    document.getElementById(
-        "recetteNom"
-    ).value = "";
-
-    document.getElementById(
-        "recetteType"
-    ).value = "";
-
-    document.getElementById(
-        "recetteLienAchat"
-    ).value = "";
-
-    document.getElementById(
-        "recettePrix"
-    ).value = "";
-
-    document.getElementById(
-        "recetteDescription"
-    ).value = "";
-
-    document.getElementById(
-        "recetteConditions"
-    ).checked = false;
+    document.getElementById("recetteNomChef").value = "";
+    document.getElementById("recetteContact").value = "";
+    document.getElementById("recetteEmail").value = "";
+    document.getElementById("recetteNom").value = "";
+    document.getElementById("recetteType").value = "";
+    document.getElementById("recetteLienAchat").value = "";
+    document.getElementById("recettePrix").value = "";
+    document.getElementById("recetteDescription").value = "";
+    document.getElementById("recetteConditions").checked = false;
 
 };
 
-
-
-/* =========================================
-   SYSTÈME D'AVIS
-========================================= */
 
 let noteChoisie = 0;
 
+const etoiles = document.querySelectorAll(".etoile");
+const noteTexte = document.getElementById("noteTexte");
 
-const etoiles =
-document.querySelectorAll(
-    ".etoile"
-);
+etoiles.forEach(function(etoile) {
 
+    etoile.addEventListener("click", function() {
 
-const noteTexte =
-document.getElementById(
-    "noteTexte"
-);
+        noteChoisie = parseInt(this.dataset.note);
 
+        etoiles.forEach(function(element) {
 
-etoiles.forEach(
-    function(etoile) {
+            const valeur = parseInt(element.dataset.note);
 
-        etoile.addEventListener(
-            "click",
-            function() {
-
-
-                noteChoisie =
-                parseInt(
-                    this.dataset.note
-                );
-
-
-                etoiles.forEach(
-                    function(element) {
-
-                        const valeur =
-                        parseInt(
-                            element.dataset.note
-                        );
-
-
-                        if (
-                            valeur <=
-                            noteChoisie
-                        ) {
-
-                            element.textContent =
-                            "★";
-
-                            element.classList.add(
-                                "active"
-                            );
-
-                        }
-
-                        else {
-
-                            element.textContent =
-                            "☆";
-
-                            element.classList.remove(
-                                "active"
-                            );
-
-                        }
-
-                    }
-                );
-
-
-                noteTexte.textContent =
-                noteChoisie +
-                " / 5 étoiles";
-
+            if (valeur <= noteChoisie) {
+                element.textContent = "★";
+                element.classList.add("active");
             }
-        );
-
-    }
-);
-
-
-
-const bouton =
-document.getElementById(
-    "btnEnvoyerAvis"
-);
-
-
-const message =
-document.getElementById(
-    "messageAvis"
-);
-
-
-
-bouton.addEventListener(
-    "click",
-    async function() {
-
-
-        const produit =
-        document.getElementById(
-            "avisProduit"
-        ).value;
-
-
-        const nom =
-        document.getElementById(
-            "avisNom"
-        ).value.trim();
-
-
-        const email =
-        document.getElementById(
-            "avisEmail"
-        ).value.trim();
-
-
-        const commentaire =
-        document.getElementById(
-            "avisCommentaire"
-        ).value.trim();
-
-
-        if (!produit) {
-
-            message.style.color =
-            "red";
-
-            message.textContent =
-            "Veuillez choisir un produit.";
-
-            return;
-
-        }
-
-
-        if (!nom) {
-
-            message.style.color =
-            "red";
-
-            message.textContent =
-            "Veuillez entrer votre nom.";
-
-            return;
-
-        }
-
-
-        if (noteChoisie === 0) {
-
-            message.style.color =
-            "red";
-
-            message.textContent =
-            "Veuillez choisir une note.";
-
-            return;
-
-        }
-
-
-        if (!commentaire) {
-
-            message.style.color =
-            "red";
-
-            message.textContent =
-            "Veuillez écrire votre commentaire.";
-
-            return;
-
-        }
-
-
-        bouton.disabled = true;
-
-        bouton.textContent =
-        "Envoi en cours...";
-
-
-        message.style.color =
-        "#555";
-
-        message.textContent =
-        "Envoi de votre avis...";
-
-
-        try {
-
-
-            const resultat =
-            await supabaseClient
-
-                .from("avis")
-
-                .insert({
-
-                    nom_client: nom,
-
-                    email:
-                    email || null,
-
-                    produit_id:
-                    null,
-
-                    produit_nom:
-                    produit,
-
-                    note:
-                    noteChoisie,
-
-                    commentaire:
-                    commentaire,
-
-                    statut:
-                    "pending"
-
-                });
-
-
-            if (resultat.error) {
-
-
-                console.error(
-                    "Erreur Supabase avis :",
-                    resultat.error
-                );
-
-
-                message.style.color =
-                "red";
-
-
-                message.textContent =
-                "Erreur lors de l'envoi : " +
-                resultat.error.message;
-
-
-                bouton.disabled =
-                false;
-
-
-                bouton.textContent =
-                "⭐ Envoyer mon avis";
-
-
-                return;
-
+            else {
+                element.textContent = "☆";
+                element.classList.remove("active");
             }
 
+        });
 
-            message.style.color =
-            "green";
+        noteTexte.textContent = noteChoisie + " / 5 étoiles";
 
+    });
 
-            message.textContent =
-            "⭐ Merci d'avoir donné votre avis ! Votre avis sera vérifié avant publication.";
-
-
-            document.getElementById(
-                "avisProduit"
-            ).value = "";
+});
 
 
-            document.getElementById(
-                "avisNom"
-            ).value = "";
+const bouton = document.getElementById("btnEnvoyerAvis");
+const message = document.getElementById("messageAvis");
 
+bouton.addEventListener("click", async function() {
 
-            document.getElementById(
-                "avisEmail"
-            ).value = "";
+    const produit = document.getElementById("avisProduit").value;
+    const nom = document.getElementById("avisNom").value.trim();
+    const email = document.getElementById("avisEmail").value.trim();
+    const commentaire = document.getElementById("avisCommentaire").value.trim();
 
+    if (!produit) {
+        message.style.color = "red";
+        message.textContent = "Veuillez choisir un produit.";
+        return;
+    }
 
-            document.getElementById(
-                "avisCommentaire"
-            ).value = "";
+    if (!nom) {
+        message.style.color = "red";
+        message.textContent = "Veuillez entrer votre nom.";
+        return;
+    }
 
+    if (noteChoisie === 0) {
+        message.style.color = "red";
+        message.textContent = "Veuillez choisir une note.";
+        return;
+    }
 
-            noteChoisie = 0;
+    if (!commentaire) {
+        message.style.color = "red";
+        message.textContent = "Veuillez écrire votre commentaire.";
+        return;
+    }
 
+    bouton.disabled = true;
+    bouton.textContent = "Envoi en cours...";
 
-            etoiles.forEach(
-                function(element) {
+    message.style.color = "#555";
+    message.textContent = "Envoi de votre avis...";
 
-                    element.textContent =
-                    "☆";
+    try {
 
-                    element.classList.remove(
-                        "active"
-                    );
+        const resultat = await supabaseClient
+            .from("avis")
+            .insert({
+                nom_client: nom,
+                email: email || null,
+                produit_id: null,
+                produit_nom: produit,
+                note: noteChoisie,
+                commentaire: commentaire,
+                statut: "pending"
+            });
 
-                }
-            );
+        if (resultat.error) {
 
+            console.error("Erreur Supabase avis :", resultat.error);
 
-            noteTexte.textContent =
-            "Choisissez votre note";
+            message.style.color = "red";
+            message.textContent = "Erreur lors de l'envoi : " + resultat.error.message;
 
+            bouton.disabled = false;
+            bouton.textContent = "⭐ Envoyer mon avis";
 
-            bouton.disabled =
-            false;
-
-
-            bouton.textContent =
-            "⭐ Envoyer mon avis";
-
-
-        }
-
-        catch (erreur) {
-
-
-            console.error(
-                "Erreur inattendue :",
-                erreur
-            );
-
-
-            message.style.color =
-            "red";
-
-
-            message.textContent =
-            "Une erreur est survenue : " +
-            erreur.message;
-
-
-            bouton.disabled =
-            false;
-
-
-            bouton.textContent =
-            "⭐ Envoyer mon avis";
+            return;
 
         }
+
+        message.style.color = "green";
+        message.textContent = "⭐ Merci d'avoir donné votre avis ! Votre avis sera vérifié avant publication.";
+
+        document.getElementById("avisProduit").value = "";
+        document.getElementById("avisNom").value = "";
+        document.getElementById("avisEmail").value = "";
+        document.getElementById("avisCommentaire").value = "";
+
+        noteChoisie = 0;
+
+        etoiles.forEach(function(element) {
+            element.textContent = "☆";
+            element.classList.remove("active");
+        });
+
+        noteTexte.textContent = "Choisissez votre note";
+
+        bouton.disabled = false;
+        bouton.textContent = "⭐ Envoyer mon avis";
 
     }
-);
+    catch (erreur) {
 
+        console.error("Erreur inattendue :", erreur);
 
+        message.style.color = "red";
+        message.textContent = "Une erreur est survenue : " + erreur.message;
 
-/* =========================================
-   CHARGEMENT INITIAL
-========================================= */
+        bouton.disabled = false;
+        bouton.textContent = "⭐ Envoyer mon avis";
+
+    }
+
+});
+
 
 chargerNouveauxProduits();
 
