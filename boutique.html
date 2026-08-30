@@ -14,6 +14,15 @@
 
 <style>
 
+.section-market {
+    padding: 15px 0 25px;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
 .form-avis {
     max-width: 560px;
     margin: 25px auto;
@@ -80,6 +89,114 @@
     margin-top: 12px;
 }
 
+
+/* =========================================
+   BLOCS "DEMANDE" / "PROPOSER" (nouveau)
+========================================= */
+
+.bloc-demande {
+    max-width: 700px;
+    margin: 30px auto 0;
+    background: #111;
+    color: white;
+    border-radius: 15px;
+    padding: 25px 18px;
+    text-align: center;
+}
+
+.bloc-demande h3 {
+    margin-top: 0;
+    color: #FFD700;
+}
+
+.bloc-demande p {
+    max-width: 600px;
+    margin: 10px auto 20px;
+    line-height: 1.5;
+}
+
+.bloc-demande ul {
+    max-width: 480px;
+    margin: 0 auto 20px;
+    text-align: left;
+    line-height: 1.6;
+    padding-left: 20px;
+}
+
+.btn-bloc-demande {
+    display: inline-block;
+    padding: 12px 20px;
+    background: #FFD700;
+    color: #111;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+
+.formulaire-demande {
+    display: none;
+    margin-top: 20px;
+    background: white;
+    color: #111;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: left;
+}
+
+.formulaire-demande.active {
+    display: block;
+}
+
+.formulaire-demande input,
+.formulaire-demande select,
+.formulaire-demande textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-family: inherit;
+}
+
+.formulaire-demande textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.formulaire-demande label.condition {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 14px;
+    margin-bottom: 14px;
+    line-height: 1.4;
+}
+
+.formulaire-demande label.condition input {
+    width: auto;
+    margin: 3px 0 0;
+}
+
+.formulaire-demande button {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 8px;
+    background: #FFD700;
+    color: #111;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.message-demande {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
 </style>
 
 </head>
@@ -116,7 +233,15 @@
 </div>
 
 
-<div class="product-grid">
+<!-- =========================================
+     SECTION GUIDE ET FORMATION
+========================================= -->
+
+<section id="formations" class="section-market">
+
+<h2 class="section-title">📚 Guide et formation</h2>
+
+<div class="product-grid" id="grille-formations">
 
 <div class="product">
 <img src="images/produits/guide-ia.png" alt="Guide IA">
@@ -183,12 +308,154 @@
 
 </div>
 
+</section>
 
-<br><br>
 
-<h2>✨ Nouveaux produits</h2>
+<!-- =========================================
+     SECTION PLAN ET BÂTIMENT
+========================================= -->
 
-<div class="product-grid" id="nouveaux-produits"></div>
+<section id="plans" class="section-market">
+
+<h2 class="section-title">🏠 Plan et bâtiment</h2>
+
+<div class="product-grid" id="grille-plans">
+<p id="vide-plans">Aucun plan disponible pour le moment.</p>
+</div>
+
+
+<!-- =========================================
+     VOUS N'AVEZ PAS TROUVÉ CE QUE VOUS
+     RECHERCHIEZ (nouveau)
+========================================= -->
+
+<div class="bloc-demande">
+
+<h3>🔎 Vous n'avez pas trouvé ce que vous recherchiez ?</h3>
+
+<p>
+Décrivez-nous le type de bâtiment ou de maison que vous recherchez.
+Si nous pouvons réaliser votre demande, nous vous contacterons pour
+discuter de votre projet.
+</p>
+
+<button type="button" class="btn-bloc-demande" onclick="ouvrirDemandePlan()">
+Je n'ai pas trouvé ce que je recherchais
+</button>
+
+
+<div id="formulaire-plan" class="formulaire-demande">
+
+<h3 style="color:#111;">📐 Demander un plan</h3>
+
+<input type="text" id="planNom" placeholder="Votre nom">
+<input type="text" id="planContact" placeholder="Votre numéro WhatsApp ou téléphone">
+<input type="email" id="planEmail" placeholder="Votre email (facultatif)">
+
+<select id="planType">
+<option value="">Quel type de bâtiment recherchez-vous ?</option>
+<option value="Maison">Maison</option>
+<option value="Villa">Villa</option>
+<option value="Immeuble">Immeuble</option>
+<option value="Commerce">Commerce</option>
+<option value="Autre">Autre</option>
+</select>
+
+<input type="text" id="planChambres" placeholder="Nombre de chambres souhaité">
+
+<textarea id="planDetails" placeholder="Décrivez le plan que vous recherchez : dimensions, nombre de pièces, étage, style souhaité, etc."></textarea>
+
+<button type="button" onclick="envoyerDemandePlan()">
+Envoyer ma demande
+</button>
+
+<p id="messagePlan" class="message-demande"></p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================
+     SECTION CUISINE ET RECETTES
+========================================= -->
+
+<section id="cuisine" class="section-market">
+
+<h2 class="section-title">🍳 Cuisine et recettes</h2>
+
+<div class="product-grid" id="grille-cuisine">
+<p id="vide-cuisine">Aucune recette disponible pour le moment.</p>
+</div>
+
+
+<!-- =========================================
+     VENDRE SUR LE SITE (nouveau)
+========================================= -->
+
+<div class="bloc-demande">
+
+<h3>👩‍🍳 Vous êtes chef ou cuisinier ?</h3>
+
+<p>
+Proposez votre propre recette à la vente sur SenoMarket. Une fois votre
+demande validée, votre recette sera mise en ligne dans cette section.
+</p>
+
+<ul>
+<li>Vous fournissez votre lien d'achat / de paiement pour votre recette</li>
+<li>Une participation financière est demandée pour la mise en ligne sur SenoMarket</li>
+<li>Votre demande est vérifiée manuellement avant publication</li>
+</ul>
+
+<button type="button" class="btn-bloc-demande" onclick="ouvrirPropositionRecette()">
+Vendre sur le site
+</button>
+
+
+<div id="formulaire-recette" class="formulaire-demande">
+
+<h3 style="color:#111;">🍽️ Proposer une recette</h3>
+
+<input type="text" id="recetteNomChef" placeholder="Votre nom">
+<input type="text" id="recetteContact" placeholder="Votre numéro WhatsApp ou téléphone">
+<input type="email" id="recetteEmail" placeholder="Votre email">
+<input type="text" id="recetteNom" placeholder="Nom de la recette">
+
+<select id="recetteType">
+<option value="">Type de plat</option>
+<option value="Entrée">Entrée</option>
+<option value="Plat principal">Plat principal</option>
+<option value="Dessert / Pâtisserie">Dessert / Pâtisserie</option>
+<option value="Boisson">Boisson</option>
+<option value="Sauce / Accompagnement">Sauce / Accompagnement</option>
+<option value="Snack / Street food">Snack / Street food</option>
+</select>
+
+<input type="text" id="recetteLienAchat" placeholder="Lien d'achat / de paiement de votre recette">
+<input type="text" id="recettePrix" placeholder="Prix de vente prévu (FCFA)">
+
+<textarea id="recetteDescription" placeholder="Décrivez votre recette : ingrédients, style, ce qui la rend unique..."></textarea>
+
+<label class="condition">
+<input type="checkbox" id="recetteConditions">
+J'accepte de payer les frais de publication demandés par SenoMarket pour
+mettre ma recette en vente sur le site.
+</label>
+
+<button type="button" onclick="envoyerPropositionRecette()">
+Envoyer ma proposition
+</button>
+
+<p id="messageRecette" class="message-demande"></p>
+
+</div>
+
+</div>
+
+</section>
 
 
 <br><br>
@@ -366,9 +633,24 @@ function ajouterOptionAvis(nom) {
 }
 
 
-async function chargerNouveauxProduits() {
+/* =========================================
+   CHARGER LES PRODUITS SUPABASE, TRIÉS
+   PAR CATÉGORIE DANS LA BONNE SECTION
+========================================= */
 
-    const zone = document.getElementById("nouveaux-produits");
+const grillesParCategorie = {
+    formations: document.getElementById("grille-formations"),
+    plans: document.getElementById("grille-plans"),
+    cuisine: document.getElementById("grille-cuisine")
+};
+
+const messagesVides = {
+    plans: document.getElementById("vide-plans"),
+    cuisine: document.getElementById("vide-cuisine")
+};
+
+
+async function chargerNouveauxProduits() {
 
     try {
 
@@ -379,25 +661,28 @@ async function chargerNouveauxProduits() {
             .order("created_at", { ascending:false });
 
         if (resultat.error) {
-
             console.error("Erreur produits :", resultat.error);
-            zone.innerHTML = "<p>Impossible de charger les nouveaux produits.</p>";
             return;
-
         }
 
         const produits = resultat.data;
 
         if (!produits || produits.length === 0) {
-
-            zone.innerHTML = "<p>Aucun nouveau produit pour le moment.</p>";
             return;
-
         }
 
-        zone.innerHTML = "";
-
         produits.forEach(function(produit) {
+
+            const grille = grillesParCategorie[produit.categorie];
+
+            if (!grille) {
+                return;
+            }
+
+            if (messagesVides[produit.categorie]) {
+                messagesVides[produit.categorie].remove();
+                delete messagesVides[produit.categorie];
+            }
 
             const image = produit.image_url
                 ? `<img src="${produit.image_url}" alt="${produit.nom || "Produit"}">`
@@ -405,7 +690,7 @@ async function chargerNouveauxProduits() {
 
             const lien = preparerLien(produit.lien_achat);
 
-            zone.innerHTML += `
+            grille.insertAdjacentHTML("beforeend", `
                 <div class="product">
                     ${image}
                     <h3>${produit.nom || ""}</h3>
@@ -413,7 +698,7 @@ async function chargerNouveauxProduits() {
                     <p><strong>${produit.prix || 0} FCFA</strong></p>
                     <a href="${lien}" class="gold-btn">Acheter maintenant</a>
                 </div>
-            `;
+            `);
 
             ajouterOptionAvis(produit.nom);
 
@@ -421,13 +706,106 @@ async function chargerNouveauxProduits() {
 
     }
     catch (erreur) {
-
         console.error("Erreur produits :", erreur);
-        zone.innerHTML = "<p>Impossible de charger les nouveaux produits.</p>";
-
     }
 
 }
+
+
+/* =========================================
+   VOUS N'AVEZ PAS TROUVÉ CE QUE VOUS
+   RECHERCHIEZ — DEMANDE DE PLAN (nouveau)
+========================================= */
+
+window.ouvrirDemandePlan = function() {
+    document.getElementById("formulaire-plan").classList.toggle("active");
+};
+
+window.envoyerDemandePlan = async function() {
+
+    const nom = document.getElementById("planNom").value.trim();
+    const contact = document.getElementById("planContact").value.trim();
+    const email = document.getElementById("planEmail").value.trim();
+    const type = document.getElementById("planType").value;
+    const chambres = document.getElementById("planChambres").value.trim();
+    const details = document.getElementById("planDetails").value.trim();
+
+    const messageEl = document.getElementById("messagePlan");
+
+    if (!nom || !contact || !type || !details) {
+        messageEl.style.color = "red";
+        messageEl.textContent = "Merci de remplir tous les champs obligatoires.";
+        return;
+    }
+
+    // TODO : créer la table Supabase "demandes_plan" puis insérer ici,
+    // et brancher la notification admin (Edge Function type notify-affiliation)
+    // await supabaseClient.from('demandes_plan').insert([{ nom, contact, email, type, chambres, details }]);
+
+    messageEl.style.color = "green";
+    messageEl.textContent = "Votre demande a bien été envoyée ! Nous vous contacterons rapidement.";
+
+    document.getElementById("planNom").value = "";
+    document.getElementById("planContact").value = "";
+    document.getElementById("planEmail").value = "";
+    document.getElementById("planType").value = "";
+    document.getElementById("planChambres").value = "";
+    document.getElementById("planDetails").value = "";
+
+};
+
+
+/* =========================================
+   VENDRE SUR LE SITE — PROPOSER UNE
+   RECETTE (nouveau)
+========================================= */
+
+window.ouvrirPropositionRecette = function() {
+    document.getElementById("formulaire-recette").classList.toggle("active");
+};
+
+window.envoyerPropositionRecette = async function() {
+
+const nom = document.getElementById("recetteNomChef").value.trim();
+    const contact = document.getElementById("recetteContact").value.trim();
+    const nomRecette = document.getElementById("recetteNom").value.trim();
+    const type = document.getElementById("recetteType").value;
+    const lienAchat = document.getElementById("recetteLienAchat").value.trim();
+    const description = document.getElementById("recetteDescription").value.trim();
+    const conditions = document.getElementById("recetteConditions").checked;
+
+    const messageEl = document.getElementById("messageRecette");
+
+    if (!nom || !contact || !nomRecette || !type || !lienAchat || !description) {
+        messageEl.style.color = "red";
+        messageEl.textContent = "Merci de remplir tous les champs obligatoires.";
+        return;
+    }
+
+    if (!conditions) {
+        messageEl.style.color = "red";
+        messageEl.textContent = "Merci d'accepter les conditions de publication.";
+        return;
+    }
+
+    // TODO : créer la table Supabase "propositions_recettes" puis insérer ici,
+    // et brancher la notification admin (Edge Function type notify-affiliation)
+    // await supabaseClient.from('propositions_recettes').insert([{ ... }]);
+
+    messageEl.style.color = "green";
+    messageEl.textContent = "Votre proposition a bien été envoyée ! Nous vous contacterons pour valider votre recette et les frais de publication.";
+
+    document.getElementById("recetteNomChef").value = "";
+    document.getElementById("recetteContact").value = "";
+    document.getElementById("recetteEmail").value = "";
+    document.getElementById("recetteNom").value = "";
+    document.getElementById("recetteType").value = "";
+    document.getElementById("recetteLienAchat").value = "";
+    document.getElementById("recettePrix").value = "";
+    document.getElementById("recetteDescription").value = "";
+    document.getElementById("recetteConditions").checked = false;
+
+};
 
 
 let noteChoisie = 0;
@@ -577,4 +955,4 @@ chargerNouveauxProduits();
 
 </body>
 
-</html>
+</html
