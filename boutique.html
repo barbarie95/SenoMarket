@@ -849,9 +849,23 @@ window.envoyerDemandePlan = async function() {
         return;
     }
 
-    // TODO : créer la table Supabase "demandes_plan" puis insérer ici,
-    // et brancher la notification admin (Edge Function type notify-affiliation)
-    // await supabaseClient.from('demandes_plan').insert([{ nom, contact, email, type, chambres, details }]);
+    const resultat = await supabaseClient
+        .from("demandes_plan")
+        .insert({
+            nom,
+            contact,
+            email: email || null,
+            type,
+            chambres: chambres || null,
+            details
+        });
+
+    if (resultat.error) {
+        console.error("Erreur demande de plan :", resultat.error);
+        messageEl.style.color = "red";
+        messageEl.textContent = "Erreur lors de l'envoi : " + resultat.error.message;
+        return;
+    }
 
     messageEl.style.color = "green";
     messageEl.textContent = "Votre demande a bien été envoyée ! Nous vous contacterons rapidement.";
@@ -879,9 +893,11 @@ window.envoyerPropositionRecette = async function() {
 
     const nom = document.getElementById("recetteNomChef").value.trim();
     const contact = document.getElementById("recetteContact").value.trim();
+    const email = document.getElementById("recetteEmail").value.trim();
     const nomRecette = document.getElementById("recetteNom").value.trim();
     const type = document.getElementById("recetteType").value;
     const lienAchat = document.getElementById("recetteLienAchat").value.trim();
+    const prix = document.getElementById("recettePrix").value.trim();
     const description = document.getElementById("recetteDescription").value.trim();
     const conditions = document.getElementById("recetteConditions").checked;
 
@@ -899,9 +915,25 @@ window.envoyerPropositionRecette = async function() {
         return;
     }
 
-    // TODO : créer la table Supabase "propositions_recettes" puis insérer ici,
-    // et brancher la notification admin (Edge Function type notify-affiliation)
-    // await supabaseClient.from('propositions_recettes').insert([{ ... }]);
+    const resultat = await supabaseClient
+        .from("propositions_recettes")
+        .insert({
+            nom_chef: nom,
+            contact,
+            email: email || null,
+            nom_recette: nomRecette,
+            type_plat: type,
+            lien_achat: lienAchat,
+            prix: prix || null,
+            description
+        });
+
+    if (resultat.error) {
+        console.error("Erreur proposition recette :", resultat.error);
+        messageEl.style.color = "red";
+        messageEl.textContent = "Erreur lors de l'envoi : " + resultat.error.message;
+        return;
+    }
 
     messageEl.style.color = "green";
     messageEl.textContent = "Votre proposition a bien été envoyée ! Nous vous contacterons pour valider votre recette et les frais de publication.";
