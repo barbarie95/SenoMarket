@@ -13,6 +13,36 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/script.js"></script>
 
+<style>
+
+/* =========================================
+   ONGLETS CATEGORIES (nouveau)
+========================================= */
+
+.onglets-categorie {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 10px 0 20px;
+}
+
+.onglet-btn {
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: 1px solid #FFD700;
+    background: #fff;
+    color: #111;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.onglet-btn.actif {
+    background: #111;
+    color: #FFD700;
+}
+
+</style>
+
 </head>
 
 
@@ -40,13 +70,35 @@
 
 
 <!-- =========================================
+     ONGLETS CATEGORIES (nouveau)
+========================================= -->
+
+<div class="onglets-categorie">
+
+<button type="button" class="onglet-btn actif" id="onglet-formations" onclick="selectionnerOnglet('formations')">
+📚 Guide et formation
+</button>
+
+<button type="button" class="onglet-btn" id="onglet-plans" onclick="selectionnerOnglet('plans')">
+🏠 Plan et bâtiment
+</button>
+
+<button type="button" class="onglet-btn" id="onglet-cuisine" onclick="selectionnerOnglet('cuisine')">
+🍳 Cuisine et recettes
+</button>
+
+</div>
+
+
+
+<!-- =========================================
      FORMULAIRE PRODUIT
 ========================================= -->
 
 <div class="card">
 
 
-<h3 id="titreFormulaire">➕ Ajouter un produit</h3>
+<h3 id="titreFormulaire">➕ Ajouter un produit (Guide et formation)</h3>
 
 
 <input
@@ -75,12 +127,8 @@ style="padding:12px;width:90%;margin:6px 0;border-radius:10px;border:1px solid #
 ></textarea>
 
 
-<input
-type="text"
-id="categorie"
-placeholder="Catégorie"
-style="padding:12px;width:90%;margin:6px 0;border-radius:10px;border:1px solid #ddd;"
->
+<!-- catégorie déterminée automatiquement par l'onglet actif, plus de champ texte libre -->
+<input type="hidden" id="categorie" value="formations">
 
 
 <!-- =========================================
@@ -148,7 +196,7 @@ Annuler
 
 <div class="card">
 
-<h3>📦 Produits enregistrés</h3>
+<h3 id="titreListe">📦 Produits enregistrés (Guide et formation)</h3>
 
 <div id="listeProduits">
 <p>Chargement des produits...</p>
@@ -218,6 +266,40 @@ async function verifierSession(){
 let produitEnModification = null;
 let imageUrlActuelle = null;
 
+let categorieActive = "formations";
+
+const nomsCategories = {
+    formations: "Guide et formation",
+    plans: "Plan et bâtiment",
+    cuisine: "Cuisine et recettes"
+};
+
+
+
+/* =========================================
+   ONGLETS CATEGORIES (nouveau)
+========================================= */
+
+function selectionnerOnglet(categorie) {
+
+    categorieActive = categorie;
+
+    document.querySelectorAll(".onglet-btn").forEach(btn => {
+        btn.classList.remove("actif");
+    });
+    document.getElementById("onglet-" + categorie).classList.add("actif");
+
+    document.getElementById("categorie").value = categorie;
+
+    reinitialiserFormulaire();
+
+    document.getElementById("titreListe").textContent =
+        "📦 Produits enregistrés (" + nomsCategories[categorie] + ")";
+
+    chargerProduits();
+
+}
+
 
 
 /* =========================================
@@ -237,6 +319,7 @@ async function chargerProduits() {
     const resultat = await supabaseClient
         .from("produits")
         .select("*")
+        .eq("categorie", categorieActive)
         .order("created_at", { ascending:false });
 
     if (resultat.error) {
@@ -251,7 +334,7 @@ async function chargerProduits() {
     const data = resultat.data;
 
     if (!data || data.length === 0) {
-        zone.innerHTML = `<p>Aucun produit enregistré.</p>`;
+        zone.innerHTML = `<p>Aucun produit enregistré dans cette catégorie.</p>`;
         return;
     }
 
@@ -274,7 +357,6 @@ async function chargerProduits() {
                 ${image}
                 <h3>🛒 ${echapperHTML(produit.nom || "")}</h3>
                 <p><strong>Prix :</strong> ${produit.prix ?? ""}</p>
-                <p><strong>Catégorie :</strong> ${echapperHTML(produit.categorie || "Non définie")}</p>
                 <p><strong>Description :</strong> ${echapperHTML(produit.description || "Aucune description")}</p>
                 <p><strong>Statut :</strong> ${statut}</p>
                 ${lien}
@@ -355,7 +437,7 @@ async function enregistrerProduit() {
     const nom = document.getElementById("nom").value.trim();
     const prix = document.getElementById("prix").value;
     const description = document.getElementById("description").value.trim();
-    const categorie = document.getElementById("categorie").value.trim();
+    const categorie = categorieActive;
     const lien_achat = document.getElementById("lien_achat").value.trim();
     const actif = document.getElementById("actif").checked;
     const fichierImage = document.getElementById("image_fichier").files[0];
@@ -394,7 +476,7 @@ async function enregistrerProduit() {
             nom,
             prix: Number(prix),
             description: description || null,
-            categorie: categorie || null,
+            categorie,
             image_url: image_url || null,
             lien_achat: lien_achat || null,
             actif
@@ -469,7 +551,7 @@ async function modifierProduit(id) {
     document.getElementById("nom").value = data.nom || "";
     document.getElementById("prix").value = data.prix ?? "";
     document.getElementById("description").value = data.description || "";
-    document.getElementById("categorie").value = data.categorie || "";
+    document.getElementById("categorie").value = data.categorie || categorieActive;
     document.getElementById("lien_achat").value = data.lien_achat || "";
     document.getElementById("actif").checked = data.actif;
     document.getElementById("image_fichier").value = "";
@@ -479,7 +561,8 @@ async function modifierProduit(id) {
         ? `<img src="${data.image_url}" style="max-width:150px;border-radius:10px;">`
         : "";
 
-    document.getElementById("titreFormulaire").textContent = "✏️ Modifier le produit";
+    document.getElementById("titreFormulaire").textContent =
+        "✏️ Modifier le produit (" + nomsCategories[categorieActive] + ")";
     document.getElementById("boutonEnregistrer").textContent = "Enregistrer les modifications";
     document.getElementById("boutonAnnuler").style.display = "inline-block";
 
@@ -561,13 +644,14 @@ function reinitialiserFormulaire() {
     document.getElementById("nom").value = "";
     document.getElementById("prix").value = "";
     document.getElementById("description").value = "";
-    document.getElementById("categorie").value = "";
+    document.getElementById("categorie").value = categorieActive;
     document.getElementById("lien_achat").value = "";
     document.getElementById("actif").checked = true;
     document.getElementById("image_fichier").value = "";
     document.getElementById("apercuImage").innerHTML = "";
 
-    document.getElementById("titreFormulaire").textContent = "➕ Ajouter un produit";
+    document.getElementById("titreFormulaire").textContent =
+        "➕ Ajouter un produit (" + nomsCategories[categorieActive] + ")";
     document.getElementById("boutonEnregistrer").textContent = "Ajouter le produit";
     document.getElementById("boutonAnnuler").style.display = "none";
 
