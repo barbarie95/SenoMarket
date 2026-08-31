@@ -151,14 +151,6 @@
     line-height: 1.5;
 }
 
-.bloc-demande ul {
-    max-width: 480px;
-    margin: 0 auto 20px;
-    text-align: left;
-    line-height: 1.6;
-    padding-left: 20px;
-}
-
 .btn-bloc-demande {
     display: inline-block;
     padding: 12px 20px;
@@ -559,9 +551,9 @@ Envoyer ma proposition
 
 
 
-<script src="js/script.js"></script>
+<script src="js/script.js">
 
-<script>
+    <script>
 
 document.addEventListener("DOMContentLoaded", function() {
 
@@ -694,8 +686,10 @@ window.afficherPlus = function(categorie) {
 
 /* =========================================
    CHARGER LES PRODUITS SUPABASE, TRIÉS
-   PAR CATÉGORIE : 3 VISIBLES + LE RESTE
-   DANS "VOIR PLUS"
+   PAR CATÉGORIE : LES PRODUITS "MIS EN
+   AVANT" PASSENT EN PRIORITÉ DANS LES
+   3 VISIBLES, LE RESTE DANS "VOIR PLUS"
+   (nouveau)
 ========================================= */
 
 const grillesPrincipales = {
@@ -749,6 +743,12 @@ async function chargerNouveauxProduits() {
         if (!produits || produits.length === 0) {
             return;
         }
+
+        // Tri stable : les produits "mis en avant" passent en premier
+        // (au sein de chaque catégorie), le reste garde l'ordre par date
+        produits.sort(function(a, b) {
+            return (b.mis_en_avant === true ? 1 : 0) - (a.mis_en_avant === true ? 1 : 0);
+        });
 
         produits.forEach(function(produit) {
 
