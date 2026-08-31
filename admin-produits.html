@@ -16,7 +16,7 @@
 <style>
 
 /* =========================================
-   ONGLETS CATEGORIES (nouveau)
+   ONGLETS CATEGORIES
 ========================================= */
 
 .onglets-categorie {
@@ -70,7 +70,7 @@
 
 
 <!-- =========================================
-     ONGLETS CATEGORIES (nouveau)
+     ONGLETS CATEGORIES
 ========================================= -->
 
 <div class="onglets-categorie">
@@ -163,6 +163,13 @@ style="padding:12px;width:90%;margin:6px 0;border-radius:10px;border:1px solid #
 <label>
 <input type="checkbox" id="actif" checked>
 Produit actif
+</label>
+
+<br>
+
+<label>
+<input type="checkbox" id="mis_en_avant">
+⭐ Mettre en avant (visible parmi les 3 premiers de la section)
 </label>
 
 
@@ -277,7 +284,7 @@ const nomsCategories = {
 
 
 /* =========================================
-   ONGLETS CATEGORIES (nouveau)
+   ONGLETS CATEGORIES
 ========================================= */
 
 function selectionnerOnglet(categorie) {
@@ -343,6 +350,7 @@ async function chargerProduits() {
     data.forEach(produit => {
 
         const statut = produit.actif ? "🟢 Actif" : "🔴 Inactif";
+        const vedette = produit.mis_en_avant ? "⭐ Mis en avant" : "☆ Normal";
 
         const image = produit.image_url
             ? `<img src="${echapperHTML(produit.image_url)}" alt="${echapperHTML(produit.nom || "")}" style="max-width:200px;border-radius:10px;margin-bottom:10px;">`
@@ -363,10 +371,14 @@ async function chargerProduits() {
                 <p><strong>Prix :</strong> ${prixAffiche}</p>
                 <p><strong>Description :</strong> ${echapperHTML(produit.description || "Aucune description")}</p>
                 <p><strong>Statut :</strong> ${statut}</p>
+                <p><strong>Mise en avant :</strong> ${vedette}</p>
                 ${lien}
                 <button class="gold-btn" onclick="modifierProduit('${produit.id}')">✏️ Modifier</button>
                 <button class="gold-btn" onclick="changerStatut('${produit.id}', ${!produit.actif})">
                     ${produit.actif ? "🔴 Désactiver" : "🟢 Activer"}
+                </button>
+                <button class="gold-btn" onclick="changerMiseEnAvant('${produit.id}', ${!produit.mis_en_avant})">
+                    ${produit.mis_en_avant ? "☆ Retirer de la mise en avant" : "⭐ Mettre en avant"}
                 </button>
                 <button class="gold-btn" onclick="supprimerProduit('${produit.id}')">🗑️ Supprimer</button>
             </div>
@@ -444,6 +456,7 @@ async function enregistrerProduit() {
     const categorie = categorieActive;
     const lien_achat = document.getElementById("lien_achat").value.trim();
     const actif = document.getElementById("actif").checked;
+    const mis_en_avant = document.getElementById("mis_en_avant").checked;
     const fichierImage = document.getElementById("image_fichier").files[0];
 
     const message = document.getElementById("message");
@@ -477,7 +490,8 @@ async function enregistrerProduit() {
             categorie,
             image_url: image_url || null,
             lien_achat: lien_achat || null,
-            actif
+            actif,
+            mis_en_avant
         };
 
         let resultat;
@@ -552,6 +566,7 @@ async function modifierProduit(id) {
     document.getElementById("categorie").value = data.categorie || categorieActive;
     document.getElementById("lien_achat").value = data.lien_achat || "";
     document.getElementById("actif").checked = data.actif;
+    document.getElementById("mis_en_avant").checked = data.mis_en_avant || false;
     document.getElementById("image_fichier").value = "";
 
     const apercu = document.getElementById("apercuImage");
@@ -587,6 +602,29 @@ async function changerStatut(id, nouveauStatut) {
     }
 
     alert(nouveauStatut ? "✅ Produit activé." : "✅ Produit désactivé.");
+    await chargerProduits();
+
+}
+
+
+
+/* =========================================
+   METTRE EN AVANT / RETIRER (nouveau)
+========================================= */
+
+async function changerMiseEnAvant(id, nouvelEtat) {
+
+    const resultat = await supabaseClient
+        .from("produits")
+        .update({ mis_en_avant: nouvelEtat })
+        .eq("id", id);
+
+    if (resultat.error) {
+        alert("❌ Impossible de modifier la mise en avant.\n\n" + resultat.error.message);
+        return;
+    }
+
+    alert(nouvelEtat ? "⭐ Produit mis en avant." : "☆ Produit retiré de la mise en avant.");
     await chargerProduits();
 
 }
@@ -645,6 +683,7 @@ function reinitialiserFormulaire() {
     document.getElementById("categorie").value = categorieActive;
     document.getElementById("lien_achat").value = "";
     document.getElementById("actif").checked = true;
+    document.getElementById("mis_en_avant").checked = false;
     document.getElementById("image_fichier").value = "";
     document.getElementById("apercuImage").innerHTML = "";
 
