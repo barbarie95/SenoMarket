@@ -92,7 +92,6 @@
 
 /* =========================================
    PRODUITS SUPPLÉMENTAIRES / VOIR PLUS
-   (nouveau)
 ========================================= */
 
 .produits-supplementaires {
@@ -492,7 +491,7 @@ Vendre sur le site
 </select>
 
 <input type="text" id="recetteLienAchat" placeholder="Lien d'achat / de paiement de votre recette">
-<input type="text" id="recettePrix" placeholder="Prix de vente prévu (FCFA)">
+<input type="text" id="recettePrix" placeholder="Prix de vente prévu (facultatif)">
 
 <textarea id="recetteDescription" placeholder="Décrivez votre recette : ingrédients, style, ce qui la rend unique..."></textarea>
 
@@ -575,7 +574,7 @@ Envoyer ma proposition
 
 <script src="js/script.js"></script>
 
-    <script>
+<script>
 
 document.addEventListener("DOMContentLoaded", function() {
 
@@ -690,7 +689,6 @@ function ajouterOptionAvis(nom) {
 
 /* =========================================
    VOIR PLUS / VOIR MOINS PAR SECTION
-   (nouveau)
 ========================================= */
 
 window.afficherPlus = function(categorie) {
@@ -710,7 +708,7 @@ window.afficherPlus = function(categorie) {
 /* =========================================
    CHARGER LES PRODUITS SUPABASE, TRIÉS
    PAR CATÉGORIE : 3 VISIBLES + LE RESTE
-   DANS "VOIR PLUS" (nouveau)
+   DANS "VOIR PLUS"
 ========================================= */
 
 const grillesPrincipales = {
@@ -735,8 +733,6 @@ const messagesVides = {
     cuisine: document.getElementById("vide-cuisine")
 };
 
-// La section formations a déjà 2 produits statiques visibles,
-// donc il reste seulement 1 place avant de basculer dans "Voir plus"
 const compteursVisibles = {
     formations: 2,
     plans: 0,
@@ -791,7 +787,6 @@ async function chargerNouveauxProduits() {
                     ${image}
                     <h3>${produit.nom || ""}</h3>
                     <p>${produit.description || ""}</p>
-                    <p><strong>${produit.prix || 0} FCFA</strong></p>
                     <a href="${lien}" class="gold-btn">Acheter maintenant</a>
                 </div>
             `;
