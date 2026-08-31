@@ -112,7 +112,7 @@ style="padding:12px;width:90%;margin:6px 0;border-radius:10px;border:1px solid #
 <input
 type="number"
 id="prix"
-placeholder="Prix"
+placeholder="Prix (facultatif)"
 step="0.01"
 min="0"
 style="padding:12px;width:90%;margin:6px 0;border-radius:10px;border:1px solid #ddd;"
@@ -352,11 +352,15 @@ async function chargerProduits() {
             ? `<p><a href="${echapperHTML(produit.lien_achat)}" target="_blank" rel="noopener noreferrer" class="gold-btn">🔗 Voir le lien d'achat</a></p>`
             : "";
 
+        const prixAffiche = (produit.prix === null || produit.prix === undefined)
+            ? "Voir sur Chariow"
+            : produit.prix;
+
         zone.innerHTML += `
             <div class="card" style="margin-bottom:20px;">
                 ${image}
                 <h3>🛒 ${echapperHTML(produit.nom || "")}</h3>
-                <p><strong>Prix :</strong> ${produit.prix ?? ""}</p>
+                <p><strong>Prix :</strong> ${prixAffiche}</p>
                 <p><strong>Description :</strong> ${echapperHTML(produit.description || "Aucune description")}</p>
                 <p><strong>Statut :</strong> ${statut}</p>
                 ${lien}
@@ -451,12 +455,6 @@ async function enregistrerProduit() {
         return;
     }
 
-    if (prix === "") {
-        message.style.color = "red";
-        message.textContent = "Veuillez entrer le prix.";
-        return;
-    }
-
     bouton.disabled = true;
     message.style.color = "#555";
     message.textContent = "Enregistrement...";
@@ -474,7 +472,7 @@ async function enregistrerProduit() {
 
         const produit = {
             nom,
-            prix: Number(prix),
+            prix: prix === "" ? null : Number(prix),
             description: description || null,
             categorie,
             image_url: image_url || null,
