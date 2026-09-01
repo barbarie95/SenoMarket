@@ -549,6 +549,8 @@ Envoyer ma proposition
 
 </footer>
 
+
+
 <script src="js/script.js"></script>
 
 <script>
@@ -687,7 +689,6 @@ window.afficherPlus = function(categorie) {
    PAR CATÉGORIE : LES PRODUITS "MIS EN
    AVANT" PASSENT EN PRIORITÉ DANS LES
    3 VISIBLES, LE RESTE DANS "VOIR PLUS"
-   (nouveau)
 ========================================= */
 
 const grillesPrincipales = {
@@ -847,18 +848,9 @@ window.envoyerDemandePlan = async function() {
         return;
     }
 
-    try {
-        await fetch(SUPABASE_URL + "/functions/v1/notify-demande-plan", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nom, contact, email, type, chambres, details })
-        });
-    } catch (erreurNotification) {
-        console.error("Erreur notification admin :", erreurNotification);
-    }
-
     messageEl.style.color = "green";
     messageEl.textContent = "Votre demande a bien été envoyée ! Nous vous contacterons rapidement.";
+
     document.getElementById("planNom").value = "";
     document.getElementById("planContact").value = "";
     document.getElementById("planEmail").value = "";
@@ -1087,4 +1079,4 @@ chargerNouveauxProduits();
 
 </body>
 
-</html>
+</html>    
