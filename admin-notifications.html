@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Notifications - SenoMarket</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/script.js"></script>
+
+<style>
+
+.notif-carte {
+    margin-bottom: 15px;
+    border-left: 4px solid #ccc;
+}
+
+.notif-carte.non-lue {
+    border-left: 4px solid #FFD700;
+    background: #fffbe6;
+}
+
+.notif-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.notif-badge.demande_plan {
+    background: #e8f0fe;
+    color: #1a56db;
+}
+
+.notif-badge.proposition_recette {
+    background: #fdeee0;
+    color: #b45309;
+}
+
+.notif-date {
+    color: #777;
+    font-size: 13px;
+}
+
+.notif-detail {
+    display: none;
+    margin-top: 12px;
+    padding: 12px;
+    background: #f7f7f7;
+    border-radius: 8px;
+}
+
+.notif-detail.active {
+    display: block;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+<img src="images/logo-seno.png" alt="Logo SenoMarket">
+</div>
+
+</header>
+
+
+
+<section class="affiliate">
+
+
+<h2>🔔 Notifications</h2>
+
+<p id="compteurNonLues">Chargement...</p>
+
+
+<div id="listeNotifications">
+<p>Chargement des notifications...</p>
+</div>
+
+
+<br>
+
+
+<a href="dashboard.html" class="gold-btn">⬅ Retour au tableau de bord</a>
+
+
+</section>
+
+
+
+<footer>
+<p>© 2026 SenoMarket - Transformez vos idées en réussite</p>
+</footer>
+
+
+
+<script>
+
+
+/* =========================================
+   SUPABASE
+========================================= */
+
+const SUPABASE_URL = "https://vfnqwdwgkocpkkaofrum.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_BOFyx3zpbcwtN6h-3N0wLw_L1QOJWR-";
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+
+
+/* =========================================
+   VERIFICATION SESSION
+========================================= */
+
+async function verifierSession(){
+
+    const { data:{ session } } =
+        await supabaseClient.auth.getSession();
+
+    if(!session){
+        window.location.href = "administrateur.html";
+        return false;
+    }
+
+    return true;
+
+}
+
+
+
+/* =========================================
+   PROTECTION HTML
+========================================= */
+
+function echapperHTML(texte) {
+    return String(texte)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+
+/* =========================================
+   CHARGER LES NOTIFICATIONS
+========================================= */
+
+async function chargerNotifications() {
+
+    const zone = document.getElementById("listeNotifications");
+    const compteur = document.getElementById("compteurNonLues");
+
+    zone.innerHTML = "<p>Chargement des notifications...</p>";
+
+    const resultat = await supabaseClient
+        .from("notifications")
+        .select("*")
+        .in("type", ["demande_plan", "proposition_recette"])
+        .order("date_creation", { ascending: false });
+
+    if (resultat.error) {
+        zone.innerHTML = `<p style="color:red;">❌ Erreur : ${echapperHTML(resultat.error.message)}</p>`;
+        return;
+    }
+
+    const data = resultat.data;
+
+    if (!data || data.length === 0) {
+        compteur.textContent = "Aucune notification pour le moment.";
+        zone.innerHTML = "";
+        return;
+    }
+
+    const nonLues = data.filter(n => !n.lu).length;
+    compteur.textContent = nonLues > 0
+        ? `🔴 ${nonLues} notification(s) non lue(s)`
+        : "✅ Toutes les notifications sont lues.";
+
+    zone.innerHTML = "";
+
+    data.forEach(notif => {
+
+        const classeCarte = notif.lu ? "card notif-carte" : "card notif-carte non-lue";
+        const libelleType = notif.type === "demande_plan" ? "🏠 Demande de plan" : "🍳 Proposition de recette";
+        const dateFormatee = new Date(notif.date_creation).toLocaleString("fr-FR");
+        const idReference = notif.demande_plan_id || notif.proposition_recette_id;
+
+        zone.innerHTML += `
+            <div class="${classeCarte}">
+                <span class="notif-badge ${notif.type}">${libelleType}</span>
+                <p>${echapperHTML(notif.message)}</p>
+                <p class="notif-date">${dateFormatee}</p>
+                <button class="gold-btn" onclick="voirDetail('${notif.type}', '${idReference}', 'detail-${notif.id}')">
+                    🔍 Voir les détails
+                </button>
+                ${!notif.lu ? `<button class="gold-btn" onclick="marquerLu('${notif.id}')">✅ Marquer comme lu</button>` : ""}
+                <div id="detail-${notif.id}" class="notif-detail"></div>
+            </div>
+        `;
+
+    });
+
+}
+
+
+
+/* =========================================
+   VOIR LE DÉTAIL (demande de plan ou
+   proposition de recette)
+========================================= */
+
+async function voirDetail(type, id, idZoneDetail) {
+
+    const zone = document.getElementById(idZoneDetail);
+
+    if (zone.classList.contains("active")) {
+        zone.classList.remove("active");
+        return;
+    }
+
+    zone.innerHTML = "Chargement...";
+    zone.classList.add("active");
+
+    const table = type === "demande_plan" ? "demandes_plan" : "propositions_recettes";
+
+    const resultat = await supabaseClient
+        .from(table)
+        .select("*")
+        .eq("id", id)
+        .single();
+
+    if (resultat.error) {
+        zone.innerHTML = `<p style="color:red;">❌ Impossible de charger le détail.</p>`;
+        return;
+    }
+
+    const d = resultat.data;
+
+    if (type === "demande_plan") {
+
+        zone.innerHTML = `
+            <p><strong>Nom :</strong> ${echapperHTML(d.nom)}</p>
+            <p><strong>Contact :</strong> ${echapperHTML(d.contact)}</p>
+            <p><strong>Email :</strong> ${echapperHTML(d.email || "Non renseigné")}</p>
+            <p><strong>Type de bâtiment :</strong> ${echapperHTML(d.type)}</p>
+            <p><strong>Chambres souhaitées :</strong> ${echapperHTML(d.chambres || "Non précisé")}</p>
+            <p><strong>Détails :</strong> ${echapperHTML(d.details)}</p>
+        `;
+
+    } else {
+
+        zone.innerHTML = `
+            <p><strong>Nom du chef :</strong> ${echapperHTML(d.nom_chef)}</p>
+            <p><strong>Contact :</strong> ${echapperHTML(d.contact)}</p>
+            <p><strong>Email :</strong> ${echapperHTML(d.email || "Non renseigné")}</p>
+            <p><strong>Nom de la recette :</strong> ${echapperHTML(d.nom_recette)}</p>
+            <p><strong>Type de plat :</strong> ${echapperHTML(d.type_plat)}</p>
+            <p><strong>Lien d'achat :</strong> <a href="${echapperHTML(d.lien_achat)}" target="_blank" rel="noopener noreferrer">${echapperHTML(d.lien_achat)}</a></p>
+            <p><strong>Prix prévu :</strong> ${echapperHTML(d.prix || "Non précisé")}</p>
+            <p><strong>Description :</strong> ${echapperHTML(d.description)}</p>
+        `;
+
+    }
+
+}
+
+
+
+/* =========================================
+   MARQUER COMME LU
+========================================= */
+
+async function marquerLu(id) {
+
+    const resultat = await supabaseClient
+        .from("notifications")
+        .update({ lu: true })
+        .eq("id", id);
+
+    if (resultat.error) {
+        alert("❌ Impossible de marquer comme lu.\n\n" + resultat.error.message);
+        return;
+    }
+
+    await chargerNotifications();
+
+}
+
+
+
+/* =========================================
+   DEMARRAGE
+========================================= */
+
+document.addEventListener("DOMContentLoaded", async function() {
+
+    const ok = await verifierSession();
+
+    if(ok){
+        chargerNotifications();
+    }
+
+});
+
+</script>
+
+
+</body>
+
+</html>
