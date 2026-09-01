@@ -847,9 +847,18 @@ window.envoyerDemandePlan = async function() {
         return;
     }
 
+    try {
+        await fetch(SUPABASE_URL + "/functions/v1/notify-demande-plan", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nom, contact, email, type, chambres, details })
+        });
+    } catch (erreurNotification) {
+        console.error("Erreur notification admin :", erreurNotification);
+    }
+
     messageEl.style.color = "green";
     messageEl.textContent = "Votre demande a bien été envoyée ! Nous vous contacterons rapidement.";
-
     document.getElementById("planNom").value = "";
     document.getElementById("planContact").value = "";
     document.getElementById("planEmail").value = "";
